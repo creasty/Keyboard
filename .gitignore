@@ -1,0 +1,12 @@
+.DS_Store
+
+*.xcworkspace
+*.pbxuser
+*.perspectivev3
+xcuserdata
+*.xccheckout
+
+# CocoaPods
+Pods/
+/.bundle
+/vendor/bundle
