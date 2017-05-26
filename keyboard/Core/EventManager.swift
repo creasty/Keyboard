@@ -34,30 +34,23 @@ class EventManager {
     private init() {
     }
 
-    private func openOrHideApplication(byBundleIdentifier id: String) {
-        if let app = workspace.frontmostApplication, app.bundleIdentifier == id {
-            app.hide()
-        } else {
-            workspace.launchApplication(
-                withBundleIdentifier: id,
-                options: [],
-                additionalEventParamDescriptor: nil,
-                launchIdentifier: nil
-            )
-        }
-    }
-
     func handle(cgEvent: CGEvent) -> Unmanaged<CGEvent>? {
         guard let event = NSEvent(cgEvent: cgEvent) else {
             return Unmanaged.passRetained(cgEvent)
         }
+        guard let keyCode = KeyCode(rawValue: event.keyCode) else {
+            return Unmanaged.passRetained(cgEvent)
+        }
+
+        NSLog("keyCode = %@", String(describing: keyCode))
 
         let flags = event.modifierFlags
 
         // workspace.runningApplications
         // NSScreen.screens().first
 
-        if let k = KeyCode(rawValue: event.keyCode), k == .a && flags.match() {
+        // Set "super key" state
+        if keyCode == .a && flags.match() {
             switch event.type {
             case .keyDown:
                 switch superKey {
@@ -78,13 +71,7 @@ class EventManager {
 
                 case .activated:
                     superKey = .disabled
-                    [true, false].forEach {
-                        CGEvent(
-                            keyboardEventSource: nil,
-                            virtualKey: KeyCode.a.rawValue,
-                            keyDown: $0
-                            )?.post(tap: .cghidEventTap)
-                    }
+                    press(keys: [.a])
                     return nil
 
                 default:
@@ -96,11 +83,23 @@ class EventManager {
             }
         }
 
+        // Window/Space navigation
         if (superKey == .activated || superKey == .used) && flags.match() {
             superKey = .used
 
-            if let k = KeyCode(rawValue: event.keyCode), k == .l && event.type == .keyDown {
-                NSLog("--------------------- !!")
+            if event.type == .keyDown {
+                switch keyCode {
+                case .h:
+                    press(keys: [.control, .leftArrow])
+                case .j:
+                    press(keys: [.command, .tab])
+                case .k:
+                    press(keys: [.command, .shift, .tab])
+                case .l:
+                    press(keys: [.control, .rightArrow])
+                default:
+                    break
+                }
             }
 
             return nil
@@ -108,7 +107,7 @@ class EventManager {
 
         // Press Cmd-Q twice to "Quit Application"
         if event.type == .keyDown {
-            if let k = KeyCode(rawValue: event.keyCode), k == .q && flags.match(command: true) {
+            if keyCode == .q && flags.match(command: true) {
                 let t0 = lastTapTimes["Cmd-Q"]
                 let t1 = DispatchTime.now()
                 lastTapTimes["Cmd-Q"] = t1
@@ -129,5 +128,37 @@ class EventManager {
 //        }
 
         return Unmanaged.passRetained(cgEvent)
+    }
+
+    private func press(keys: [KeyCode]) {
+        keys.forEach {
+            let e = CGEvent(
+                keyboardEventSource: nil,
+                virtualKey: $0.rawValue,
+                keyDown: true
+            )
+            e?.post(tap: .cghidEventTap)
+        }
+        keys.reversed().forEach {
+            let e = CGEvent(
+                keyboardEventSource: nil,
+                virtualKey: $0.rawValue,
+                keyDown: false
+            )
+            e?.post(tap: .cghidEventTap)
+        }
+    }
+
+    private func openOrHideApplication(byBundleIdentifier id: String) {
+        if let app = workspace.frontmostApplication, app.bundleIdentifier == id {
+            app.hide()
+        } else {
+            workspace.launchApplication(
+                withBundleIdentifier: id,
+                options: [],
+                additionalEventParamDescriptor: nil,
+                launchIdentifier: nil
+            )
+        }
     }
 }
