@@ -150,12 +150,20 @@ class EventManager {
             }
         }
 
-//        if ev.type == .keyDown {
-//            if ev.keyCode == KeyCode["A"] && flags == [] {
-//                openOrHideApplication(byBundleIdentifier: "com.apple.finder")
-//                return nil
-//            }
-//        }
+        /**
+         * Cmd-' to toggle Finder
+         * Cmd-Ctrl-' to toggle Evernote
+         */
+        if keyCode == .doubleQuote && event.type == .keyDown {
+            if flags.match(command: true) {
+                openOrHideApplication(byBundleIdentifier: "com.apple.finder")
+                return nil
+            }
+            if flags.match(control: true, command: true) {
+                openOrHideApplication(byBundleIdentifier: "com.evernote.Evernote")
+                return nil
+            }
+        }
 
         return Unmanaged.passRetained(cgEvent)
     }
