@@ -159,6 +159,8 @@ class EventManager {
 
     private let workspace = NSWorkspace.shared()
 
+    private var lastTapTimes = [String:DispatchTime]()
+
     private init() {
     }
 
@@ -180,17 +182,32 @@ class EventManager {
             return Unmanaged.passRetained(event)
         }
 
-//        let flags = ev.modifierFlags
+        let flags = ev.modifierFlags
 
         // workspace.runningApplications
         // NSScreen.screens().first
 
+        // Press Cmd-Q twice to "Quit Application"
         if ev.type == .keyDown {
-            if ev.keyCode == KeyCode["Q"] /* && flags.contains(.command) */ {
-                openOrHideApplication(byBundleIdentifier: "com.apple.finder")
+            if ev.keyCode == KeyCode["Q"] && flags.contains(.command) && !flags.contains(.shift) && !flags.contains(.control) && !flags.contains(.option) {
+                let t0 = lastTapTimes["Cmd-Q"]
+                let t1 = DispatchTime.now()
+                lastTapTimes["Cmd-Q"] = t1
+
+                if let t0 = t0, Double(t1.uptimeNanoseconds) - Double(t0.uptimeNanoseconds) < 300 * 1e6 {
+                    return Unmanaged.passRetained(event)
+                }
+
                 return nil
             }
         }
+
+//        if ev.type == .keyDown {
+//            if ev.keyCode == KeyCode["A"] && flags == [] {
+//                openOrHideApplication(byBundleIdentifier: "com.apple.finder")
+//                return nil
+//            }
+//        }
 
         return Unmanaged.passRetained(event)
     }
