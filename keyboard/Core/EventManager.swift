@@ -85,18 +85,18 @@ class EventManager {
             }
         }
 
-        // Window/Space navigation
-        if (superKey == .activated || superKey == .used) && flags.match() {
+        // Window/Space navigations:
+        //
+        //     S+H: Move to left space
+        //     S+L: Move to right space
+        //     S+J: Switch to next application
+        //     S+K: Switch to previous application
+        //     S+N: Switch to next window
+        //     S+B: Switch to previous window
+        //
+        if [.activated, .used].contains(superKey) && flags.match() {
             superKey = .used
 
-            /**
-             * S+H: Move to left space
-             * S+L: Move to right space
-             * S+J: Switch to next application
-             * S+K: Switch to previous application
-             * S+N: Switch to next window
-             * S+B: Switch to previous window
-             */
             if event.type == .keyDown {
                 switch keyCode {
                 case .h:
@@ -150,10 +150,11 @@ class EventManager {
             }
         }
 
-        /**
-         * Cmd-' to toggle Finder
-         * Cmd-Ctrl-' to toggle Evernote
-         */
+        // Application hotkeys:
+        //
+        //          Cmd-': Finder
+        //     Ctrl-Cmd-': Evernote
+        //
         if keyCode == .doubleQuote && event.type == .keyDown {
             if flags.match(command: true) {
                 openOrHideApplication(byBundleIdentifier: "com.apple.finder")
@@ -169,9 +170,9 @@ class EventManager {
     }
 
     private func press(key: KeyCode, flags: CGEventFlags = [], remap: Bool = true) {
-        isHijacked = remap
-
         [true, false].forEach {
+            isHijacked = remap
+
             let e = CGEvent(
                 keyboardEventSource: nil,
                 virtualKey: key.rawValue,
@@ -179,9 +180,9 @@ class EventManager {
             )
             e?.flags = flags
             e?.post(tap: .cghidEventTap)
-        }
 
-        isHijacked = true
+            isHijacked = true
+        }
     }
 
     private func openOrHideApplication(byBundleIdentifier id: String) {
