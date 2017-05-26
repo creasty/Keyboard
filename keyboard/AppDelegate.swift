@@ -1,4 +1,5 @@
 import Cocoa
+import Foundation
 
 public let KeyCode: [String:UInt16] = [
     "A":              0x00,
@@ -152,6 +153,27 @@ public let KeyCode: [String:UInt16] = [
     "Kana":        0x68,
 ]
 
+enum SuperKeyState {
+    case inactive
+    case activated
+    case used
+    case disabled
+}
+
+extension NSEventModifierFlags {
+    func match(
+        shift: Bool = false,
+        control: Bool = false,
+        option: Bool = false,
+        command: Bool = false
+    ) -> Bool {
+        return contains(.shift) == shift &&
+            contains(.control) == control &&
+            contains(.option) == option &&
+            contains(.command) == command
+    }
+}
+
 class EventManager {
     static let shared: EventManager = {
         return EventManager()
@@ -160,6 +182,14 @@ class EventManager {
     private let workspace = NSWorkspace.shared()
 
     private var lastTapTimes = [String:DispatchTime]()
+
+    private var superKey: SuperKeyState = .inactive {
+        didSet {
+            if superKey != oldValue {
+                NSLog("state = %@", String(describing: superKey))
+            }
+        }
+    }
 
     private init() {
     }
@@ -177,25 +207,74 @@ class EventManager {
         }
     }
 
-    func handle(event: CGEvent) -> Unmanaged<CGEvent>? {
-        guard let ev = NSEvent(cgEvent: event) else {
-            return Unmanaged.passRetained(event)
+    func handle(cgEvent: CGEvent) -> Unmanaged<CGEvent>? {
+        guard let event = NSEvent(cgEvent: cgEvent) else {
+            return Unmanaged.passRetained(cgEvent)
         }
 
-        let flags = ev.modifierFlags
+        let flags = event.modifierFlags
 
         // workspace.runningApplications
         // NSScreen.screens().first
 
+        if event.keyCode == KeyCode["A"] && flags.match() {
+            switch event.type {
+            case .keyDown:
+                switch superKey {
+                case .disabled:
+                    superKey = .inactive
+                    return Unmanaged.passRetained(cgEvent)
+
+                default:
+                    superKey = .activated
+                    return nil
+                }
+
+            case .keyUp:
+                switch superKey {
+                case .used:
+                    superKey = .inactive
+                    return nil
+
+                case .activated:
+                    superKey = .disabled
+                    [true, false].forEach {
+                        CGEvent(
+                            keyboardEventSource: nil,
+                            virtualKey: KeyCode["A"]!,
+                            keyDown: $0
+                        )?.post(tap: .cghidEventTap)
+                    }
+                    return nil
+
+                default:
+                    break
+                }
+
+            default:
+                break
+            }
+        }
+
+        if (superKey == .activated || superKey == .used) && flags.match() {
+            superKey = .used
+
+            if event.keyCode == KeyCode["L"] && event.type == .keyDown {
+                NSLog("--------------------- !!")
+            }
+
+            return nil
+        }
+
         // Press Cmd-Q twice to "Quit Application"
-        if ev.type == .keyDown {
-            if ev.keyCode == KeyCode["Q"] && flags.contains(.command) && !flags.contains(.shift) && !flags.contains(.control) && !flags.contains(.option) {
+        if event.type == .keyDown {
+            if event.keyCode == KeyCode["Q"] && flags.match(command: true) {
                 let t0 = lastTapTimes["Cmd-Q"]
                 let t1 = DispatchTime.now()
                 lastTapTimes["Cmd-Q"] = t1
 
                 if let t0 = t0, Double(t1.uptimeNanoseconds) - Double(t0.uptimeNanoseconds) < 300 * 1e6 {
-                    return Unmanaged.passRetained(event)
+                    return Unmanaged.passRetained(cgEvent)
                 }
 
                 return nil
@@ -209,7 +288,7 @@ class EventManager {
 //            }
 //        }
 
-        return Unmanaged.passRetained(event)
+        return Unmanaged.passRetained(cgEvent)
     }
 }
 
@@ -236,7 +315,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             options: .defaultTap,
             eventsOfInterest: CGEventMask(eventMask),
             callback: { (_, _, event, _) -> Unmanaged<CGEvent>? in
-                return EventManager.shared.handle(event: event)
+                return EventManager.shared.handle(cgEvent: event)
             },
             userInfo: nil
         ) else {
