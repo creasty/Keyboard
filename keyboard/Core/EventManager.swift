@@ -99,6 +99,10 @@ class EventManager {
                     press(key: .tab, flags: [.maskCommand, .maskShift])
                 case .l:
                     press(key: .rightArrow, flags: [.maskControl])
+                case .n:
+                    press(key: .backtick, flags: [.maskCommand])
+                case .b:
+                    press(key: .backtick, flags: [.maskCommand, .maskShift])
                 default:
                     break
                 }
