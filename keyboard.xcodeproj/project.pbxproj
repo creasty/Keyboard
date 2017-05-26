@@ -10,6 +10,9 @@
 		AE6A00D61ED6A25000A93C2E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6A00D51ED6A25000A93C2E /* AppDelegate.swift */; };
 		AE6A00D81ED6A25000A93C2E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AE6A00D71ED6A25000A93C2E /* Assets.xcassets */; };
 		AE6A00DB1ED6A25000A93C2E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE6A00D91ED6A25000A93C2E /* MainMenu.xib */; };
+		AE6A00E41ED88F3F00A93C2E /* EventManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6A00E31ED88F3F00A93C2E /* EventManager.swift */; };
+		AE6A00E61ED8962500A93C2E /* KeyCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6A00E51ED8962500A93C2E /* KeyCode.swift */; };
+		AE6A00E81ED8990E00A93C2E /* SuperKeyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6A00E71ED8990E00A93C2E /* SuperKeyState.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -18,6 +21,9 @@
 		AE6A00D71ED6A25000A93C2E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AE6A00DA1ED6A25000A93C2E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		AE6A00DC1ED6A25000A93C2E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AE6A00E31ED88F3F00A93C2E /* EventManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EventManager.swift; path = Core/EventManager.swift; sourceTree = "<group>"; };
+		AE6A00E51ED8962500A93C2E /* KeyCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KeyCode.swift; path = Core/KeyCode.swift; sourceTree = "<group>"; };
+		AE6A00E71ED8990E00A93C2E /* SuperKeyState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SuperKeyState.swift; path = Core/SuperKeyState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,12 +56,23 @@
 		AE6A00D41ED6A25000A93C2E /* keyboard */ = {
 			isa = PBXGroup;
 			children = (
+				AE6A00E21ED88F0200A93C2E /* Core */,
 				AE6A00D51ED6A25000A93C2E /* AppDelegate.swift */,
 				AE6A00D71ED6A25000A93C2E /* Assets.xcassets */,
 				AE6A00D91ED6A25000A93C2E /* MainMenu.xib */,
 				AE6A00DC1ED6A25000A93C2E /* Info.plist */,
 			);
 			path = keyboard;
+			sourceTree = "<group>";
+		};
+		AE6A00E21ED88F0200A93C2E /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				AE6A00E31ED88F3F00A93C2E /* EventManager.swift */,
+				AE6A00E51ED8962500A93C2E /* KeyCode.swift */,
+				AE6A00E71ED8990E00A93C2E /* SuperKeyState.swift */,
+			);
+			name = Core;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -129,7 +146,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE6A00E41ED88F3F00A93C2E /* EventManager.swift in Sources */,
+				AE6A00E61ED8962500A93C2E /* KeyCode.swift in Sources */,
 				AE6A00D61ED6A25000A93C2E /* AppDelegate.swift in Sources */,
+				AE6A00E81ED8990E00A93C2E /* SuperKeyState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
