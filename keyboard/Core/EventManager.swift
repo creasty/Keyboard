@@ -14,10 +14,6 @@ extension NSEventModifierFlags {
     }
 }
 
-extension CGEvent {
-
-}
-
 class EventManager {
     static let shared: EventManager = {
         return EventManager()
@@ -89,6 +85,14 @@ class EventManager {
         if (superKey == .activated || superKey == .used) && flags.match() {
             superKey = .used
 
+            /**
+             * S+H: Move to left space
+             * S+L: Move to right space
+             * S+J: Switch to next application
+             * S+K: Switch to previous application
+             * S+N: Switch to next window
+             * S+B: Switch to previous window
+             */
             if event.type == .keyDown {
                 switch keyCode {
                 case .h:
@@ -123,6 +127,22 @@ class EventManager {
                 }
 
                 return nil
+            }
+        }
+
+        // Emacs
+        if keyCode == .c && flags.match(control: true) {
+            if event.type == .keyDown {
+                press(key: .escape)
+            }
+            return nil
+        }
+
+        // Leave InsMode with EISUU
+        if event.type == .keyDown {
+            if keyCode == .escape && flags.match() {
+                press(key: .jisEisu)
+                return Unmanaged.passRetained(cgEvent)
             }
         }
 
