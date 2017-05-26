@@ -14,6 +14,10 @@ extension NSEventModifierFlags {
     }
 }
 
+extension CGEvent {
+
+}
+
 class EventManager {
     static let shared: EventManager = {
         return EventManager()
@@ -42,8 +46,6 @@ class EventManager {
             return Unmanaged.passRetained(cgEvent)
         }
 
-        NSLog("keyCode = %@", String(describing: keyCode))
-
         let flags = event.modifierFlags
 
         // workspace.runningApplications
@@ -71,7 +73,7 @@ class EventManager {
 
                 case .activated:
                     superKey = .disabled
-                    press(keys: [.a])
+                    press(key: .a)
                     return nil
 
                 default:
@@ -90,13 +92,13 @@ class EventManager {
             if event.type == .keyDown {
                 switch keyCode {
                 case .h:
-                    press(keys: [.control, .leftArrow])
+                    press(key: .leftArrow, flags: [.maskControl])
                 case .j:
-                    press(keys: [.command, .tab])
+                    press(key: .tab, flags: [.maskCommand])
                 case .k:
-                    press(keys: [.command, .shift, .tab])
+                    press(key: .tab, flags: [.maskCommand, .maskShift])
                 case .l:
-                    press(keys: [.control, .rightArrow])
+                    press(key: .rightArrow, flags: [.maskControl])
                 default:
                     break
                 }
@@ -130,21 +132,14 @@ class EventManager {
         return Unmanaged.passRetained(cgEvent)
     }
 
-    private func press(keys: [KeyCode]) {
-        keys.forEach {
+    private func press(key: KeyCode, flags: CGEventFlags = []) {
+        [true, false].forEach {
             let e = CGEvent(
                 keyboardEventSource: nil,
-                virtualKey: $0.rawValue,
-                keyDown: true
+                virtualKey: key.rawValue,
+                keyDown: $0
             )
-            e?.post(tap: .cghidEventTap)
-        }
-        keys.reversed().forEach {
-            let e = CGEvent(
-                keyboardEventSource: nil,
-                virtualKey: $0.rawValue,
-                keyDown: false
-            )
+            e?.flags = flags
             e?.post(tap: .cghidEventTap)
         }
     }
