@@ -22,6 +22,7 @@ class EventManager {
     private let workspace = NSWorkspace.shared()
 
     private var lastTapTimes = [String:DispatchTime]()
+    private var isHijacked: Bool = true
 
     private var superKey: SuperKeyState = .inactive {
         didSet {
@@ -35,6 +36,9 @@ class EventManager {
     }
 
     func handle(cgEvent: CGEvent) -> Unmanaged<CGEvent>? {
+        guard isHijacked else {
+            return Unmanaged.passRetained(cgEvent)
+        }
         guard let event = NSEvent(cgEvent: cgEvent) else {
             return Unmanaged.passRetained(cgEvent)
         }
@@ -96,17 +100,17 @@ class EventManager {
             if event.type == .keyDown {
                 switch keyCode {
                 case .h:
-                    press(key: .leftArrow, flags: [.maskControl])
+                    press(key: .leftArrow, flags: [.maskControl], remap: false)
                 case .j:
-                    press(key: .tab, flags: [.maskCommand])
+                    press(key: .tab, flags: [.maskCommand], remap: false)
                 case .k:
-                    press(key: .tab, flags: [.maskCommand, .maskShift])
+                    press(key: .tab, flags: [.maskCommand, .maskShift], remap: false)
                 case .l:
-                    press(key: .rightArrow, flags: [.maskControl])
+                    press(key: .rightArrow, flags: [.maskControl], remap: false)
                 case .n:
-                    press(key: .backtick, flags: [.maskCommand])
+                    press(key: .backtick, flags: [.maskCommand], remap: false)
                 case .b:
-                    press(key: .backtick, flags: [.maskCommand, .maskShift])
+                    press(key: .backtick, flags: [.maskCommand, .maskShift], remap: false)
                 default:
                     break
                 }
@@ -141,7 +145,7 @@ class EventManager {
         // Leave InsMode with EISUU
         if event.type == .keyDown {
             if keyCode == .escape && flags.match() {
-                press(key: .jisEisu)
+                press(key: .jisEisu, remap: false)
                 return Unmanaged.passRetained(cgEvent)
             }
         }
@@ -156,7 +160,9 @@ class EventManager {
         return Unmanaged.passRetained(cgEvent)
     }
 
-    private func press(key: KeyCode, flags: CGEventFlags = []) {
+    private func press(key: KeyCode, flags: CGEventFlags = [], remap: Bool = true) {
+        isHijacked = remap
+
         [true, false].forEach {
             let e = CGEvent(
                 keyboardEventSource: nil,
@@ -166,6 +172,8 @@ class EventManager {
             e?.flags = flags
             e?.post(tap: .cghidEventTap)
         }
+
+        isHijacked = true
     }
 
     private func openOrHideApplication(byBundleIdentifier id: String) {
