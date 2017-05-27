@@ -162,17 +162,23 @@ class EventManager {
                 case .f:
                     press(key: .rightArrow, actions: [event.type == .keyDown])
                     return nil
-                default:
-                    break
-                }
-            }
-            if flags.match(control: true) || flags.match(shift: true, control: true) {
-                switch keyCode {
                 case .a:
                     press(key: .leftArrow, flags: [.maskCommand], actions: [event.type == .keyDown])
                     return nil
                 case .e:
                     press(key: .rightArrow, flags: [.maskCommand], actions: [event.type == .keyDown])
+                    return nil
+                default:
+                    break
+                }
+            }
+            if flags.match(shift: true, control: true) {
+                switch keyCode {
+                case .a:
+                    press(key: .leftArrow, flags: [.maskCommand, .maskShift], actions: [event.type == .keyDown])
+                    return nil
+                case .e:
+                    press(key: .rightArrow, flags: [.maskCommand, .maskShift], actions: [event.type == .keyDown])
                     return nil
                 default:
                     break
