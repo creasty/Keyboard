@@ -69,6 +69,7 @@ class EventManager {
                 switch superKey {
                 case .used:
                     superKey = .inactive
+                    press(key: .command)
                     return nil
 
                 case .activated:
