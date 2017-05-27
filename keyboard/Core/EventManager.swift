@@ -135,12 +135,60 @@ class EventManager {
             }
         }
 
-        // Emacs
-        if keyCode == .c && flags.match(control: true) {
-            if event.type == .keyDown {
-                press(key: .escape)
+        // Emacs:
+        //
+        //     Ctrl-C: Escape
+        //     Ctrl-D: Forward delete
+        //     Ctrl-H: Backspace
+        //     Ctrl-J: Enter
+        //     Ctrl-P: ↑
+        //     Ctrl-N: ↓
+        //     Ctrl-B: ←
+        //     Ctrl-F: →
+        //     Ctrl-A: Beginning of line (Shift allowed)
+        //     Ctrl-E: End of line (Shift allowed)
+        //
+        if flags.match(control: true) {
+            switch keyCode {
+            case .c:
+                press(key: .escape, actions: [event.type == .keyDown])
+                return nil
+            case .d:
+                press(key: .forwardDelete, actions: [event.type == .keyDown])
+                return nil
+            case .h:
+                press(key: .backspace, actions: [event.type == .keyDown])
+                return nil
+            case .j:
+                press(key: .enter, actions: [event.type == .keyDown])
+                return nil
+            case .p:
+                press(key: .upArrow, actions: [event.type == .keyDown])
+                return nil
+            case .n:
+                press(key: .downArrow, actions: [event.type == .keyDown])
+                return nil
+            case .b:
+                press(key: .leftArrow, actions: [event.type == .keyDown])
+                return nil
+            case .f:
+                press(key: .rightArrow, actions: [event.type == .keyDown])
+                return nil
+            default:
+                break
             }
-            return nil
+        }
+        if flags.match(control: true) || flags.match(shift: true, control: true) {
+            switch keyCode {
+            case .a:
+                press(key: .leftArrow, flags: [.maskCommand], actions: [event.type == .keyDown])
+                return nil
+            case .e:
+                press(key: .rightArrow, flags: [.maskCommand], actions: [event.type == .keyDown])
+                return nil
+            default:
+                break
+            }
         }
 
         // Leave InsMode with EISUU
@@ -170,8 +218,8 @@ class EventManager {
         return Unmanaged.passRetained(cgEvent)
     }
 
-    private func press(key: KeyCode, flags: CGEventFlags = [], remap: Bool = true) {
-        [true, false].forEach {
+    private func press(key: KeyCode, flags: CGEventFlags = [], remap: Bool = true, actions: [Bool] = [true, false]) {
+        actions.forEach {
             isHijacked = remap
 
             let e = CGEvent(
