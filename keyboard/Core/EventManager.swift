@@ -35,9 +35,6 @@ class EventManager {
 
         let flags = event.modifierFlags
 
-        // workspace.runningApplications
-        // NSScreen.screens().first
-
         // Set "super key" state
         if keyCode == superKeyCode && flags.match() {
             switch event.type {
@@ -142,28 +139,28 @@ class EventManager {
                     press(key: .escape, actions: [event.type == .keyDown])
                     return nil
                 case .d:
-                    press(key: .forwardDelete, actions: [event.type == .keyDown])
+                    press(key: .forwardDelete, remap: false, actions: [event.type == .keyDown])
                     return nil
                 case .h:
-                    press(key: .backspace, actions: [event.type == .keyDown])
+                    press(key: .backspace, remap: false, actions: [event.type == .keyDown])
                     return nil
                 case .j:
-                    press(key: .enter, actions: [event.type == .keyDown])
+                    press(key: .enter, remap: false, actions: [event.type == .keyDown])
                     return nil
                 case .p:
-                    press(key: .upArrow, actions: [event.type == .keyDown])
+                    press(key: .upArrow, remap: false, actions: [event.type == .keyDown])
                     return nil
                 case .n:
-                    press(key: .downArrow, actions: [event.type == .keyDown])
+                    press(key: .downArrow, remap: false, actions: [event.type == .keyDown])
                     return nil
                 case .b:
-                    press(key: .leftArrow, actions: [event.type == .keyDown])
+                    press(key: .leftArrow, remap: false, actions: [event.type == .keyDown])
                     return nil
                 case .f:
-                    press(key: .rightArrow, actions: [event.type == .keyDown])
+                    press(key: .rightArrow, remap: false, actions: [event.type == .keyDown])
                     return nil
                 case .a:
-                    press(key: .leftArrow, flags: [.maskCommand], actions: [event.type == .keyDown])
+                    press(key: .leftArrow, flags: [.maskCommand], remap: false, actions: [event.type == .keyDown])
                     return nil
                 case .e:
                     press(key: .rightArrow, flags: [.maskCommand], actions: [event.type == .keyDown])
@@ -175,10 +172,10 @@ class EventManager {
             if flags.match(shift: true, control: true) {
                 switch keyCode {
                 case .a:
-                    press(key: .leftArrow, flags: [.maskCommand, .maskShift], actions: [event.type == .keyDown])
+                    press(key: .leftArrow, flags: [.maskCommand, .maskShift], remap: false, actions: [event.type == .keyDown])
                     return nil
                 case .e:
-                    press(key: .rightArrow, flags: [.maskCommand, .maskShift], actions: [event.type == .keyDown])
+                    press(key: .rightArrow, flags: [.maskCommand, .maskShift], remap: false, actions: [event.type == .keyDown])
                     return nil
                 default:
                     break
