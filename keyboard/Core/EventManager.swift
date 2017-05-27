@@ -58,7 +58,7 @@ class EventManager {
 
                 case .activated:
                     superKey = .disabled
-                    press(key: superKeyCode)
+                    press(key: superKeyCode, remap: true)
                     return nil
 
                 default:
@@ -85,17 +85,17 @@ class EventManager {
             if event.type == .keyDown {
                 switch keyCode {
                 case .h:
-                    press(key: .leftArrow, flags: [.maskControl], remap: false)
+                    press(key: .leftArrow, flags: [.maskControl])
                 case .j:
-                    press(key: .tab, flags: [.maskCommand], remap: false)
+                    press(key: .tab, flags: [.maskCommand])
                 case .k:
-                    press(key: .tab, flags: [.maskCommand, .maskShift], remap: false)
+                    press(key: .tab, flags: [.maskCommand, .maskShift])
                 case .l:
-                    press(key: .rightArrow, flags: [.maskControl], remap: false)
+                    press(key: .rightArrow, flags: [.maskControl])
                 case .n:
-                    press(key: .backtick, flags: [.maskCommand], remap: false)
+                    press(key: .backtick, flags: [.maskCommand])
                 case .b:
-                    press(key: .backtick, flags: [.maskCommand, .maskShift], remap: false)
+                    press(key: .backtick, flags: [.maskCommand, .maskShift])
                 default:
                     break
                 }
@@ -134,37 +134,37 @@ class EventManager {
         //
         if keyCode == .c && flags.match(control: true) {
             if event.type == .keyDown {
-                press(key: .jisEisu, remap: false)
+                press(key: .jisEisu)
             }
-            press(key: .escape, remap: false, actions: [event.type == .keyDown])
+            press(key: .escape, actions: [event.type == .keyDown])
             return nil
         }
         if let bundleId = workspace.frontmostApplication?.bundleIdentifier, !emacsApplications.contains(bundleId) {
             if flags.match(control: true) {
                 switch keyCode {
                 case .d:
-                    press(key: .forwardDelete, remap: false, actions: [event.type == .keyDown])
+                    press(key: .forwardDelete, actions: [event.type == .keyDown])
                     return nil
                 case .h:
-                    press(key: .backspace, remap: false, actions: [event.type == .keyDown])
+                    press(key: .backspace, actions: [event.type == .keyDown])
                     return nil
                 case .j:
-                    press(key: .enter, remap: false, actions: [event.type == .keyDown])
+                    press(key: .enter, actions: [event.type == .keyDown])
                     return nil
                 case .p:
-                    press(key: .upArrow, remap: false, actions: [event.type == .keyDown])
+                    press(key: .upArrow, actions: [event.type == .keyDown])
                     return nil
                 case .n:
-                    press(key: .downArrow, remap: false, actions: [event.type == .keyDown])
+                    press(key: .downArrow, actions: [event.type == .keyDown])
                     return nil
                 case .b:
-                    press(key: .leftArrow, remap: false, actions: [event.type == .keyDown])
+                    press(key: .leftArrow, actions: [event.type == .keyDown])
                     return nil
                 case .f:
-                    press(key: .rightArrow, remap: false, actions: [event.type == .keyDown])
+                    press(key: .rightArrow, actions: [event.type == .keyDown])
                     return nil
                 case .a:
-                    press(key: .leftArrow, flags: [.maskCommand], remap: false, actions: [event.type == .keyDown])
+                    press(key: .leftArrow, flags: [.maskCommand], actions: [event.type == .keyDown])
                     return nil
                 case .e:
                     press(key: .rightArrow, flags: [.maskCommand], actions: [event.type == .keyDown])
@@ -176,10 +176,10 @@ class EventManager {
             if flags.match(shift: true, control: true) {
                 switch keyCode {
                 case .a:
-                    press(key: .leftArrow, flags: [.maskCommand, .maskShift], remap: false, actions: [event.type == .keyDown])
+                    press(key: .leftArrow, flags: [.maskCommand, .maskShift], actions: [event.type == .keyDown])
                     return nil
                 case .e:
-                    press(key: .rightArrow, flags: [.maskCommand, .maskShift], remap: false, actions: [event.type == .keyDown])
+                    press(key: .rightArrow, flags: [.maskCommand, .maskShift], actions: [event.type == .keyDown])
                     return nil
                 default:
                     break
@@ -190,7 +190,7 @@ class EventManager {
         // Leave InsMode with EISUU
         if event.type == .keyDown {
             if keyCode == .escape && flags.match() {
-                press(key: .jisEisu, remap: false)
+                press(key: .jisEisu)
                 return Unmanaged.passRetained(cgEvent)
             }
         }
@@ -214,7 +214,7 @@ class EventManager {
         return Unmanaged.passRetained(cgEvent)
     }
 
-    private func press(key: KeyCode, flags: CGEventFlags = [], remap: Bool = true, actions: [Bool] = [true, false]) {
+    private func press(key: KeyCode, flags: CGEventFlags = [], remap: Bool = false, actions: [Bool] = [true, false]) {
         actions.forEach {
             isHijacked = remap
 
