@@ -132,12 +132,16 @@ class EventManager {
         //     Ctrl-A: Beginning of line (Shift allowed)
         //     Ctrl-E: End of line (Shift allowed)
         //
+        if keyCode == .c && flags.match(control: true) {
+            if event.type == .keyDown {
+                press(key: .jisEisu, remap: false)
+            }
+            press(key: .escape, remap: false, actions: [event.type == .keyDown])
+            return nil
+        }
         if let bundleId = workspace.frontmostApplication?.bundleIdentifier, !emacsApplications.contains(bundleId) {
             if flags.match(control: true) {
                 switch keyCode {
-                case .c:
-                    press(key: .escape, actions: [event.type == .keyDown])
-                    return nil
                 case .d:
                     press(key: .forwardDelete, remap: false, actions: [event.type == .keyDown])
                     return nil
