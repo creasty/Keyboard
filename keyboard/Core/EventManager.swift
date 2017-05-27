@@ -1,19 +1,5 @@
 import Cocoa
 
-extension NSEventModifierFlags {
-    func match(
-        shift: Bool = false,
-        control: Bool = false,
-        option: Bool = false,
-        command: Bool = false
-    ) -> Bool {
-        return contains(.shift) == shift &&
-            contains(.control) == control &&
-            contains(.option) == option &&
-            contains(.command) == command
-    }
-}
-
 class EventManager {
     static let shared: EventManager = {
         return EventManager()
@@ -24,6 +10,7 @@ class EventManager {
     private var lastTapTimes = [String:DispatchTime]()
     private var isHijacked: Bool = true
 
+    private let superKeyCode: KeyCode = .s
     private var superKey: SuperKeyState = .inactive {
         didSet {
             if superKey != oldValue {
@@ -52,7 +39,7 @@ class EventManager {
         // NSScreen.screens().first
 
         // Set "super key" state
-        if keyCode == .a && flags.match() {
+        if keyCode == superKeyCode && flags.match() {
             switch event.type {
             case .keyDown:
                 switch superKey {
@@ -74,7 +61,7 @@ class EventManager {
 
                 case .activated:
                     superKey = .disabled
-                    press(key: .a)
+                    press(key: superKeyCode)
                     return nil
 
                 default:
@@ -148,46 +135,48 @@ class EventManager {
         //     Ctrl-A: Beginning of line (Shift allowed)
         //     Ctrl-E: End of line (Shift allowed)
         //
-        if flags.match(control: true) {
-            switch keyCode {
-            case .c:
-                press(key: .escape, actions: [event.type == .keyDown])
-                return nil
-            case .d:
-                press(key: .forwardDelete, actions: [event.type == .keyDown])
-                return nil
-            case .h:
-                press(key: .backspace, actions: [event.type == .keyDown])
-                return nil
-            case .j:
-                press(key: .enter, actions: [event.type == .keyDown])
-                return nil
-            case .p:
-                press(key: .upArrow, actions: [event.type == .keyDown])
-                return nil
-            case .n:
-                press(key: .downArrow, actions: [event.type == .keyDown])
-                return nil
-            case .b:
-                press(key: .leftArrow, actions: [event.type == .keyDown])
-                return nil
-            case .f:
-                press(key: .rightArrow, actions: [event.type == .keyDown])
-                return nil
-            default:
-                break
+        if let bundleId = workspace.frontmostApplication?.bundleIdentifier, !emacsApplications.contains(bundleId) {
+            if flags.match(control: true) {
+                switch keyCode {
+                case .c:
+                    press(key: .escape, actions: [event.type == .keyDown])
+                    return nil
+                case .d:
+                    press(key: .forwardDelete, actions: [event.type == .keyDown])
+                    return nil
+                case .h:
+                    press(key: .backspace, actions: [event.type == .keyDown])
+                    return nil
+                case .j:
+                    press(key: .enter, actions: [event.type == .keyDown])
+                    return nil
+                case .p:
+                    press(key: .upArrow, actions: [event.type == .keyDown])
+                    return nil
+                case .n:
+                    press(key: .downArrow, actions: [event.type == .keyDown])
+                    return nil
+                case .b:
+                    press(key: .leftArrow, actions: [event.type == .keyDown])
+                    return nil
+                case .f:
+                    press(key: .rightArrow, actions: [event.type == .keyDown])
+                    return nil
+                default:
+                    break
+                }
             }
-        }
-        if flags.match(control: true) || flags.match(shift: true, control: true) {
-            switch keyCode {
-            case .a:
-                press(key: .leftArrow, flags: [.maskCommand], actions: [event.type == .keyDown])
-                return nil
-            case .e:
-                press(key: .rightArrow, flags: [.maskCommand], actions: [event.type == .keyDown])
-                return nil
-            default:
-                break
+            if flags.match(control: true) || flags.match(shift: true, control: true) {
+                switch keyCode {
+                case .a:
+                    press(key: .leftArrow, flags: [.maskCommand], actions: [event.type == .keyDown])
+                    return nil
+                case .e:
+                    press(key: .rightArrow, flags: [.maskCommand], actions: [event.type == .keyDown])
+                    return nil
+                default:
+                    break
+                }
             }
         }
 

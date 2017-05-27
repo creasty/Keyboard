@@ -1,4 +1,4 @@
-import Cocoa
+import Foundation
 
 enum SuperKeyState {
     case inactive

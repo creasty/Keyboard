@@ -13,6 +13,7 @@
 		AE6A00E41ED88F3F00A93C2E /* EventManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6A00E31ED88F3F00A93C2E /* EventManager.swift */; };
 		AE6A00E61ED8962500A93C2E /* KeyCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6A00E51ED8962500A93C2E /* KeyCode.swift */; };
 		AE6A00E81ED8990E00A93C2E /* SuperKeyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6A00E71ED8990E00A93C2E /* SuperKeyState.swift */; };
+		AE825DF11ED93C1F0021C6E3 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE825DF01ED93C1F0021C6E3 /* Util.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		AE6A00E31ED88F3F00A93C2E /* EventManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EventManager.swift; path = Core/EventManager.swift; sourceTree = "<group>"; };
 		AE6A00E51ED8962500A93C2E /* KeyCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KeyCode.swift; path = Core/KeyCode.swift; sourceTree = "<group>"; };
 		AE6A00E71ED8990E00A93C2E /* SuperKeyState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SuperKeyState.swift; path = Core/SuperKeyState.swift; sourceTree = "<group>"; };
+		AE825DF01ED93C1F0021C6E3 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Util.swift; path = Core/Util.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +73,7 @@
 				AE6A00E31ED88F3F00A93C2E /* EventManager.swift */,
 				AE6A00E51ED8962500A93C2E /* KeyCode.swift */,
 				AE6A00E71ED8990E00A93C2E /* SuperKeyState.swift */,
+				AE825DF01ED93C1F0021C6E3 /* Util.swift */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -148,6 +151,7 @@
 			files = (
 				AE6A00E41ED88F3F00A93C2E /* EventManager.swift in Sources */,
 				AE6A00E61ED8962500A93C2E /* KeyCode.swift in Sources */,
+				AE825DF11ED93C1F0021C6E3 /* Util.swift in Sources */,
 				AE6A00D61ED6A25000A93C2E /* AppDelegate.swift in Sources */,
 				AE6A00E81ED8990E00A93C2E /* SuperKeyState.swift in Sources */,
 			);
@@ -302,6 +306,7 @@
 				AE6A00E11ED6A25000A93C2E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
