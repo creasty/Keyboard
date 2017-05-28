@@ -5,6 +5,7 @@
 *.perspectivev3
 xcuserdata
 *.xccheckout
+build
 
 # CocoaPods
 Pods/
