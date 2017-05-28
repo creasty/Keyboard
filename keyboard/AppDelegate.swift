@@ -3,16 +3,32 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-    @IBOutlet weak var window: NSWindow!
+    private lazy var statusItem: NSStatusItem = {
+        return NSStatusBar.system().statusItem(withLength: NSSquareStatusItemLength)
+    }()
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        window.collectionBehavior = .canJoinAllSpaces
-
+        setupStatusItem()
         trustThisApplication()
         trapKeyEvents()
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
+    }
+
+    private func setupStatusItem() {
+        if let button = statusItem.button {
+            button.title = "K"
+            button.action = #selector(onOpen)
+        }
+
+        statusItem.menu = {
+            let menu = NSMenu()
+
+            menu.addItem(NSMenuItem(title: "Quit", action: #selector(onQuit), keyEquivalent: "q"))
+
+            return menu
+        }()
     }
 
     private func trapKeyEvents() {
@@ -47,5 +63,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         guard AXIsProcessTrustedWithOptions(opts) else {
             exit(1)
         }
+    }
+
+    func onQuit() {
+        NSApplication.shared().terminate(nil)
+    }
+
+    func onOpen() {
     }
 }
