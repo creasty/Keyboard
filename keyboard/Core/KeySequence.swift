@@ -8,7 +8,7 @@ final class KeySequence {
         let count: Int
 
         init(count: Int = 1) {
-            timestamp = Double(DispatchTime.now().uptimeNanoseconds)
+            timestamp = DispatchTime.uptimeNanoseconds()
             self.count = count
         }
     }
@@ -20,7 +20,7 @@ final class KeySequence {
             return 0
         }
 
-        let t = Double(DispatchTime.now().uptimeNanoseconds)
+        let t = DispatchTime.uptimeNanoseconds()
         guard t - record.timestamp < threshold else {
             records[key] = nil
             return 0

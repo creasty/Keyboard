@@ -62,10 +62,16 @@ extension NSEventModifierFlags {
         control: Bool = false,
         option: Bool = false,
         command: Bool = false
-        ) -> Bool {
+    ) -> Bool {
         return contains(.shift) == shift &&
             contains(.control) == control &&
             contains(.option) == option &&
             contains(.command) == command
+    }
+}
+
+extension DispatchTime {
+    static func uptimeNanoseconds() -> Double {
+        return Double(now().uptimeNanoseconds)
     }
 }

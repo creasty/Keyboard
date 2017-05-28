@@ -6,26 +6,8 @@ final class EventManager {
     }()
 
     private let workspace = NSWorkspace.shared()
-
     private let seq = KeySequence()
-
-    private let superKeyCode: KeyCode = .s
-    private var superKeyActivatedAt: Double = 0
-    private var superKey: SuperKeyState = .inactive {
-        didSet {
-            guard superKey != oldValue else {
-                return
-            }
-
-            if superKey == .activated {
-                superKeyActivatedAt = Double(DispatchTime.now().uptimeNanoseconds)
-            }
-
-            #if true
-            NSLog("state = %@", String(describing: superKey))
-            #endif
-        }
-    }
+    private let superKey = SuperKey(key: .s)
 
     private init() {
     }
@@ -44,39 +26,40 @@ final class EventManager {
         let flags = event.modifierFlags
 
         // Set "super key" state
-        if keyCode == superKeyCode && flags.match() {
-            switch event.type {
-            case .keyDown:
-                superKey = .activated
-                return nil
+        if flags.match() {
+            if keyCode == superKey.hookedKey {
+                switch event.type {
+                case .keyDown:
+                    superKey.state = .activated
+                    return nil
 
-            case .keyUp:
-                switch superKey {
-                case .activated:
-                    press(key: superKeyCode)
-                case .enabled:
-                    press(key: .command)
+                case .keyUp:
+                    switch superKey.state {
+                    case .activated:
+                        press(key: superKey.hookedKey)
+                    case .enabled:
+                        press(key: .command)
+                    default: break
+                    }
+                    superKey.state = .inactive
+                    return nil
+
                 default: break
                 }
-                superKey = .inactive
-                return nil
-
-            default: break
             }
-        }
-        if superKey == .activated && flags.match() {
-            let t = Double(DispatchTime.now().uptimeNanoseconds)
-            guard t - superKeyActivatedAt > 100 * 1e6 else {
-                superKey = .disabled
+            if superKey.state == .activated {
+                guard superKey.canBeEnabled() else {
+                    superKey.state = .disabled
 
-                if event.type == .keyDown {
-                    press(key: superKeyCode)
+                    if event.type == .keyDown {
+                        press(key: superKey.hookedKey)
+                    }
+                    press(key: keyCode, actions: [event.type == .keyDown])
+                    return nil
                 }
-                press(key: keyCode, actions: [event.type == .keyDown])
-                return nil
+                
+                superKey.state = .enabled
             }
-
-            superKey = .enabled
         }
 
         // Window/Space navigations:
@@ -88,7 +71,7 @@ final class EventManager {
         //     S+N: Switch to next window
         //     S+B: Switch to previous window
         //
-        if superKey == .enabled && flags.match() {
+        if superKey.state == .enabled && flags.match() {
             if event.type == .keyDown {
                 switch keyCode {
                 case .h:
