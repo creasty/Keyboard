@@ -10,8 +10,13 @@ final class SuperKey {
         case disabled
     }
 
-    private let threshold: Double = 80 * 1e6
+    private let downThreshold: Double = 50 // ms
+    private let dispatchDelay: Int = 150 // ms
     private var activatedAt: Double = 0
+
+    private var handledAction: DispatchWorkItem?
+    private var handledKey: KeyCode?
+    private var handledAt: DispatchTime?
 
     var state: State = .inactive {
         didSet {
@@ -23,9 +28,7 @@ final class SuperKey {
                 activatedAt = DispatchTime.uptimeNanoseconds()
             }
 
-            #if false
-                NSLog("state = %@", String(describing: state))
-            #endif
+            NSLog("state = %@", String(describing: state))
         }
     }
 
@@ -33,7 +36,41 @@ final class SuperKey {
         hookedKey = key
     }
 
-    func canBeEnabled() -> Bool {
-        return DispatchTime.uptimeNanoseconds() - activatedAt > threshold
+    func enable() -> Bool {
+        guard DispatchTime.uptimeNanoseconds() - activatedAt > downThreshold * 1e6 else {
+            return false
+        }
+        state = .enabled
+        return true
+    }
+
+    func async(key: KeyCode, execute block: @escaping @convention(block) () -> Void) {
+        let dispatchTime: DispatchTime = DispatchTime.now() + DispatchTimeInterval.milliseconds(dispatchDelay)
+        let work = DispatchWorkItem(block: block)
+
+        handledKey = key
+        handledAction = work
+        handledAt = dispatchTime
+
+        DispatchQueue.global().asyncAfter(deadline: dispatchTime, execute: work)
+    }
+
+    func cancel() -> KeyCode? {
+        guard let handledAction = handledAction,
+            let handledKey = handledKey,
+            let handledAt = handledAt else {
+            return nil
+        }
+        self.handledAction = nil
+        self.handledKey = nil
+        self.handledAt = nil
+
+        guard handledAt > DispatchTime.now() else {
+            return nil
+        }
+
+        handledAction.cancel()
+
+        return handledKey
     }
 }

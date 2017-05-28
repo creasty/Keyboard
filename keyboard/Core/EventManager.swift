@@ -31,6 +31,8 @@ final class EventManager {
         let flags = event.modifierFlags
         let isKeyDown = (event.type == .keyDown)
 
+        NSLog("\(String(describing: key)) \(isKeyDown ? "down" : "up")")
+
         let action = updateSuperKeyState(key: key, flags: flags, isKeyDown: isKeyDown)
             ?? handleSuperKey(key: key, flags: flags, isKeyDown: isKeyDown)
             ?? handleSafeQuit(key: key, flags: flags, isKeyDown: isKeyDown)
@@ -60,7 +62,12 @@ final class EventManager {
                 case .activated:
                     press(key: superKey.hookedKey)
                 case .enabled:
-                    press(key: .command)
+                    if let key = superKey.cancel() {
+                        press(key: superKey.hookedKey)
+                        press(key: key)
+                    } else {
+                        press(key: .command)
+                    }
                 default: break
                 }
                 superKey.state = .inactive
@@ -69,17 +76,17 @@ final class EventManager {
         }
 
         if superKey.state == .activated {
-            guard superKey.canBeEnabled() else {
+            guard superKey.enable() else {
                 superKey.state = .disabled
 
                 if isKeyDown {
                     press(key: superKey.hookedKey)
                 }
+
                 press(key: key, actions: [isKeyDown])
+
                 return .prevent
             }
-
-            superKey.state = .enabled
         }
 
         return nil
@@ -98,28 +105,30 @@ final class EventManager {
         guard superKey.state == .enabled else {
             return nil
         }
-        guard isKeyDown else {
-            return nil
-        }
         guard flags.match() else {
             return nil
         }
+        guard isKeyDown else {
+            return .passThrough
+        }
 
-        switch key {
-        case .h:
-            press(key: .leftArrow, flags: [.maskControl])
-        case .j:
-            press(key: .tab, flags: [.maskCommand])
-        case .k:
-            press(key: .tab, flags: [.maskCommand, .maskShift])
-        case .l:
-            press(key: .rightArrow, flags: [.maskControl])
-        case .n:
-            press(key: .backtick, flags: [.maskCommand])
-        case .b:
-            press(key: .backtick, flags: [.maskCommand, .maskShift])
-        default:
-            break
+        superKey.async(key: key) { [weak self] in
+            switch key {
+            case .h:
+                self?.press(key: .leftArrow, flags: [.maskControl])
+            case .j:
+                self?.press(key: .tab, flags: [.maskCommand])
+            case .k:
+                self?.press(key: .tab, flags: [.maskCommand, .maskShift])
+            case .l:
+                self?.press(key: .rightArrow, flags: [.maskControl])
+            case .n:
+                self?.press(key: .backtick, flags: [.maskCommand])
+            case .b:
+                self?.press(key: .backtick, flags: [.maskCommand, .maskShift])
+            default:
+                break
+            }
         }
 
         return .prevent
