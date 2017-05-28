@@ -47,31 +47,13 @@ final class EventManager {
         if keyCode == superKeyCode && flags.match() {
             switch event.type {
             case .keyDown:
-                switch superKey {
-                case .disabled:
-                    superKey = .inactive
-                    return Unmanaged.passRetained(cgEvent)
-
-                default:
-                    superKey = .activated
-                    return nil
-                }
+                superKey = .activated
+                return nil
 
             case .keyUp:
-                switch superKey {
-                case .used:
-                    superKey = .inactive
-                    press(key: .command)
-                    return nil
-
-                case .activated:
-                    superKey = .inactive
-                    press(key: superKeyCode)
-                    return nil
-
-                default:
-                    break
-                }
+                press(key: superKey == .activated ? superKeyCode : .command)
+                superKey = .inactive
+                return nil
 
             default:
                 break
@@ -91,7 +73,6 @@ final class EventManager {
             superKey = .used
 
             let t = Double(DispatchTime.now().uptimeNanoseconds)
-
             guard t - superKeyActivatedAt > 100 * 1e6 else {
                 if event.type == .keyDown {
                     press(key: superKeyCode)
