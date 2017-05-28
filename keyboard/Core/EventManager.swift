@@ -10,11 +10,20 @@ final class EventManager {
     private let seq = KeySequence()
 
     private let superKeyCode: KeyCode = .s
+    private var superKeyActivatedAt: Double = 0
     private var superKey: SuperKeyState = .inactive {
         didSet {
-            if superKey != oldValue {
-                NSLog("state = %@", String(describing: superKey))
+            guard superKey != oldValue else {
+                return
             }
+
+            if superKey == .activated {
+                superKeyActivatedAt = Double(DispatchTime.now().uptimeNanoseconds)
+            }
+
+            #if true
+            NSLog("state = %@", String(describing: superKey))
+            #endif
         }
     }
 
@@ -56,8 +65,8 @@ final class EventManager {
                     return nil
 
                 case .activated:
-                    superKey = .disabled
-                    press(key: superKeyCode, remap: true)
+                    superKey = .inactive
+                    press(key: superKeyCode)
                     return nil
 
                 default:
@@ -80,6 +89,16 @@ final class EventManager {
         //
         if [.activated, .used].contains(superKey) && flags.match() {
             superKey = .used
+
+            let t = Double(DispatchTime.now().uptimeNanoseconds)
+
+            guard t - superKeyActivatedAt > 100 * 1e6 else {
+                if event.type == .keyDown {
+                    press(key: superKeyCode)
+                }
+                press(key: keyCode, actions: [event.type == .keyDown])
+                return nil
+            }
 
             if event.type == .keyDown {
                 switch keyCode {
