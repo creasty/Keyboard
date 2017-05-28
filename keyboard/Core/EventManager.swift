@@ -8,7 +8,6 @@ class EventManager {
     private let workspace = NSWorkspace.shared()
 
     private var lastTapTimes = [String:DispatchTime]()
-    private var isHijacked: Bool = true
 
     private let superKeyCode: KeyCode = .s
     private var superKey: SuperKeyState = .inactive {
@@ -23,7 +22,7 @@ class EventManager {
     }
 
     func handle(cgEvent: CGEvent) -> Unmanaged<CGEvent>? {
-        guard isHijacked else {
+        guard !cgEvent.flags.contains(.maskSecondaryFn) else {
             return Unmanaged.passRetained(cgEvent)
         }
         guard let event = NSEvent(cgEvent: cgEvent) else {
@@ -216,17 +215,17 @@ class EventManager {
 
     private func press(key: KeyCode, flags: CGEventFlags = [], remap: Bool = false, actions: [Bool] = [true, false]) {
         actions.forEach {
-            isHijacked = remap
-
             let e = CGEvent(
                 keyboardEventSource: nil,
                 virtualKey: key.rawValue,
                 keyDown: $0
             )
-            e?.flags = flags
+            if remap {
+                e?.flags = flags
+            } else {
+                e?.flags = flags.union(.maskSecondaryFn)
+            }
             e?.post(tap: .cghidEventTap)
-
-            isHijacked = true
         }
     }
 
