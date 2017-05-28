@@ -33,6 +33,7 @@ Open "System Preferences" and set the following shortcuts:
 Create new entry if missing.
 
 </details>
+<br>
 
 | Key | Description |
 |---|---|
