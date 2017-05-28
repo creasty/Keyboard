@@ -13,6 +13,22 @@ final class EventManager {
         case prevent
         case passThrough
     }
+    enum KeyPressAction {
+        case down
+        case up
+        case both
+
+        func keyDowns() -> [Bool] {
+            switch self {
+            case .down:
+                return [true]
+            case .up:
+                return [false]
+            case .both:
+                return [true, false]
+            }
+        }
+    }
 
     private init() {
     }
@@ -80,7 +96,7 @@ final class EventManager {
                 superKey.state = .disabled
 
                 press(key: superKey.hookedKey)
-                press(key: key, actions: [isKeyDown])
+                press(key: key, action: (isKeyDown ? .down : .up))
 
                 return .prevent
             }
@@ -169,7 +185,7 @@ final class EventManager {
             if isKeyDown {
                 press(key: .jisEisu)
             }
-            press(key: .escape, actions: [isKeyDown])
+            press(key: .escape, action: (isKeyDown ? .down : .up))
             return .prevent
         }
 
@@ -180,31 +196,31 @@ final class EventManager {
         if flags.match(control: true) {
             switch key {
             case .d:
-                press(key: .forwardDelete, actions: [isKeyDown])
+                press(key: .forwardDelete, action: (isKeyDown ? .down : .up))
                 return .prevent
             case .h:
-                press(key: .backspace, actions: [isKeyDown])
+                press(key: .backspace, action: (isKeyDown ? .down : .up))
                 return .prevent
             case .j:
-                press(key: .enter, actions: [isKeyDown])
+                press(key: .enter, action: (isKeyDown ? .down : .up))
                 return .prevent
             case .p:
-                press(key: .upArrow, actions: [isKeyDown])
+                press(key: .upArrow, action: (isKeyDown ? .down : .up))
                 return .prevent
             case .n:
-                press(key: .downArrow, actions: [isKeyDown])
+                press(key: .downArrow, action: (isKeyDown ? .down : .up))
                 return .prevent
             case .b:
-                press(key: .leftArrow, actions: [isKeyDown])
+                press(key: .leftArrow, action: (isKeyDown ? .down : .up))
                 return .prevent
             case .f:
-                press(key: .rightArrow, actions: [isKeyDown])
+                press(key: .rightArrow, action: (isKeyDown ? .down : .up))
                 return .prevent
             case .a:
-                press(key: .leftArrow, flags: [.maskCommand], actions: [isKeyDown])
+                press(key: .leftArrow, flags: [.maskCommand], action: (isKeyDown ? .down : .up))
                 return .prevent
             case .e:
-                press(key: .rightArrow, flags: [.maskCommand], actions: [isKeyDown])
+                press(key: .rightArrow, flags: [.maskCommand], action: (isKeyDown ? .down : .up))
                 return .prevent
             default:
                 break
@@ -213,10 +229,10 @@ final class EventManager {
         if flags.match(shift: true, control: true) {
             switch key {
             case .a:
-                press(key: .leftArrow, flags: [.maskCommand, .maskShift], actions: [isKeyDown])
+                press(key: .leftArrow, flags: [.maskCommand, .maskShift], action: (isKeyDown ? .down : .up))
                 return .prevent
             case .e:
-                press(key: .rightArrow, flags: [.maskCommand, .maskShift], actions: [isKeyDown])
+                press(key: .rightArrow, flags: [.maskCommand, .maskShift], action: (isKeyDown ? .down : .up))
                 return .prevent
             default:
                 break
@@ -268,15 +284,16 @@ final class EventManager {
         return nil
     }
 
-    private func press(key: KeyCode, flags: CGEventFlags = [], remap: Bool = false, actions: [Bool] = [true, false]) {
-        actions.enumerated().forEach {
-            if $0.offset == 1 {
+    private func press(key: KeyCode, flags: CGEventFlags = [], remap: Bool = false, action: KeyPressAction = .both) {
+        action.keyDowns().forEach {
+            if !$0 && action == .both {
                 usleep(100)
             }
+
             let e = CGEvent(
                 keyboardEventSource: nil,
                 virtualKey: key.rawValue,
-                keyDown: $0.element
+                keyDown: $0
             )
             if remap {
                 e?.flags = flags
