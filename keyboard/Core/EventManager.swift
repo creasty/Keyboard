@@ -272,11 +272,14 @@ final class EventManager {
     }
 
     private func press(key: KeyCode, flags: CGEventFlags = [], remap: Bool = false, actions: [Bool] = [true, false]) {
-        actions.forEach {
+        actions.enumerated().forEach {
+            if $0.offset == 1 {
+                usleep(50)
+            }
             let e = CGEvent(
                 keyboardEventSource: nil,
                 virtualKey: key.rawValue,
-                keyDown: $0
+                keyDown: $0.element
             )
             if remap {
                 e?.flags = flags
