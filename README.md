@@ -14,6 +14,26 @@ List of hacks
 
 `S` acts as a "super key" that doesn't require any modifier keys.
 
+<details>
+
+<summary>Requirements</summary>
+
+Open "System Preferences" and set the following shortcuts:
+
+| 1 | 2 |
+|---|---|
+| ![](https://cloud.githubusercontent.com/assets/1695538/26527997/3df11bf8-43db-11e7-975b-6f14aeb2e4a2.png) | ![](https://cloud.githubusercontent.com/assets/1695538/26527998/3e289ec0-43db-11e7-991b-a107a7f16231.png) |
+
+- Mission Control
+  - "Move left a space" `Ctrl-LeftArrow`
+  - "Move right a space" `Ctrl-RightArrow`
+- Keyboard
+  - "Move focus to next window" `Cmd-Backtick`
+
+Create new entry if missing.
+
+</details>
+
 | Key | Description |
 |---|---|
 | `S+H` | Move to left space |
