@@ -29,7 +29,7 @@ final class SuperKey {
                 activatedAt = DispatchTime.uptimeNanoseconds()
             }
 
-//            NSLog("state = %@", String(describing: state))
+            NSLog("state = %@", String(describing: state))
         }
     }
 
@@ -42,6 +42,10 @@ final class SuperKey {
     }
 
     func enable() -> Bool {
+        guard state == .activated else {
+            return true
+        }
+
         guard DispatchTime.uptimeNanoseconds() - activatedAt > downThreshold * 1e6 else {
             return false
         }

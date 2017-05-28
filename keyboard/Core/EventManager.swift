@@ -47,7 +47,7 @@ final class EventManager {
         let flags = event.modifierFlags
         let isKeyDown = (event.type == .keyDown)
 
-//        NSLog("\(String(describing: key)) \(isKeyDown ? "down" : "up")")
+        NSLog("\(String(describing: key)) \(isKeyDown ? "down" : "up")")
 
         let action = updateSuperKeyState(key: key, flags: flags, isKeyDown: isKeyDown)
             ?? handleSuperKey(key: key, flags: flags, isKeyDown: isKeyDown)
@@ -91,15 +91,13 @@ final class EventManager {
             }
         }
 
-        if superKey.state == .activated {
-            guard superKey.enable() else {
-                superKey.state = .disabled
+        guard superKey.enable() else {
+            superKey.state = .disabled
 
-                press(key: superKey.hookedKey)
-                press(key: key, action: (isKeyDown ? .down : .up))
+            press(key: superKey.hookedKey)
+            press(key: key, action: (isKeyDown ? .down : .up))
 
-                return .prevent
-            }
+            return .prevent
         }
 
         return nil
@@ -121,11 +119,12 @@ final class EventManager {
         guard flags.match() else {
             return nil
         }
-        guard isKeyDown else {
-            return .prevent
-        }
 
         superKey.perform(key: key) { [weak self] in
+            guard isKeyDown else {
+                return
+            }
+
             switch key {
             case .h:
                 self?.press(key: .leftArrow, flags: [.maskControl])
