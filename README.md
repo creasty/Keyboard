@@ -4,7 +4,7 @@ Keyboard
 Master of keyboard is master of automation.
 
 Minimum Karabiner-esque feature implementation in Swift 3.  
-Goal is to port my onw custom settings in Karabiner and its [private.xml](https://github.com/creasty/dotfiles/blob/d8b54873c6de27f1244ea10c7e290d1f248ea8ff/app/karabiner/private.xml).
+It's aimed at porting my own custom settings in Karabiner and its [private.xml](https://github.com/creasty/dotfiles/blob/d8b54873c6de27f1244ea10c7e290d1f248ea8ff/app/karabiner/private.xml).
 
 
 List of hacks
