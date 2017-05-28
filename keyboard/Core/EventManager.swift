@@ -287,7 +287,7 @@ final class EventManager {
     private func press(key: KeyCode, flags: CGEventFlags = [], remap: Bool = false, action: KeyPressAction = .both) {
         action.keyDowns().forEach {
             if !$0 && action == .both {
-                usleep(100)
+                usleep(1000)
             }
 
             let e = CGEvent(
