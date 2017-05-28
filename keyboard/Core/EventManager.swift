@@ -61,7 +61,7 @@ final class EventManager {
                 switch superKey.state {
                 case .activated:
                     press(key: superKey.hookedKey)
-                case .enabled:
+                case .enabled, .used:
                     if let key = superKey.cancel() {
                         press(key: superKey.hookedKey)
                         press(key: key)
@@ -102,17 +102,17 @@ final class EventManager {
     //     S+B: Switch to previous window
     //
     private func handleSuperKey(key: KeyCode, flags: NSEventModifierFlags, isKeyDown: Bool) -> Action? {
-        guard superKey.state == .enabled else {
+        guard superKey.isEnabled else {
             return nil
         }
         guard flags.match() else {
             return nil
         }
         guard isKeyDown else {
-            return .passThrough
+            return .prevent
         }
 
-        superKey.async(key: key) { [weak self] in
+        superKey.perform(key: key) { [weak self] in
             switch key {
             case .h:
                 self?.press(key: .leftArrow, flags: [.maskControl])

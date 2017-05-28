@@ -7,6 +7,7 @@ final class SuperKey {
         case inactive
         case activated
         case enabled
+        case used
         case disabled
     }
 
@@ -32,6 +33,10 @@ final class SuperKey {
         }
     }
 
+    var isEnabled: Bool {
+        return [.enabled, .used].contains(state)
+    }
+
     init(key: KeyCode) {
         hookedKey = key
     }
@@ -44,7 +49,13 @@ final class SuperKey {
         return true
     }
 
-    func async(key: KeyCode, execute block: @escaping @convention(block) () -> Void) {
+    func perform(key: KeyCode, execute block: @escaping @convention(block) () -> Void) {
+        guard state == .used else {
+            block()
+            return
+        }
+        state = .used
+
         let dispatchTime: DispatchTime = DispatchTime.now() + DispatchTimeInterval.milliseconds(dispatchDelay)
         let work = DispatchWorkItem(block: block)
 
