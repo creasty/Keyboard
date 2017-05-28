@@ -67,6 +67,7 @@ final class EventManager {
 
     private func updateSuperKeyState(key: KeyCode, flags: NSEventModifierFlags, isKeyDown: Bool) -> Action? {
         guard flags.match() else {
+            superKey.state = .inactive
             return nil
         }
 
