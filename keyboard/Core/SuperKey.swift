@@ -29,7 +29,7 @@ final class SuperKey {
                 activatedAt = DispatchTime.uptimeNanoseconds()
             }
 
-            NSLog("state = %@", String(describing: state))
+//            NSLog("state = %@", String(describing: state))
         }
     }
 
@@ -54,37 +54,39 @@ final class SuperKey {
     }
 
     func perform(key: KeyCode, block: @escaping @convention(block) () -> Void) {
+        let dispatchTime: DispatchTime = DispatchTime.now() + DispatchTimeInterval.milliseconds(dispatchDelay)
+
+        handledKey = key
+        handledAt = dispatchTime
+
         guard state == .used else {
+            handledAction = nil
             block()
             return
         }
         state = .used
 
-        let dispatchTime: DispatchTime = DispatchTime.now() + DispatchTimeInterval.milliseconds(dispatchDelay)
         let work = DispatchWorkItem(block: block)
-
-        handledKey = key
         handledAction = work
-        handledAt = dispatchTime
-
         DispatchQueue.global().asyncAfter(deadline: dispatchTime, execute: work)
     }
 
     func cancel() -> KeyCode? {
-        guard let handledAction = handledAction,
-            let handledKey = handledKey,
-            let handledAt = handledAt else {
+        guard let handledKey = handledKey, let handledAt = handledAt else {
             return nil
         }
-        self.handledAction = nil
         self.handledKey = nil
         self.handledAt = nil
 
         guard handledAt > DispatchTime.now() else {
+            self.handledAction = nil
             return nil
         }
 
-        handledAction.cancel()
+        if let handledAction = handledAction {
+            self.handledAction = nil
+            handledAction.cancel()
+        }
 
         return handledKey
     }

@@ -47,7 +47,7 @@ final class EventManager {
         let flags = event.modifierFlags
         let isKeyDown = (event.type == .keyDown)
 
-        NSLog("\(String(describing: key)) \(isKeyDown ? "down" : "up")")
+//        NSLog("\(String(describing: key)) \(isKeyDown ? "down" : "up")")
 
         let action = updateSuperKeyState(key: key, flags: flags, isKeyDown: isKeyDown)
             ?? handleSuperKey(key: key, flags: flags, isKeyDown: isKeyDown)
