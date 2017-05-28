@@ -54,6 +54,7 @@ final class EventManager {
             ?? handleSafeQuit(key: key, flags: flags, isKeyDown: isKeyDown)
             ?? handleEmacsMode(key: key, flags: flags, isKeyDown: isKeyDown)
             ?? handleEscape(key: key, flags: flags, isKeyDown: isKeyDown)
+            ?? handleAppHotkey(key: key, flags: flags, isKeyDown: isKeyDown)
             ?? .passThrough
 
         switch action {
