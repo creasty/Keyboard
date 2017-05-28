@@ -49,7 +49,7 @@ final class SuperKey {
         return true
     }
 
-    func perform(key: KeyCode, execute block: @escaping @convention(block) () -> Void) {
+    func perform(key: KeyCode, block: @escaping @convention(block) () -> Void) {
         guard state == .used else {
             block()
             return

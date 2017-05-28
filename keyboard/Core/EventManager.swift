@@ -59,9 +59,9 @@ final class EventManager {
                 return .prevent
             } else {
                 switch superKey.state {
-                case .activated, .enabled:
+                case .activated:
                     press(key: superKey.hookedKey)
-                case .used:
+                case .used, .enabled:
                     if let key = superKey.cancel() {
                         press(key: superKey.hookedKey)
                         press(key: key)
