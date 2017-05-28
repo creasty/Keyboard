@@ -29,7 +29,7 @@ final class SuperKey {
                 activatedAt = DispatchTime.uptimeNanoseconds()
             }
 
-            NSLog("state = %@", String(describing: state))
+//            NSLog("state = %@", String(describing: state))
         }
     }
 

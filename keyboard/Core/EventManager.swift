@@ -31,7 +31,7 @@ final class EventManager {
         let flags = event.modifierFlags
         let isKeyDown = (event.type == .keyDown)
 
-        NSLog("\(String(describing: key)) \(isKeyDown ? "down" : "up")")
+//        NSLog("\(String(describing: key)) \(isKeyDown ? "down" : "up")")
 
         let action = updateSuperKeyState(key: key, flags: flags, isKeyDown: isKeyDown)
             ?? handleSuperKey(key: key, flags: flags, isKeyDown: isKeyDown)
@@ -59,9 +59,9 @@ final class EventManager {
                 return .prevent
             } else {
                 switch superKey.state {
-                case .activated:
+                case .activated, .enabled:
                     press(key: superKey.hookedKey)
-                case .enabled, .used:
+                case .used:
                     if let key = superKey.cancel() {
                         press(key: superKey.hookedKey)
                         press(key: key)
@@ -79,10 +79,7 @@ final class EventManager {
             guard superKey.enable() else {
                 superKey.state = .disabled
 
-                if isKeyDown {
-                    press(key: superKey.hookedKey)
-                }
-
+                press(key: superKey.hookedKey)
                 press(key: key, actions: [isKeyDown])
 
                 return .prevent
@@ -274,7 +271,7 @@ final class EventManager {
     private func press(key: KeyCode, flags: CGEventFlags = [], remap: Bool = false, actions: [Bool] = [true, false]) {
         actions.enumerated().forEach {
             if $0.offset == 1 {
-                usleep(50)
+                usleep(100)
             }
             let e = CGEvent(
                 keyboardEventSource: nil,
