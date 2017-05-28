@@ -51,13 +51,32 @@ final class EventManager {
                 return nil
 
             case .keyUp:
-                press(key: superKey == .activated ? superKeyCode : .command)
+                switch superKey {
+                case .activated:
+                    press(key: superKeyCode)
+                case .enabled:
+                    press(key: .command)
+                default: break
+                }
                 superKey = .inactive
                 return nil
 
-            default:
-                break
+            default: break
             }
+        }
+        if superKey == .activated && flags.match() {
+            let t = Double(DispatchTime.now().uptimeNanoseconds)
+            guard t - superKeyActivatedAt > 100 * 1e6 else {
+                superKey = .disabled
+
+                if event.type == .keyDown {
+                    press(key: superKeyCode)
+                }
+                press(key: keyCode, actions: [event.type == .keyDown])
+                return nil
+            }
+
+            superKey = .enabled
         }
 
         // Window/Space navigations:
@@ -69,18 +88,7 @@ final class EventManager {
         //     S+N: Switch to next window
         //     S+B: Switch to previous window
         //
-        if [.activated, .used].contains(superKey) && flags.match() {
-            superKey = .used
-
-            let t = Double(DispatchTime.now().uptimeNanoseconds)
-            guard t - superKeyActivatedAt > 100 * 1e6 else {
-                if event.type == .keyDown {
-                    press(key: superKeyCode)
-                }
-                press(key: keyCode, actions: [event.type == .keyDown])
-                return nil
-            }
-
+        if superKey == .enabled && flags.match() {
             if event.type == .keyDown {
                 switch keyCode {
                 case .h:
