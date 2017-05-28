@@ -1,13 +1,13 @@
 import Cocoa
 
-class EventManager {
+final class EventManager {
     static let shared: EventManager = {
         return EventManager()
     }()
 
     private let workspace = NSWorkspace.shared()
 
-    private var lastTapTimes = [String:DispatchTime]()
+    private let seq = KeySequence()
 
     private let superKeyCode: KeyCode = .s
     private var superKey: SuperKeyState = .inactive {
@@ -106,11 +106,8 @@ class EventManager {
         // Press Cmd-Q twice to "Quit Application"
         if event.type == .keyDown {
             if keyCode == .q && flags.match(command: true) {
-                let t0 = lastTapTimes["Cmd-Q"]
-                let t1 = DispatchTime.now()
-                lastTapTimes["Cmd-Q"] = t1
-
-                if let t0 = t0, Double(t1.uptimeNanoseconds) - Double(t0.uptimeNanoseconds) < 300 * 1e6 {
+                if seq.record(forKey: "Cmd-Q") == 2 {
+                    seq.reset(forKey: "Cmd-Q")
                     return Unmanaged.passRetained(cgEvent)
                 }
 
