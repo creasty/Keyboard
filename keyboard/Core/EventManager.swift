@@ -184,61 +184,61 @@ final class EventManager {
     //     Ctrl-E: End of line (Shift allowed)
     //
     private func handleEmacsMode(key: KeyCode, flags: NSEventModifierFlags, isKeyDown: Bool) -> Action? {
-        if key == .c && flags.match(control: true) {
-            if isKeyDown {
-                press(key: .jisEisu)
-            }
-            press(key: .escape, action: (isKeyDown ? .down : .up))
-            return .prevent
-        }
-
-        guard let bundleId = workspace.frontmostApplication?.bundleIdentifier, !emacsApplications.contains(bundleId) else {
+        guard let bundleId = workspace.frontmostApplication?.bundleIdentifier else {
             return nil
         }
 
-        if flags.match(control: true) {
-            switch key {
-            case .d:
-                press(key: .forwardDelete, action: (isKeyDown ? .down : .up))
+        if !terminalApplications.contains(bundleId) {
+            if key == .c && flags.match(control: true) {
+                if isKeyDown {
+                    press(key: .jisEisu)
+                }
+                press(key: .escape, action: (isKeyDown ? .down : .up))
                 return .prevent
-            case .h:
-                press(key: .backspace, action: (isKeyDown ? .down : .up))
-                return .prevent
-            case .j:
-                press(key: .enter, action: (isKeyDown ? .down : .up))
-                return .prevent
-            case .p:
-                press(key: .upArrow, action: (isKeyDown ? .down : .up))
-                return .prevent
-            case .n:
-                press(key: .downArrow, action: (isKeyDown ? .down : .up))
-                return .prevent
-            case .b:
-                press(key: .leftArrow, action: (isKeyDown ? .down : .up))
-                return .prevent
-            case .f:
-                press(key: .rightArrow, action: (isKeyDown ? .down : .up))
-                return .prevent
-            case .a:
-                press(key: .leftArrow, flags: [.maskCommand], action: (isKeyDown ? .down : .up))
-                return .prevent
-            case .e:
-                press(key: .rightArrow, flags: [.maskCommand], action: (isKeyDown ? .down : .up))
-                return .prevent
-            default:
-                break
             }
         }
-        if flags.match(shift: true, control: true) {
-            switch key {
-            case .a:
-                press(key: .leftArrow, flags: [.maskCommand, .maskShift], action: (isKeyDown ? .down : .up))
+
+        if !emacsApplications.contains(bundleId) {
+            var remap: (KeyCode, CGEventFlags)? = nil
+
+            if flags.match(control: true) {
+                switch key {
+                case .d:
+                    remap = (.forwardDelete, [])
+                case .h:
+                    remap = (.backspace, [])
+                case .j:
+                    remap = (.enter, [])
+                default:
+                    break
+                }
+            }
+            if flags.match(shift: nil, control: true) {
+                switch key {
+                case .p:
+                    remap = (.upArrow, [])
+                case .n:
+                    remap = (.downArrow, [])
+                case .b:
+                    remap = (.leftArrow, [])
+                case .f:
+                    remap = (.rightArrow, [])
+                case .a:
+                    remap = (.leftArrow, [.maskCommand])
+                case .e:
+                    remap = (.rightArrow, [.maskCommand])
+                default:
+                    break
+                }
+            }
+
+            if let remap = remap {
+                let remapFlags = flags.contains(.shift)
+                    ? remap.1.union(.maskShift)
+                    : remap.1
+
+                press(key: remap.0, flags: remapFlags, action: (isKeyDown ? .down : .up))
                 return .prevent
-            case .e:
-                press(key: .rightArrow, flags: [.maskCommand, .maskShift], action: (isKeyDown ? .down : .up))
-                return .prevent
-            default:
-                break
             }
         }
 
