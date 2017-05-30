@@ -37,6 +37,9 @@ final class EventManager {
         guard !cgEvent.flags.contains(.maskSecondaryFn) else {
             return Unmanaged.passRetained(cgEvent)
         }
+        guard !cgEvent.flags.contains(.maskHelp) else {
+            return Unmanaged.passRetained(cgEvent)
+        }
         guard let event = NSEvent(cgEvent: cgEvent) else {
             return Unmanaged.passRetained(cgEvent)
         }
@@ -131,9 +134,9 @@ final class EventManager {
             case .h:
                 self?.press(key: .leftArrow, flags: [.maskControl])
             case .j:
-                self?.press(key: .tab, flags: [.maskCommand])
+                self?.press(key: .tab, flags: [.maskCommand], remapAltMode: true)
             case .k:
-                self?.press(key: .tab, flags: [.maskCommand, .maskShift])
+                self?.press(key: .tab, flags: [.maskCommand, .maskShift], remapAltMode: true)
             case .l:
                 self?.press(key: .rightArrow, flags: [.maskControl])
             case .n:
@@ -285,7 +288,13 @@ final class EventManager {
         return nil
     }
 
-    private func press(key: KeyCode, flags: CGEventFlags = [], remap: Bool = false, action: KeyPressAction = .both) {
+    private func press(
+        key: KeyCode,
+        flags: CGEventFlags = [],
+        remap: Bool = false,
+        remapAltMode: Bool = false,
+        action: KeyPressAction = .both
+    ) {
         action.keyDowns().forEach {
             if !$0 && action == .both {
                 usleep(1000)
@@ -299,7 +308,7 @@ final class EventManager {
             if remap {
                 e?.flags = flags
             } else {
-                e?.flags = flags.union(.maskSecondaryFn)
+                e?.flags = flags.union(remapAltMode ? .maskHelp : .maskSecondaryFn)
             }
             e?.post(tap: .cghidEventTap)
         }
