@@ -12,7 +12,7 @@ final class SuperKey {
     }
 
     private let downThreshold: Double = 50 // ms
-    private let dispatchDelay: Int = 150 // ms
+    private let dispatchDelay: Int = 200 // ms
     private var activatedAt: Double = 0
 
     private var handledAction: DispatchWorkItem?
