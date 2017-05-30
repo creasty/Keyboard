@@ -8,7 +8,7 @@ final class EventManager {
     private let workspace = NSWorkspace.shared()
     private let seq = KeySequence()
     private let superKey = SuperKey(key: .s)
-    private let noremapFlag: CGEventFlags = .maskSecondaryFn
+    private let noremapFlag: CGEventFlags = .maskHelp
 
     enum Action {
         case prevent
@@ -131,13 +131,13 @@ final class EventManager {
 
             switch key {
             case .h:
-                self?.press(key: .leftArrow, flags: [.maskControl])
+                self?.press(key: .leftArrow, flags: [.maskControl, .maskSecondaryFn])
             case .j:
                 self?.press(key: .tab, flags: [.maskCommand])
             case .k:
                 self?.press(key: .tab, flags: [.maskCommand, .maskShift])
             case .l:
-                self?.press(key: .rightArrow, flags: [.maskControl])
+                self?.press(key: .rightArrow, flags: [.maskControl, .maskSecondaryFn])
             case .n:
                 self?.press(key: .backtick, flags: [.maskCommand])
             case .b:
