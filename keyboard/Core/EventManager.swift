@@ -8,6 +8,7 @@ final class EventManager {
     private let workspace = NSWorkspace.shared()
     private let seq = KeySequence()
     private let superKey = SuperKey(key: .s)
+    private let noremapFlag: CGEventFlags = .maskSecondaryFn
 
     enum Action {
         case prevent
@@ -34,10 +35,8 @@ final class EventManager {
     }
 
     func handle(cgEvent: CGEvent) -> Unmanaged<CGEvent>? {
-        guard !cgEvent.flags.contains(.maskSecondaryFn) else {
-            return Unmanaged.passRetained(cgEvent)
-        }
-        guard !cgEvent.flags.contains(.maskHelp) else {
+        guard !cgEvent.flags.contains(noremapFlag) else {
+            cgEvent.flags.remove(noremapFlag)
             return Unmanaged.passRetained(cgEvent)
         }
         guard let event = NSEvent(cgEvent: cgEvent) else {
@@ -134,9 +133,9 @@ final class EventManager {
             case .h:
                 self?.press(key: .leftArrow, flags: [.maskControl])
             case .j:
-                self?.press(key: .tab, flags: [.maskCommand], remapAltMode: true)
+                self?.press(key: .tab, flags: [.maskCommand])
             case .k:
-                self?.press(key: .tab, flags: [.maskCommand, .maskShift], remapAltMode: true)
+                self?.press(key: .tab, flags: [.maskCommand, .maskShift])
             case .l:
                 self?.press(key: .rightArrow, flags: [.maskControl])
             case .n:
@@ -291,8 +290,6 @@ final class EventManager {
     private func press(
         key: KeyCode,
         flags: CGEventFlags = [],
-        remap: Bool = false,
-        remapAltMode: Bool = false,
         action: KeyPressAction = .both
     ) {
         action.keyDowns().forEach {
@@ -305,11 +302,7 @@ final class EventManager {
                 virtualKey: key.rawValue,
                 keyDown: $0
             )
-            if remap {
-                e?.flags = flags
-            } else {
-                e?.flags = flags.union(remapAltMode ? .maskHelp : .maskSecondaryFn)
-            }
+            e?.flags = flags.union(noremapFlag)
             e?.post(tap: .cghidEventTap)
         }
     }
