@@ -51,7 +51,7 @@ final class EventManager {
 
 //        NSLog("\(String(describing: key)) \(isKeyDown ? "down" : "up")")
 
-        let action = updateSuperKeyState(key: key, flags: flags, isKeyDown: isKeyDown)
+        let action = updateSuperKeyState(key: key, flags: flags, isKeyDown: isKeyDown, isARepeat: event.isARepeat)
             ?? handleSuperKey(key: key, flags: flags, isKeyDown: isKeyDown)
             ?? handleSafeQuit(key: key, flags: flags, isKeyDown: isKeyDown)
             ?? handleEmacsMode(key: key, flags: flags, isKeyDown: isKeyDown)
@@ -66,13 +66,17 @@ final class EventManager {
         }
     }
 
-    private func updateSuperKeyState(key: KeyCode, flags: NSEventModifierFlags, isKeyDown: Bool) -> Action? {
+    private func updateSuperKeyState(key: KeyCode, flags: NSEventModifierFlags, isKeyDown: Bool, isARepeat: Bool) -> Action? {
         guard flags.match() else {
             superKey.state = .inactive
             return nil
         }
 
         if key == superKey.hookedKey {
+            guard !isARepeat else {
+                return .prevent
+            }
+
             if isKeyDown {
                 superKey.state = .activated
                 return .prevent
@@ -92,15 +96,17 @@ final class EventManager {
                 superKey.state = .inactive
                 return .prevent
             }
-        }
+        } else {
+            if isKeyDown {
+                guard superKey.enable() else {
+                    superKey.state = .disabled
 
-        guard superKey.enable() else {
-            superKey.state = .disabled
+                    press(key: superKey.hookedKey)
+                    press(key: key, action: (isKeyDown ? .down : .up))
 
-            press(key: superKey.hookedKey)
-            press(key: key, action: (isKeyDown ? .down : .up))
-
-            return .prevent
+                    return .prevent
+                }
+            }
         }
 
         return nil
