@@ -56,7 +56,6 @@ final class EventManager {
             ?? handleSafeQuit(key: key, flags: flags, isKeyDown: isKeyDown)
             ?? handleEmacsMode(key: key, flags: flags, isKeyDown: isKeyDown)
             ?? handleEscape(key: key, flags: flags, isKeyDown: isKeyDown)
-            ?? handleAppHotkey(key: key, flags: flags, isKeyDown: isKeyDown)
             ?? .passThrough
 
         switch action {
@@ -260,26 +259,6 @@ final class EventManager {
         press(key: .jisEisu)
 
         return .passThrough
-    }
-
-    // Application hotkeys:
-    //
-    //          Cmd-': Finder
-    //
-    private func handleAppHotkey(key: KeyCode, flags: NSEventModifierFlags, isKeyDown: Bool) -> Action? {
-        guard isKeyDown else {
-            return nil
-        }
-        guard key == .doubleQuote else {
-            return nil
-        }
-
-        if flags.match(command: true) {
-            openOrHideApplication(byBundleIdentifier: "com.apple.finder")
-            return .prevent
-        }
-
-        return nil
     }
 
     private func press(
