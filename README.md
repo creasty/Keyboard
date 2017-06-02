@@ -70,7 +70,6 @@ Don't mind to create new entry if missing.
 | Key | Application |
 |---|---|
 | `Cmd-'` | Finder |
-| `Ctrl-Cmd-'` | Evernote |
 
 ### Fool-safe "Quit Application"
 

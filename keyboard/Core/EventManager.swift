@@ -265,7 +265,6 @@ final class EventManager {
     // Application hotkeys:
     //
     //          Cmd-': Finder
-    //     Ctrl-Cmd-': Evernote
     //
     private func handleAppHotkey(key: KeyCode, flags: NSEventModifierFlags, isKeyDown: Bool) -> Action? {
         guard isKeyDown else {
@@ -277,10 +276,6 @@ final class EventManager {
 
         if flags.match(command: true) {
             openOrHideApplication(byBundleIdentifier: "com.apple.finder")
-            return .prevent
-        }
-        if flags.match(control: true, command: true) {
-            openOrHideApplication(byBundleIdentifier: "com.evernote.Evernote")
             return .prevent
         }
 
