@@ -12,7 +12,7 @@ final class SuperKey {
     }
 
     private let downThreshold: Double = 50 // ms
-    private let dispatchDelay: Int = 200 // ms
+    private let dispatchDelay: Int = 150 // ms
     private var activatedAt: Double = 0
 
     private var handledAction: DispatchWorkItem?
@@ -45,7 +45,6 @@ final class SuperKey {
         guard state == .activated else {
             return true
         }
-
         guard DispatchTime.uptimeNanoseconds() - activatedAt > downThreshold * 1e6 else {
             return false
         }
@@ -54,19 +53,19 @@ final class SuperKey {
     }
 
     func perform(key: KeyCode, block: @escaping @convention(block) () -> Void) {
-        let dispatchTime: DispatchTime = DispatchTime.now() + DispatchTimeInterval.milliseconds(dispatchDelay)
-
         handledKey = key
-        handledAt = dispatchTime
 
-        guard state == .used else {
+        guard state != .used else {
             handledAction = nil
+            handledAt = DispatchTime.now()
             block()
             return
         }
         state = .used
 
         let work = DispatchWorkItem(block: block)
+        let dispatchTime = DispatchTime.now() + DispatchTimeInterval.milliseconds(dispatchDelay)
+        handledAt = dispatchTime
         handledAction = work
         DispatchQueue.global().asyncAfter(deadline: dispatchTime, execute: work)
     }
