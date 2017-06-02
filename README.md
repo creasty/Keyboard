@@ -63,14 +63,6 @@ Don't mind to create new entry if missing.
 | `Ctrl-A` | Beginning of line | YES |
 | `Ctrl-E` | End of line | YES |
 
-### Application hotkeys
-
-> Karabiner: ` <vkopenurldef>` and `__KeyToKey__`
-
-| Key | Application |
-|---|---|
-| `Cmd-'` | Finder |
-
 ### Fool-safe "Quit Application"
 
 > Karabiner: `remap.doublepresscommandQ`
