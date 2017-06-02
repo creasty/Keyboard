@@ -8,7 +8,7 @@ final class EventManager {
     private let workspace = NSWorkspace.shared()
     private let seq = KeySequence()
     private let superKey = SuperKey(key: .s)
-    private let noremapFlag: CGEventFlags = .maskHelp
+    private let noremapFlag: CGEventFlags = .maskAlphaShift
 
     enum Action {
         case prevent
