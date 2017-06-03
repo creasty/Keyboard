@@ -26,7 +26,8 @@ deploy:
   api_key:
     secure: mXFdjz7uE06jbOE7tOb+OD8iOQ6oRwaAu659Gk/f9g5J3EjoXL05Q7QQ4JugoPwZ1SXEh1FgtMlU/bm/W41GJgGTCzwI3jvJUAF3lxdqFDyiVnaoyEyEiv4e6qzMQaODIgfOZQLk3POZwIEmSVI0Qq8wmGmqrDd99dcpJnXWlEqKvscQ3i/zNvhwNALl/lx4ysk+ceM5+fJXFWD0gQY1eJ/dNaEGAGW53LNHM4/Dd2XxHTcI7aqBqijCQZzu4soTvFDb6d7nsA9tkOSuK0T5+CyW33FZ6dFbN4nmAAqF3LyOIOu9FyaqsRKqvfDEg0a7+BDpBvkrSi/MddwywjbwTl2jFbOTFJrIHd63ngPN0ZERZs/D6vbJF6SBAV0EiDEhcxXc6yxV/UqkX4WV2KAYShSRKWiOSRNIyGQk40UZkgoG7eeLYV9sYqiPaq3AyCYpt2kyO4emxrUwJwQ7qvOXDiIOfF5+vsrTA9tRzqWMn211ot/VdS2izHN10oMiJNtORJh7UHUIUeYVWutLdxDyMpxzjxK8ozWKJER8tHpQkKyIZEOxJ4Tmx/RwtjnTB0ZlJ4ZvrydIq/BCxUsPRlHIsuenhfUMVgHPNreALyzQfrWUQYZRWZH2q8+WmZWznb6NVN6bAbo4gdfMIg2iZfRyr7qxZzXo7miHi+VAr+NCPTQ=
   skip_cleanup: true
-  file_glob: build/*.zip
+  file_glob: true
+  file: build/*.zip
   on:
     tags: true
     repo: creasty/Keyboard
