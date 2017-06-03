@@ -1,5 +1,14 @@
 import Cocoa
 
+let terminalApplications: Set<String> = [
+    "com.apple.Terminal",
+    "iTerm",
+    "net.sourceforge.iTerm",
+    "com.googlecode.iterm2",
+    "co.zeit.hyperterm",
+    "co.zeit.hyper",
+]
+
 let emacsApplications: Set<String> = [
     // eclipse
     "org.eclipse.eclipse",
@@ -58,15 +67,24 @@ let emacsApplications: Set<String> = [
 
 extension NSEventModifierFlags {
     func match(
-        shift: Bool = false,
-        control: Bool = false,
-        option: Bool = false,
-        command: Bool = false
+        shift: Bool? = false,
+        control: Bool? = false,
+        option: Bool? = false,
+        command: Bool? = false
     ) -> Bool {
-        return contains(.shift) == shift &&
-            contains(.control) == control &&
-            contains(.option) == option &&
-            contains(.command) == command
+        if let shift = shift, contains(.shift) != shift {
+            return false
+        }
+        if let control = control, contains(.control) != control {
+            return false
+        }
+        if let option = option, contains(.option) != option {
+            return false
+        }
+        if let command = command, contains(.command) != command {
+            return false
+        }
+        return true
     }
 }
 

@@ -8,6 +8,7 @@ final class EventManager {
     private let workspace = NSWorkspace.shared()
     private let seq = KeySequence()
     private let superKey = SuperKey(key: .s)
+    private let noremapFlag: CGEventFlags = .maskAlphaShift
 
     enum Action {
         case prevent
@@ -34,7 +35,8 @@ final class EventManager {
     }
 
     func handle(cgEvent: CGEvent) -> Unmanaged<CGEvent>? {
-        guard !cgEvent.flags.contains(.maskSecondaryFn) else {
+        guard !cgEvent.flags.contains(noremapFlag) else {
+            cgEvent.flags.remove(noremapFlag)
             return Unmanaged.passRetained(cgEvent)
         }
         guard let event = NSEvent(cgEvent: cgEvent) else {
@@ -49,12 +51,11 @@ final class EventManager {
 
 //        NSLog("\(String(describing: key)) \(isKeyDown ? "down" : "up")")
 
-        let action = updateSuperKeyState(key: key, flags: flags, isKeyDown: isKeyDown)
+        let action = updateSuperKeyState(key: key, flags: flags, isKeyDown: isKeyDown, isARepeat: event.isARepeat)
             ?? handleSuperKey(key: key, flags: flags, isKeyDown: isKeyDown)
             ?? handleSafeQuit(key: key, flags: flags, isKeyDown: isKeyDown)
             ?? handleEmacsMode(key: key, flags: flags, isKeyDown: isKeyDown)
             ?? handleEscape(key: key, flags: flags, isKeyDown: isKeyDown)
-            ?? handleAppHotkey(key: key, flags: flags, isKeyDown: isKeyDown)
             ?? .passThrough
 
         switch action {
@@ -65,38 +66,46 @@ final class EventManager {
         }
     }
 
-    private func updateSuperKeyState(key: KeyCode, flags: NSEventModifierFlags, isKeyDown: Bool) -> Action? {
+    private func updateSuperKeyState(key: KeyCode, flags: NSEventModifierFlags, isKeyDown: Bool, isARepeat: Bool) -> Action? {
         guard flags.match() else {
             superKey.state = .inactive
             return nil
         }
 
-        if key == superKey.hookedKey {
-            if isKeyDown {
-                superKey.state = .activated
-                return .prevent
-            } else {
-                switch superKey.state {
-                case .activated:
-                    press(key: superKey.hookedKey)
-                case .used, .enabled:
-                    if let key = superKey.cancel() {
-                        press(key: superKey.hookedKey)
-                        press(key: key)
-                    } else {
-                        press(key: .command)
-                    }
-                default: break
-                }
-                superKey.state = .inactive
+        if key == superKey.prefixKey {
+            guard !isARepeat else {
                 return .prevent
             }
+            guard !isKeyDown else {
+                superKey.state = .activated
+                return .prevent
+            }
+
+            switch superKey.state {
+            case .activated:
+                press(key: superKey.prefixKey)
+            case .used, .enabled:
+                if let key = superKey.cancel() {
+                    press(key: superKey.prefixKey)
+                    press(key: key)
+                } else {
+                    press(key: .command)
+                }
+            default: break
+            }
+
+            superKey.state = .inactive
+            return .prevent
+        }
+
+        guard isKeyDown else {
+            return nil
         }
 
         guard superKey.enable() else {
             superKey.state = .disabled
 
-            press(key: superKey.hookedKey)
+            press(key: superKey.prefixKey)
             press(key: key, action: (isKeyDown ? .down : .up))
 
             return .prevent
@@ -129,13 +138,13 @@ final class EventManager {
 
             switch key {
             case .h:
-                self?.press(key: .leftArrow, flags: [.maskControl])
+                self?.press(key: .leftArrow, flags: [.maskControl, .maskSecondaryFn])
             case .j:
                 self?.press(key: .tab, flags: [.maskCommand])
             case .k:
                 self?.press(key: .tab, flags: [.maskCommand, .maskShift])
             case .l:
-                self?.press(key: .rightArrow, flags: [.maskControl])
+                self?.press(key: .rightArrow, flags: [.maskControl, .maskSecondaryFn])
             case .n:
                 self?.press(key: .backtick, flags: [.maskCommand])
             case .b:
@@ -182,61 +191,61 @@ final class EventManager {
     //     Ctrl-E: End of line (Shift allowed)
     //
     private func handleEmacsMode(key: KeyCode, flags: NSEventModifierFlags, isKeyDown: Bool) -> Action? {
-        if key == .c && flags.match(control: true) {
-            if isKeyDown {
-                press(key: .jisEisu)
-            }
-            press(key: .escape, action: (isKeyDown ? .down : .up))
-            return .prevent
-        }
-
-        guard let bundleId = workspace.frontmostApplication?.bundleIdentifier, !emacsApplications.contains(bundleId) else {
+        guard let bundleId = workspace.frontmostApplication?.bundleIdentifier else {
             return nil
         }
 
-        if flags.match(control: true) {
-            switch key {
-            case .d:
-                press(key: .forwardDelete, action: (isKeyDown ? .down : .up))
+        if !terminalApplications.contains(bundleId) {
+            if key == .c && flags.match(control: true) {
+                if isKeyDown {
+                    press(key: .jisEisu)
+                }
+                press(key: .escape, action: (isKeyDown ? .down : .up))
                 return .prevent
-            case .h:
-                press(key: .backspace, action: (isKeyDown ? .down : .up))
-                return .prevent
-            case .j:
-                press(key: .enter, action: (isKeyDown ? .down : .up))
-                return .prevent
-            case .p:
-                press(key: .upArrow, action: (isKeyDown ? .down : .up))
-                return .prevent
-            case .n:
-                press(key: .downArrow, action: (isKeyDown ? .down : .up))
-                return .prevent
-            case .b:
-                press(key: .leftArrow, action: (isKeyDown ? .down : .up))
-                return .prevent
-            case .f:
-                press(key: .rightArrow, action: (isKeyDown ? .down : .up))
-                return .prevent
-            case .a:
-                press(key: .leftArrow, flags: [.maskCommand], action: (isKeyDown ? .down : .up))
-                return .prevent
-            case .e:
-                press(key: .rightArrow, flags: [.maskCommand], action: (isKeyDown ? .down : .up))
-                return .prevent
-            default:
-                break
             }
         }
-        if flags.match(shift: true, control: true) {
-            switch key {
-            case .a:
-                press(key: .leftArrow, flags: [.maskCommand, .maskShift], action: (isKeyDown ? .down : .up))
+
+        if !emacsApplications.contains(bundleId) {
+            var remap: (KeyCode, CGEventFlags)? = nil
+
+            if flags.match(control: true) {
+                switch key {
+                case .d:
+                    remap = (.forwardDelete, [])
+                case .h:
+                    remap = (.backspace, [])
+                case .j:
+                    remap = (.enter, [])
+                default:
+                    break
+                }
+            }
+            if flags.match(shift: nil, control: true) {
+                switch key {
+                case .p:
+                    remap = (.upArrow, [])
+                case .n:
+                    remap = (.downArrow, [])
+                case .b:
+                    remap = (.leftArrow, [])
+                case .f:
+                    remap = (.rightArrow, [])
+                case .a:
+                    remap = (.leftArrow, [.maskCommand])
+                case .e:
+                    remap = (.rightArrow, [.maskCommand])
+                default:
+                    break
+                }
+            }
+
+            if let remap = remap {
+                let remapFlags = flags.contains(.shift)
+                    ? remap.1.union(.maskShift)
+                    : remap.1
+
+                press(key: remap.0, flags: remapFlags, action: (isKeyDown ? .down : .up))
                 return .prevent
-            case .e:
-                press(key: .rightArrow, flags: [.maskCommand, .maskShift], action: (isKeyDown ? .down : .up))
-                return .prevent
-            default:
-                break
             }
         }
 
@@ -260,32 +269,11 @@ final class EventManager {
         return .passThrough
     }
 
-    // Application hotkeys:
-    //
-    //          Cmd-': Finder
-    //     Ctrl-Cmd-': Evernote
-    //
-    private func handleAppHotkey(key: KeyCode, flags: NSEventModifierFlags, isKeyDown: Bool) -> Action? {
-        guard isKeyDown else {
-            return nil
-        }
-        guard key == .doubleQuote else {
-            return nil
-        }
-
-        if flags.match(command: true) {
-            openOrHideApplication(byBundleIdentifier: "com.apple.finder")
-            return .prevent
-        }
-        if flags.match(control: true, command: true) {
-            openOrHideApplication(byBundleIdentifier: "com.evernote.Evernote")
-            return .prevent
-        }
-
-        return nil
-    }
-
-    private func press(key: KeyCode, flags: CGEventFlags = [], remap: Bool = false, action: KeyPressAction = .both) {
+    private func press(
+        key: KeyCode,
+        flags: CGEventFlags = [],
+        action: KeyPressAction = .both
+    ) {
         action.keyDowns().forEach {
             if !$0 && action == .both {
                 usleep(1000)
@@ -296,16 +284,12 @@ final class EventManager {
                 virtualKey: key.rawValue,
                 keyDown: $0
             )
-            if remap {
-                e?.flags = flags
-            } else {
-                e?.flags = flags.union(.maskSecondaryFn)
-            }
+            e?.flags = flags.union(noremapFlag)
             e?.post(tap: .cghidEventTap)
         }
     }
 
-    private func openOrHideApplication(byBundleIdentifier id: String) {
+    private func showOrHideApplication(byBundleIdentifier id: String) {
         if let app = workspace.frontmostApplication, app.bundleIdentifier == id {
             app.hide()
         } else {
