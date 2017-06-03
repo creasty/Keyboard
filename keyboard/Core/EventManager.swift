@@ -76,37 +76,39 @@ final class EventManager {
             guard !isARepeat else {
                 return .prevent
             }
-
-            if isKeyDown {
+            guard !isKeyDown else {
                 superKey.state = .activated
                 return .prevent
-            } else {
-                switch superKey.state {
-                case .activated:
-                    press(key: superKey.prefixKey)
-                case .used, .enabled:
-                    if let key = superKey.cancel() {
-                        press(key: superKey.prefixKey)
-                        press(key: key)
-                    } else {
-                        press(key: .command)
-                    }
-                default: break
-                }
-                superKey.state = .inactive
-                return .prevent
             }
-        } else {
-            if isKeyDown {
-                guard superKey.enable() else {
-                    superKey.state = .disabled
 
+            switch superKey.state {
+            case .activated:
+                press(key: superKey.prefixKey)
+            case .used, .enabled:
+                if let key = superKey.cancel() {
                     press(key: superKey.prefixKey)
-                    press(key: key, action: (isKeyDown ? .down : .up))
-
-                    return .prevent
+                    press(key: key)
+                } else {
+                    press(key: .command)
                 }
+            default: break
             }
+
+            superKey.state = .inactive
+            return .prevent
+        }
+
+        guard isKeyDown else {
+            return nil
+        }
+
+        guard superKey.enable() else {
+            superKey.state = .disabled
+
+            press(key: superKey.prefixKey)
+            press(key: key, action: (isKeyDown ? .down : .up))
+
+            return .prevent
         }
 
         return nil
@@ -287,7 +289,7 @@ final class EventManager {
         }
     }
 
-    private func openOrHideApplication(byBundleIdentifier id: String) {
+    private func showOrHideApplication(byBundleIdentifier id: String) {
         if let app = workspace.frontmostApplication, app.bundleIdentifier == id {
             app.hide()
         } else {
