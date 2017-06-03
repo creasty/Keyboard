@@ -1,0 +1,37 @@
+language:  objective-c
+os:        osx
+osx_image: xcode8.3  # OS X 10.12 (https://docs.travis-ci.com/user/osx-ci-environment/#OS-X-Version)
+
+sudo: required
+
+branches:
+  only:
+    - master
+    - /^v[\d\.]+$/
+
+cache:
+  directories:
+    - vendor/bundle
+    - Pods
+
+script:
+  - make build
+
+before_deploy:
+  - make build
+  - make dist
+
+deploy:
+  provider: releases
+  api_key:
+    secure: mXFdjz7uE06jbOE7tOb+OD8iOQ6oRwaAu659Gk/f9g5J3EjoXL05Q7QQ4JugoPwZ1SXEh1FgtMlU/bm/W41GJgGTCzwI3jvJUAF3lxdqFDyiVnaoyEyEiv4e6qzMQaODIgfOZQLk3POZwIEmSVI0Qq8wmGmqrDd99dcpJnXWlEqKvscQ3i/zNvhwNALl/lx4ysk+ceM5+fJXFWD0gQY1eJ/dNaEGAGW53LNHM4/Dd2XxHTcI7aqBqijCQZzu4soTvFDb6d7nsA9tkOSuK0T5+CyW33FZ6dFbN4nmAAqF3LyOIOu9FyaqsRKqvfDEg0a7+BDpBvkrSi/MddwywjbwTl2jFbOTFJrIHd63ngPN0ZERZs/D6vbJF6SBAV0EiDEhcxXc6yxV/UqkX4WV2KAYShSRKWiOSRNIyGQk40UZkgoG7eeLYV9sYqiPaq3AyCYpt2kyO4emxrUwJwQ7qvOXDiIOfF5+vsrTA9tRzqWMn211ot/VdS2izHN10oMiJNtORJh7UHUIUeYVWutLdxDyMpxzjxK8ozWKJER8tHpQkKyIZEOxJ4Tmx/RwtjnTB0ZlJ4ZvrydIq/BCxUsPRlHIsuenhfUMVgHPNreALyzQfrWUQYZRWZH2q8+WmZWznb6NVN6bAbo4gdfMIg2iZfRyr7qxZzXo7miHi+VAr+NCPTQ=
+  skip_cleanup: true
+  file_glob: build/*.zip
+  on:
+    tags: true
+    repo: creasty/Keyboard
+
+notifications:
+  email: false
+  slack:
+    secure: hEYbhNFw2o9hZV1+AbJIWP/4Sg5+wT7Oz2VydBVjyqRh1njdI4ntqsmC+NUmaqr3ory3AJTf+TZmAfySPk2eR2Ifudgk+MeBypt706l3UBxV0u+gVnXVpl8Yh0XklInE6+xIt95o3+uzH41xKDhDM8Pac4cWbaDao7eQz/9BBTTexfG2gijWPOUnbVpzztoHjdvSJoLq7CBMLbBti3yYIpX0/v9ekVfKPA8EcSuwPigaZtWbQOx368nGlZDAOrp1o8aMSK+ojUtWRvDhkflr7jCu3xHpAZe/y3ZDvYPgCQQuoXibZvIIYdcvVOt0/+1sq5Srod1yhZi48/mPNOrxZC9uwG0FZdkWFZkLrWSYIBWDXvrUEJawSKxbCaYEYZz1C5J0JkVxfM08UnvGzOMBk6a5tOtL6v0E/kxHZ066f35Qo9VnXIl8MHGEA9TpvbBDheva3+Rumu2DOg0AirnznR2JZcggcnu9jvNYWLsXgG1yf+g02NWVJi9PCzXo53pUi5KUutZFvhH6JSi/Jsfi/omu6/0PeHBFknu8XwgNM+Ynp8iSZKWFhQiAWwDwcWbNpYqJOoEW5kvCfmItFmb6yVFQ2/eXs/5F64VEAg8ZGV2mOXGObJi3zfghkhLfyRZucoxSagnJtHao3qdQz0qiejtBPTTDTB+T8L1tSqFmE7M=
