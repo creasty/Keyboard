@@ -1,8 +1,7 @@
 SHELL := /bin/bash -eu -o pipefail
 
-NAME     := Keyboard
-VERSION  := 0.1.0
-OS       := sierra
+NAME := keyboard
+OS   := sierra
 
 .PHONY: build
 build:
@@ -11,6 +10,6 @@ build:
 .PHONY: dist
 dist:
 	@cd build/Release \
-		&& zip -r "$(NAME)-$(VERSION)-$(OS).zip" keyboard.app \
-		&& mv "$(NAME)-$(VERSION)-$(OS).zip" .. \
+		&& zip -r "$(NAME)-$(OS).zip" keyboard.app \
+		&& mv "$(NAME)-$(OS).zip" .. \
 		&& cd ../..
