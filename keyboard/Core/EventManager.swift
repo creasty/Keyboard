@@ -72,7 +72,7 @@ final class EventManager {
             return nil
         }
 
-        if key == superKey.hookedKey {
+        if key == superKey.prefixKey {
             guard !isARepeat else {
                 return .prevent
             }
@@ -83,10 +83,10 @@ final class EventManager {
             } else {
                 switch superKey.state {
                 case .activated:
-                    press(key: superKey.hookedKey)
+                    press(key: superKey.prefixKey)
                 case .used, .enabled:
                     if let key = superKey.cancel() {
-                        press(key: superKey.hookedKey)
+                        press(key: superKey.prefixKey)
                         press(key: key)
                     } else {
                         press(key: .command)
@@ -101,7 +101,7 @@ final class EventManager {
                 guard superKey.enable() else {
                     superKey.state = .disabled
 
-                    press(key: superKey.hookedKey)
+                    press(key: superKey.prefixKey)
                     press(key: key, action: (isKeyDown ? .down : .up))
 
                     return .prevent
