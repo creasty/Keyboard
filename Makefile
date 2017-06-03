@@ -1,7 +1,7 @@
 SHELL := /bin/bash -eu -o pipefail
 
 NAME     := Keyboard
-VERSION  := 1.0.0
+VERSION  := 0.1.0
 OS       := sierra
 
 .PHONY: build
