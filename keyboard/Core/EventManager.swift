@@ -56,6 +56,7 @@ final class EventManager {
             ?? handleSafeQuit(key: key, flags: flags, isKeyDown: isKeyDown)
             ?? handleEmacsMode(key: key, flags: flags, isKeyDown: isKeyDown)
             ?? handleEscape(key: key, flags: flags, isKeyDown: isKeyDown)
+            ?? handleWindowResizer(key: key, flags: flags, isKeyDown: isKeyDown)
             ?? .passThrough
 
         switch action {
@@ -116,12 +117,12 @@ final class EventManager {
 
     // Window/Space navigations:
     //
-    //     S+H: Move to left space
-    //     S+L: Move to right space
-    //     S+J: Switch to next application
-    //     S+K: Switch to previous application
-    //     S+N: Switch to next window
-    //     S+B: Switch to previous window
+    //     S+H   Move to left space
+    //     S+L   Move to right space
+    //     S+J   Switch to next application
+    //     S+K   Switch to previous application
+    //     S+N   Switch to next window
+    //     S+B   Switch to previous window
     //
     private func handleSuperKey(key: KeyCode, flags: NSEventModifierFlags, isKeyDown: Bool) -> Action? {
         guard superKey.isEnabled else {
@@ -179,16 +180,16 @@ final class EventManager {
 
     // Emacs mode:
     //
-    //     Ctrl-C: Escape
-    //     Ctrl-D: Forward delete
-    //     Ctrl-H: Backspace
-    //     Ctrl-J: Enter
-    //     Ctrl-P: ↑
-    //     Ctrl-N: ↓
-    //     Ctrl-B: ←
-    //     Ctrl-F: →
-    //     Ctrl-A: Beginning of line (Shift allowed)
-    //     Ctrl-E: End of line (Shift allowed)
+    //     Ctrl-C    Escape
+    //     Ctrl-D    Forward delete
+    //     Ctrl-H    Backspace
+    //     Ctrl-J    Enter
+    //     Ctrl-P    ↑
+    //     Ctrl-N    ↓
+    //     Ctrl-B    ←
+    //     Ctrl-F    →
+    //     Ctrl-A    Beginning of line (Shift allowed)
+    //     Ctrl-E    End of line (Shift allowed)
     //
     private func handleEmacsMode(key: KeyCode, flags: NSEventModifierFlags, isKeyDown: Bool) -> Action? {
         guard let bundleId = workspace.frontmostApplication?.bundleIdentifier else {
@@ -269,6 +270,56 @@ final class EventManager {
         return .passThrough
     }
 
+    // Window resizer:
+    //
+    //           Cmd-Alt-/        Full
+    //           Cmd-Alt-Left     Left
+    //           Cmd-Alt-Up       Top
+    //           Cmd-Alt-Right    Right
+    //           Cmd-Alt-Down     Bottom
+    //     Shift-Cmd-Alt-Left     Top-left
+    //     Shift-Cmd-Alt-Up       Top-right
+    //     Shift-Cmd-Alt-Right    Bottom-right
+    //     Shift-Cmd-Alt-Down     Bottom-left
+    //
+    private func handleWindowResizer(key: KeyCode, flags: NSEventModifierFlags, isKeyDown: Bool) -> Action? {
+        guard flags.match(shift: nil, option: true, command: true) else {
+            return nil
+        }
+
+        var windowSize: WindowSize?
+
+        if flags.contains(.shift) {
+            switch key {
+            case .leftArrow:  windowSize = .topLeft
+            case .upArrow:    windowSize = .topRight
+            case .rightArrow: windowSize = .bottomRight
+            case .downArrow:  windowSize = .bottomLeft
+            default: break
+            }
+        } else {
+            switch key {
+            case .slash:      windowSize = .full
+            case .leftArrow:  windowSize = .left
+            case .upArrow:    windowSize = .top
+            case .rightArrow: windowSize = .right
+            case .downArrow:  windowSize = .bottom
+            default: break
+            }
+        }
+
+        guard windowSize != nil else {
+            return nil
+        }
+
+        if let frame = windowSize?.rect() {
+            NSLog(String(describing: windowSize))
+            resizeWindow(frame: frame)
+        }
+
+        return .prevent
+    }
+
     private func press(
         key: KeyCode,
         flags: CGEventFlags = [],
@@ -287,6 +338,23 @@ final class EventManager {
             e?.flags = flags.union(noremapFlag)
             e?.post(tap: .cghidEventTap)
         }
+    }
+
+    private func resizeWindow(frame: CGRect) {
+        let source = [
+            "tell application \"System Events\" to tell (process 1 where frontmost is true)",
+            "set position of window 1 to {\(frame.origin.x), \(frame.origin.y)}",
+            "set size of window 1 to {\(frame.width), \(frame.height)}",
+            "end tell",
+        ].joined(separator: "\n")
+
+        NSLog(source)
+        guard let script = NSAppleScript(source: source) else {
+            return
+        }
+
+        var error: NSDictionary?
+        script.executeAndReturnError(&error)
     }
 
     private func showOrHideApplication(byBundleIdentifier id: String) {
