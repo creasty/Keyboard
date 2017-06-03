@@ -283,6 +283,9 @@ final class EventManager {
     //     Shift-Cmd-Alt-Down     Bottom-left
     //
     private func handleWindowResizer(key: KeyCode, flags: NSEventModifierFlags, isKeyDown: Bool) -> Action? {
+        guard isKeyDown else {
+            return nil
+        }
         guard flags.match(shift: nil, option: true, command: true) else {
             return nil
         }
@@ -313,7 +316,6 @@ final class EventManager {
         }
 
         if let frame = windowSize?.rect() {
-            NSLog(String(describing: windowSize))
             resizeWindow(frame: frame)
         }
 
@@ -348,7 +350,6 @@ final class EventManager {
             "end tell",
         ].joined(separator: "\n")
 
-        NSLog(source)
         guard let script = NSAppleScript(source: source) else {
             return
         }
