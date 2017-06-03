@@ -7,6 +7,14 @@ Minimum Karabiner-esque feature implementation in Swift 3.
 It aims at porting my own custom settings in Karabiner and its [private.xml](https://github.com/creasty/dotfiles/blob/d8b54873c6de27f1244ea10c7e290d1f248ea8ff/app/karabiner/private.xml).
 
 
+Installation
+------------
+
+```
+$ brew cask install creasty/tools/keyboard
+```
+
+
 List of hacks
 -------------
 
