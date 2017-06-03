@@ -20,8 +20,6 @@ List of hacks
 
 ### Window/space navigations
 
-> Karabiner: `__KeyOverlaidModifier__` and `__BlockUntilKeyUp__`
-
 `S` acts as "super key" that doesn't require any modifier keys.
 
 <details>
@@ -46,7 +44,7 @@ Don't mind to create new entry if missing.
 <br>
 
 | Key | Description |
-|---|---|
+|---:|:---|
 | `S+H` | Move to left space |
 | `S+L` | Move to right space |
 | `S+J` | Switch to next application |
@@ -56,10 +54,8 @@ Don't mind to create new entry if missing.
 
 ### Emacs mode
 
-> Karabiner: `option.emacsmode_*`
-
 | Key | Description | Shift allowed |
-|---|---|---|
+|---:|:---|:---|
 | `Ctrl-C` | Escape | NO |
 | `Ctrl-D` | Forward delete | NO |
 | `Ctrl-H` | Backspace | NO |
@@ -71,16 +67,26 @@ Don't mind to create new entry if missing.
 | `Ctrl-A` | Beginning of line | YES |
 | `Ctrl-E` | End of line | YES |
 
-### Fool-safe "Quit Application"
+### Window resizing/positioning
 
-> Karabiner: `remap.doublepresscommandQ`
+| Key | Description |
+|---:|:---|
+| `Cmd-Alt-/` | Full |
+| `Cmd-Alt-Left` | Left |
+| `Cmd-Alt-Up` | Top |
+| `Cmd-Alt-Right` | Right |
+| `Cmd-Alt-Down` | Bottom |
+| `Shift-Cmd-Alt-Left` | Top-left |
+| `Shift-Cmd-Alt-Up` | Top-right |
+| `Shift-Cmd-Alt-Right` | Bottom-right |
+| `Shift-Cmd-Alt-Down` | Bottom-left |
+
+### Fool-safe "Quit Application"
 
 Press `Cmd-Q` twice to quit application.
 
 `Cmd-Q Cmd-Q`
 
 ### Switch to EISUU (an input source) with Escape key
-
-> Karabiner: `__KeyToKey__`
 
 For Vim, `Ctrl-C` and `Escape` now invoke `EISUU` with it.
