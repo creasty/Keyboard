@@ -44,7 +44,7 @@ Don't mind to create new entry if missing.
 <br>
 
 | Key | Description |
-|---:|:---|
+|:---|:---|
 | `S+H` | Move to left space |
 | `S+L` | Move to right space |
 | `S+J` | Switch to next application |
@@ -55,7 +55,7 @@ Don't mind to create new entry if missing.
 ### Emacs mode
 
 | Key | Description | Shift allowed |
-|---:|:---|:---|
+|:---|:---|:---|
 | `Ctrl-C` | Escape | NO |
 | `Ctrl-D` | Forward delete | NO |
 | `Ctrl-H` | Backspace | NO |
@@ -70,7 +70,7 @@ Don't mind to create new entry if missing.
 ### Window resizing/positioning
 
 | Key | Description |
-|---:|:---|
+|:---|:---|
 | `Cmd-Alt-/` | Full |
 | `Cmd-Alt-Left` | Left |
 | `Cmd-Alt-Up` | Top |
@@ -85,8 +85,16 @@ Don't mind to create new entry if missing.
 
 Press `Cmd-Q` twice to quit application.
 
-`Cmd-Q Cmd-Q`
+| Key | Description |
+|:---|:---|
+| `Cmd-Q` | Noop |
+| `Cmd-Q Cmd-Q` | Invokes `Cmd-Q`. Quit application |
 
-### Switch to EISUU (an input source) with Escape key
+### Switch input source with Escape key
 
-For Vim, `Ctrl-C` and `Escape` now invoke `EISUU` with it.
+For Vim, leave insert mode with EISUU in order to avoid IME from capturing key strokes.
+
+| Key | Description |
+|:---|:---|
+| `Ctrl-C` | Invokes `EISUU, Escape` |
+| `Escape` | Invokes `EISUU, Escape` |
