@@ -311,19 +311,17 @@ final class EventManager {
             }
         }
 
-        guard windowSize != nil else {
-            return nil
-        }
-
-        if let frame = windowSize?.rect() {
+        if let windowSize = windowSize {
             do {
-                try resizeWindow(frame: frame)
+                try resizeWindow(windowSize: windowSize)
             } catch {
                 print(error)
             }
+
+            return .prevent
         }
 
-        return .prevent
+        return nil
     }
 
     private func press(
@@ -346,12 +344,25 @@ final class EventManager {
         }
     }
 
-    private func resizeWindow(frame: CGRect) throws {
+    private func resizeWindow(windowSize: WindowSize) throws {
         guard let app = NSWorkspace.shared.frontmostApplication?.axUIElement() else { return }
         guard let window = try app.getAttribute(AXAttributes.focusedWindow) else { return }
+        guard let frame = try window.getAttribute(AXAttributes.frame) else { return }
 
-        try window.setAttribute(AXAttributes.position, value: frame.origin)
-        try window.setAttribute(AXAttributes.size, value: frame.size)
+        guard let screen = (NSScreen.screens
+            .map { screen in (screen, screen.frame.intersection(frame)) }
+            .filter { _, intersect in !intersect.isNull }
+            .map { screen, intersect in (screen, intersect.size.width * intersect.size.height) }
+            .max { lhs, rhs in lhs.1 < rhs.1 }?
+            .0
+        ) else {
+            return
+        }
+
+        let newFrame = windowSize.rect(screenFrame: screen.frame)
+
+        try window.setAttribute(AXAttributes.position, value: newFrame.origin)
+        try window.setAttribute(AXAttributes.size, value: newFrame.size)
     }
 
     private func showOrHideApplication(byBundleIdentifier id: String) {
