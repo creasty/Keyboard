@@ -19,7 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		AE6A00D21ED6A25000A93C2E /* keyboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = keyboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AE6A00D21ED6A25000A93C2E /* Keyboard Dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Keyboard Dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE6A00D51ED6A25000A93C2E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AE6A00D71ED6A25000A93C2E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AE6A00DA1ED6A25000A93C2E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
@@ -54,7 +54,7 @@
 		AE6A00D31ED6A25000A93C2E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AE6A00D21ED6A25000A93C2E /* keyboard.app */,
+				AE6A00D21ED6A25000A93C2E /* Keyboard Dev.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -101,7 +101,7 @@
 			);
 			name = keyboard;
 			productName = keyboard;
-			productReference = AE6A00D21ED6A25000A93C2E /* keyboard.app */;
+			productReference = AE6A00D21ED6A25000A93C2E /* Keyboard Dev.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -276,8 +276,8 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = keyboard/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.creasty.keyboard;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.creasty.keyboard-dev";
+				PRODUCT_NAME = "Keyboard Dev";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -290,7 +290,7 @@
 				INFOPLIST_FILE = keyboard/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.creasty.keyboard;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Keyboard;
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
