@@ -1,6 +1,6 @@
 import Cocoa
 
-final class SuperKeyHandler: EventHandler {
+final class SuperKeyHandler: Handler {
     private let superKey: SuperKey
     private let callback: (KeyCode) -> Void
 
@@ -11,12 +11,12 @@ final class SuperKeyHandler: EventHandler {
         self.callback = callback
     }
 
-    func handle(key: KeyCode, flags: NSEvent.ModifierFlags, isKeyDown: Bool, isARepeat: Bool) -> EventHandlerAction? {
+    func handle(key: KeyCode, flags: NSEvent.ModifierFlags, isKeyDown: Bool, isARepeat: Bool) -> HandlerAction? {
         return updateState(key: key, flags: flags, isKeyDown: isKeyDown, isARepeat: isARepeat)
             ?? execute(key: key, flags: flags, isKeyDown: isKeyDown)
     }
 
-    private func updateState(key: KeyCode, flags: NSEvent.ModifierFlags, isKeyDown: Bool, isARepeat: Bool) -> EventHandlerAction? {
+    private func updateState(key: KeyCode, flags: NSEvent.ModifierFlags, isKeyDown: Bool, isARepeat: Bool) -> HandlerAction? {
         guard flags.match() else {
             superKey.state = .inactive
             return nil
@@ -64,7 +64,7 @@ final class SuperKeyHandler: EventHandler {
         return nil
     }
 
-    private func execute(key: KeyCode, flags: NSEvent.ModifierFlags, isKeyDown: Bool) -> EventHandlerAction? {
+    private func execute(key: KeyCode, flags: NSEvent.ModifierFlags, isKeyDown: Bool) -> HandlerAction? {
         guard superKey.isEnabled else {
             return nil
         }

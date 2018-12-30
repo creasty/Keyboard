@@ -9,7 +9,7 @@ import Cocoa
 //     S+N   Switch to next window
 //     S+B   Switch to previous window
 //
-final class NavigationEventHandler: EventHandler {
+final class NavigationHandler: Handler {
     private lazy var superKeyHandler: SuperKeyHandler = {
         return SuperKeyHandler(key: .s) { [weak self] (key) in
             self?.execute(key: key)
@@ -18,7 +18,7 @@ final class NavigationEventHandler: EventHandler {
 
     private let emitter = Emitter()
 
-    func handle(key: KeyCode, flags: NSEvent.ModifierFlags, isKeyDown: Bool, isARepeat: Bool) -> EventHandlerAction? {
+    func handle(key: KeyCode, flags: NSEvent.ModifierFlags, isKeyDown: Bool, isARepeat: Bool) -> HandlerAction? {
         return superKeyHandler.handle(key: key, flags: flags, isKeyDown: isKeyDown, isARepeat: isARepeat)
     }
 

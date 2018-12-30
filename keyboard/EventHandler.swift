@@ -1,10 +1,10 @@
 import Cocoa
 
-enum EventHandlerAction {
+enum HandlerAction {
     case prevent
     case passThrough
 }
 
-protocol EventHandler {
-    func handle(key: KeyCode, flags: NSEvent.ModifierFlags, isKeyDown: Bool, isARepeat: Bool) -> EventHandlerAction?
+protocol Handler {
+    func handle(key: KeyCode, flags: NSEvent.ModifierFlags, isKeyDown: Bool, isARepeat: Bool) -> HandlerAction?
 }

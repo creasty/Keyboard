@@ -78,11 +78,11 @@ private let emacsApplications: Set<String> = [
 //     Ctrl-A    Beginning of line (Shift allowed)
 //     Ctrl-E    End of line (Shift allowed)
 //
-final class EmacsEventHandler: EventHandler {
+final class EmacsHandler: Handler {
     private let workspace = NSWorkspace.shared
     private let emitter = Emitter()
 
-    func handle(key: KeyCode, flags: NSEvent.ModifierFlags, isKeyDown: Bool, isARepeat: Bool) -> EventHandlerAction? {
+    func handle(key: KeyCode, flags: NSEvent.ModifierFlags, isKeyDown: Bool, isARepeat: Bool) -> HandlerAction? {
         guard let bundleId = workspace.frontmostApplication?.bundleIdentifier else {
             return nil
         }

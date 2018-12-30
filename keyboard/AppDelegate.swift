@@ -39,10 +39,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private func setupEventManager() {
         eventManager = EventManager()
         eventManager!.handlers = [
-            NavigationEventHandler(),
-            EmacsEventHandler(),
-            EscapeEventHandler(),
-            WindowResizeEventHandler(),
+            NavigationHandler(),
+            EmacsHandler(),
+            EscapeHandler(),
+            WindowResizeHandler(),
         ]
     }
 

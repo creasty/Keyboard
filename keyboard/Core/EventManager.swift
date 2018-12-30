@@ -1,7 +1,7 @@
 import Cocoa
 
 final class EventManager {
-    var handlers: [EventHandler] = []
+    var handlers: [Handler] = []
 
     init() {
     }
@@ -23,7 +23,7 @@ final class EventManager {
 
 //        NSLog("\(String(describing: key)) \(isKeyDown ? "down" : "up")")
 
-        let finalAction: EventHandlerAction = {
+        let finalAction: HandlerAction = {
             for handler in handlers {
                 if let action = handler.handle(key: key, flags: flags, isKeyDown: isKeyDown, isARepeat: event.isARepeat) {
                     return action

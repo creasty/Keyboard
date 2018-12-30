@@ -61,10 +61,10 @@ private enum WindowSize {
 //     Shift-Cmd-Alt-Right    Bottom-right
 //     Shift-Cmd-Alt-Down     Bottom-left
 //
-final class WindowResizeEventHandler: EventHandler {
+final class WindowResizeHandler: Handler {
     private let workspace = NSWorkspace.shared
 
-    func handle(key: KeyCode, flags: NSEvent.ModifierFlags, isKeyDown: Bool, isARepeat: Bool) -> EventHandlerAction? {
+    func handle(key: KeyCode, flags: NSEvent.ModifierFlags, isKeyDown: Bool, isARepeat: Bool) -> HandlerAction? {
         guard isKeyDown else {
             return nil
         }
