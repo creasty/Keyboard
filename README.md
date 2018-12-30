@@ -7,7 +7,7 @@ Keyboard
 
 Master of keyboard is master of automation.
 
-Minimum Karabiner-esque feature implementation in Swift 3.  
+Minimum Karabiner-esque feature implementation in Swift.  
 It aims at porting my own custom settings in Karabiner and its [private.xml](https://github.com/creasty/dotfiles/blob/d8b54873c6de27f1244ea10c7e290d1f248ea8ff/app/karabiner/private.xml).
 
 
@@ -36,13 +36,11 @@ Open "System Preferences" and set the following shortcuts:
   - "Move left a space" `Ctrl-LeftArrow`
   - "Move right a space" `Ctrl-RightArrow`
 - Keyboard
-  - "Move focus to next window" `Cmd-Backtick`
-
-Don't mind to create new entry if missing.
+  - "Move focus to next window" `Cmd-F1`
 
 | 1 | 2 |
 |---|---|
-| ![](https://cloud.githubusercontent.com/assets/1695538/26527997/3df11bf8-43db-11e7-975b-6f14aeb2e4a2.png) | ![](https://cloud.githubusercontent.com/assets/1695538/26527998/3e289ec0-43db-11e7-991b-a107a7f16231.png) |
+| ![](https://user-images.githubusercontent.com/1695538/50548207-12b02800-0c8c-11e9-8dd9-527d4aed2b69.png) | ![](https://user-images.githubusercontent.com/1695538/50548209-1643af00-0c8c-11e9-9bf8-1e86ca13f4fb.png) |
 
 </details>
 <br>
@@ -85,15 +83,6 @@ Don't mind to create new entry if missing.
 | `Shift-Cmd-Alt-Right` | Bottom-right |
 | `Shift-Cmd-Alt-Down` | Bottom-left |
 
-### Fool-safe "Quit Application"
-
-Press `Cmd-Q` twice to quit application.
-
-| Key | Description |
-|:---|:---|
-| `Cmd-Q` | Noop |
-| `Cmd-Q Cmd-Q` | Invokes `Cmd-Q`. Quit application |
-
 ### Switch input source with Escape key
 
 For Vim, leave insert mode with EISUU in order to avoid IME from capturing key strokes.
@@ -102,3 +91,13 @@ For Vim, leave insert mode with EISUU in order to avoid IME from capturing key s
 |:---|:---|
 | `Ctrl-C` | Invokes `EISUU, Escape` |
 | `Escape` | Invokes `EISUU, Escape` |
+
+### Switch between apps
+
+`;` acts as "super key" that doesn't require any modifier keys.
+
+| Key | App | Bundle ID | URL |
+|:---|:---|:---|:---|
+| `;+F` | Finder | `com.apple.finder` | N/A |
+| `;+T` | iTerm 2 | `com.googlecode.iterm2` | https://www.iterm2.com |
+| `;+B` | Bear | `net.shinyfrog.bear` | https://bear.app |

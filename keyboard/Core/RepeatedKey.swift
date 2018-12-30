@@ -1,6 +1,6 @@
 import Foundation
 
-final class KeySequence {
+final class RepeatedKey {
     private let threshold: Double = 300 * 1e6
 
     private struct Record {
@@ -13,7 +13,7 @@ final class KeySequence {
         }
     }
 
-    private var records = [String:Record]()
+    private var records = [String: Record]()
 
     func count(forKey key: String) -> Int {
         guard let record = records[key] else {

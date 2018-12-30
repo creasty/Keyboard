@@ -7,29 +7,53 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AE38940621D8CB8C0097BE73 /* AXAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE38940521D8CB8C0097BE73 /* AXAttribute.swift */; };
+		AE38940821D8DF3A0097BE73 /* AXUIElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE38940721D8DF3A0097BE73 /* AXUIElement.swift */; };
+		AE38940A21D8DF9F0097BE73 /* AXError.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE38940921D8DF9F0097BE73 /* AXError.swift */; };
+		AE38940C21D8E0770097BE73 /* NSEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE38940B21D8E0770097BE73 /* NSEvent.swift */; };
+		AE38940E21D8E0940097BE73 /* DispatchTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE38940D21D8E0940097BE73 /* DispatchTime.swift */; };
+		AE38941021D8F74B0097BE73 /* Emitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE38940F21D8F74B0097BE73 /* Emitter.swift */; };
 		AE6A00D61ED6A25000A93C2E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6A00D51ED6A25000A93C2E /* AppDelegate.swift */; };
 		AE6A00D81ED6A25000A93C2E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AE6A00D71ED6A25000A93C2E /* Assets.xcassets */; };
 		AE6A00DB1ED6A25000A93C2E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE6A00D91ED6A25000A93C2E /* MainMenu.xib */; };
 		AE6A00E41ED88F3F00A93C2E /* EventManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6A00E31ED88F3F00A93C2E /* EventManager.swift */; };
 		AE6A00E61ED8962500A93C2E /* KeyCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6A00E51ED8962500A93C2E /* KeyCode.swift */; };
 		AE6A00E81ED8990E00A93C2E /* SuperKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6A00E71ED8990E00A93C2E /* SuperKey.swift */; };
-		AE825DF11ED93C1F0021C6E3 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE825DF01ED93C1F0021C6E3 /* Util.swift */; };
-		AE825DF31EDA85000021C6E3 /* KeySequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE825DF21EDA85000021C6E3 /* KeySequence.swift */; };
-		AE86A6ED1EE3160D00891173 /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE86A6EC1EE3160D00891173 /* Window.swift */; };
+		AE825DF31EDA85000021C6E3 /* RepeatedKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE825DF21EDA85000021C6E3 /* RepeatedKey.swift */; };
+		AECCF7CD21D8FA8C00B21C0A /* Handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECCF7CC21D8FA8C00B21C0A /* Handler.swift */; };
+		AECCF7CF21D8FAFC00B21C0A /* SuperKeyHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECCF7CE21D8FAFC00B21C0A /* SuperKeyHandler.swift */; };
+		AECCF7D121D8FCE800B21C0A /* NavigationEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECCF7D021D8FCE800B21C0A /* NavigationEventHandler.swift */; };
+		AECCF7D321D8FF2800B21C0A /* EmacsEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECCF7D221D8FF2800B21C0A /* EmacsEventHandler.swift */; };
+		AECCF7D521D8FFE400B21C0A /* EscapeEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECCF7D421D8FFE400B21C0A /* EscapeEventHandler.swift */; };
+		AECCF7D721D9004E00B21C0A /* WindowResizeEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECCF7D621D9004E00B21C0A /* WindowResizeEventHandler.swift */; };
+		AECCF7DB21D9072C00B21C0A /* AppComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECCF7DA21D9072C00B21C0A /* AppComponent.swift */; };
+		AECCF7DD21D90B5B00B21C0A /* AppSwitchHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECCF7DC21D90B5B00B21C0A /* AppSwitchHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		AE6A00D21ED6A25000A93C2E /* keyboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = keyboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AE38940521D8CB8C0097BE73 /* AXAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AXAttribute.swift; sourceTree = "<group>"; };
+		AE38940721D8DF3A0097BE73 /* AXUIElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AXUIElement.swift; sourceTree = "<group>"; };
+		AE38940921D8DF9F0097BE73 /* AXError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AXError.swift; sourceTree = "<group>"; };
+		AE38940B21D8E0770097BE73 /* NSEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSEvent.swift; sourceTree = "<group>"; };
+		AE38940D21D8E0940097BE73 /* DispatchTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchTime.swift; sourceTree = "<group>"; };
+		AE38940F21D8F74B0097BE73 /* Emitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emitter.swift; sourceTree = "<group>"; };
+		AE6A00D21ED6A25000A93C2E /* Keyboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Keyboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE6A00D51ED6A25000A93C2E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AE6A00D71ED6A25000A93C2E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AE6A00DA1ED6A25000A93C2E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		AE6A00DC1ED6A25000A93C2E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AE6A00E31ED88F3F00A93C2E /* EventManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EventManager.swift; path = Core/EventManager.swift; sourceTree = "<group>"; };
-		AE6A00E51ED8962500A93C2E /* KeyCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KeyCode.swift; path = Core/KeyCode.swift; sourceTree = "<group>"; };
-		AE6A00E71ED8990E00A93C2E /* SuperKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SuperKey.swift; path = Core/SuperKey.swift; sourceTree = "<group>"; };
-		AE825DF01ED93C1F0021C6E3 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Util.swift; path = Core/Util.swift; sourceTree = "<group>"; };
-		AE825DF21EDA85000021C6E3 /* KeySequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KeySequence.swift; path = Core/KeySequence.swift; sourceTree = "<group>"; };
-		AE86A6EC1EE3160D00891173 /* Window.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Window.swift; path = Core/Window.swift; sourceTree = "<group>"; };
+		AE6A00E31ED88F3F00A93C2E /* EventManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventManager.swift; sourceTree = "<group>"; };
+		AE6A00E51ED8962500A93C2E /* KeyCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyCode.swift; sourceTree = "<group>"; };
+		AE6A00E71ED8990E00A93C2E /* SuperKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuperKey.swift; sourceTree = "<group>"; };
+		AE825DF21EDA85000021C6E3 /* RepeatedKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepeatedKey.swift; sourceTree = "<group>"; };
+		AECCF7CC21D8FA8C00B21C0A /* Handler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Handler.swift; sourceTree = "<group>"; };
+		AECCF7CE21D8FAFC00B21C0A /* SuperKeyHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuperKeyHandler.swift; sourceTree = "<group>"; };
+		AECCF7D021D8FCE800B21C0A /* NavigationEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationEventHandler.swift; sourceTree = "<group>"; };
+		AECCF7D221D8FF2800B21C0A /* EmacsEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmacsEventHandler.swift; sourceTree = "<group>"; };
+		AECCF7D421D8FFE400B21C0A /* EscapeEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EscapeEventHandler.swift; sourceTree = "<group>"; };
+		AECCF7D621D9004E00B21C0A /* WindowResizeEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowResizeEventHandler.swift; sourceTree = "<group>"; };
+		AECCF7DA21D9072C00B21C0A /* AppComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppComponent.swift; sourceTree = "<group>"; };
+		AECCF7DC21D90B5B00B21C0A /* AppSwitchHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSwitchHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,18 +67,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AE38940421D8CB6D0097BE73 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				AE38940521D8CB8C0097BE73 /* AXAttribute.swift */,
+				AE38940921D8DF9F0097BE73 /* AXError.swift */,
+				AE38940721D8DF3A0097BE73 /* AXUIElement.swift */,
+				AE38940D21D8E0940097BE73 /* DispatchTime.swift */,
+				AE38940B21D8E0770097BE73 /* NSEvent.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		AE6A00C91ED6A25000A93C2E = {
 			isa = PBXGroup;
 			children = (
-				AE6A00D41ED6A25000A93C2E /* keyboard */,
 				AE6A00D31ED6A25000A93C2E /* Products */,
+				AE6A00D41ED6A25000A93C2E /* keyboard */,
 			);
 			sourceTree = "<group>";
 		};
 		AE6A00D31ED6A25000A93C2E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AE6A00D21ED6A25000A93C2E /* keyboard.app */,
+				AE6A00D21ED6A25000A93C2E /* Keyboard.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -63,10 +99,13 @@
 			isa = PBXGroup;
 			children = (
 				AE6A00E21ED88F0200A93C2E /* Core */,
+				AECCF7CB21D8FA6F00B21C0A /* EventHandlers */,
+				AE38940421D8CB6D0097BE73 /* Extensions */,
+				AECCF7DA21D9072C00B21C0A /* AppComponent.swift */,
 				AE6A00D51ED6A25000A93C2E /* AppDelegate.swift */,
 				AE6A00D71ED6A25000A93C2E /* Assets.xcassets */,
-				AE6A00D91ED6A25000A93C2E /* MainMenu.xib */,
 				AE6A00DC1ED6A25000A93C2E /* Info.plist */,
+				AE6A00D91ED6A25000A93C2E /* MainMenu.xib */,
 			);
 			path = keyboard;
 			sourceTree = "<group>";
@@ -74,14 +113,27 @@
 		AE6A00E21ED88F0200A93C2E /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				AE38940F21D8F74B0097BE73 /* Emitter.swift */,
 				AE6A00E31ED88F3F00A93C2E /* EventManager.swift */,
+				AECCF7CC21D8FA8C00B21C0A /* Handler.swift */,
 				AE6A00E51ED8962500A93C2E /* KeyCode.swift */,
+				AE825DF21EDA85000021C6E3 /* RepeatedKey.swift */,
 				AE6A00E71ED8990E00A93C2E /* SuperKey.swift */,
-				AE825DF01ED93C1F0021C6E3 /* Util.swift */,
-				AE825DF21EDA85000021C6E3 /* KeySequence.swift */,
-				AE86A6EC1EE3160D00891173 /* Window.swift */,
+				AECCF7CE21D8FAFC00B21C0A /* SuperKeyHandler.swift */,
 			);
-			name = Core;
+			path = Core;
+			sourceTree = "<group>";
+		};
+		AECCF7CB21D8FA6F00B21C0A /* EventHandlers */ = {
+			isa = PBXGroup;
+			children = (
+				AECCF7DC21D90B5B00B21C0A /* AppSwitchHandler.swift */,
+				AECCF7D221D8FF2800B21C0A /* EmacsEventHandler.swift */,
+				AECCF7D421D8FFE400B21C0A /* EscapeEventHandler.swift */,
+				AECCF7D021D8FCE800B21C0A /* NavigationEventHandler.swift */,
+				AECCF7D621D9004E00B21C0A /* WindowResizeEventHandler.swift */,
+			);
+			path = EventHandlers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -101,7 +153,7 @@
 			);
 			name = keyboard;
 			productName = keyboard;
-			productReference = AE6A00D21ED6A25000A93C2E /* keyboard.app */;
+			productReference = AE6A00D21ED6A25000A93C2E /* Keyboard.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -111,7 +163,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0820;
-				LastUpgradeCheck = 0820;
+				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = Creasty;
 				TargetAttributes = {
 					AE6A00D11ED6A25000A93C2E = {
@@ -155,13 +207,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AECCF7D121D8FCE800B21C0A /* NavigationEventHandler.swift in Sources */,
+				AECCF7D321D8FF2800B21C0A /* EmacsEventHandler.swift in Sources */,
+				AE38940C21D8E0770097BE73 /* NSEvent.swift in Sources */,
+				AECCF7CD21D8FA8C00B21C0A /* Handler.swift in Sources */,
 				AE6A00E41ED88F3F00A93C2E /* EventManager.swift in Sources */,
+				AECCF7DB21D9072C00B21C0A /* AppComponent.swift in Sources */,
+				AECCF7CF21D8FAFC00B21C0A /* SuperKeyHandler.swift in Sources */,
 				AE6A00E61ED8962500A93C2E /* KeyCode.swift in Sources */,
-				AE86A6ED1EE3160D00891173 /* Window.swift in Sources */,
-				AE825DF11ED93C1F0021C6E3 /* Util.swift in Sources */,
+				AE38940621D8CB8C0097BE73 /* AXAttribute.swift in Sources */,
 				AE6A00D61ED6A25000A93C2E /* AppDelegate.swift in Sources */,
-				AE825DF31EDA85000021C6E3 /* KeySequence.swift in Sources */,
+				AECCF7DD21D90B5B00B21C0A /* AppSwitchHandler.swift in Sources */,
+				AE38940821D8DF3A0097BE73 /* AXUIElement.swift in Sources */,
+				AE38940E21D8E0940097BE73 /* DispatchTime.swift in Sources */,
+				AE38940A21D8DF9F0097BE73 /* AXError.swift in Sources */,
+				AE825DF31EDA85000021C6E3 /* RepeatedKey.swift in Sources */,
+				AE38941021D8F74B0097BE73 /* Emitter.swift in Sources */,
+				AECCF7D521D8FFE400B21C0A /* EscapeEventHandler.swift in Sources */,
 				AE6A00E81ED8990E00A93C2E /* SuperKey.swift in Sources */,
+				AECCF7D721D9004E00B21C0A /* WindowResizeEventHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -174,6 +238,7 @@
 				AE6A00DA1ED6A25000A93C2E /* Base */,
 			);
 			name = MainMenu.xib;
+			path = .;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -188,15 +253,23 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -237,15 +310,23 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -276,9 +357,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = keyboard/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.creasty.keyboard;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.creasty.keyboard-dev";
+				PRODUCT_DISPLAY_NAME = "Keyboard Dev";
+				PRODUCT_NAME = Keyboard;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -290,8 +372,9 @@
 				INFOPLIST_FILE = keyboard/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.creasty.keyboard;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				PRODUCT_DISPLAY_NAME = Keyboard;
+				PRODUCT_NAME = Keyboard;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
