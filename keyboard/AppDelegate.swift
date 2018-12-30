@@ -8,8 +8,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }()
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        guard isProcessTrusted() else {
+            exit(1)
+        }
+
         setupStatusItem()
-        trustThisApplication()
         trapKeyEvents()
     }
 
@@ -19,14 +22,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private func setupStatusItem() {
         if let button = statusItem.button {
             button.title = "K"
-            button.action = #selector(onOpen)
         }
 
         statusItem.menu = {
             let menu = NSMenu()
-
-            menu.addItem(NSMenuItem(title: "Quit", action: #selector(onQuit), keyEquivalent: "q"))
-
+            menu.addItem(NSMenuItem(title: "Quit", action: #selector(handleQuit), keyEquivalent: "q"))
             return menu
         }()
     }
@@ -44,8 +44,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             },
             userInfo: nil
         ) else {
-            print("Failed to create event tap")
-            exit(1)
+            fatalError("Failed to create event tap")
         }
 
         let runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, 0)
@@ -54,21 +53,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         CFRunLoopRun()
     }
 
-    private func trustThisApplication() {
-        let opts = NSDictionary(
-            object: kCFBooleanTrue,
-            forKey: kAXTrustedCheckOptionPrompt.takeUnretainedValue() as NSString
-        ) as CFDictionary
+    private func isProcessTrusted() -> Bool {
+        let promptKey = kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String
+        let opts = [promptKey: true] as CFDictionary
 
-        guard AXIsProcessTrustedWithOptions(opts) else {
-            exit(1)
-        }
+        return AXIsProcessTrustedWithOptions(opts)
     }
 
-    func onQuit() {
+    @objc
+    private func handleQuit() {
         NSApplication.shared().terminate(nil)
-    }
-
-    func onOpen() {
     }
 }
