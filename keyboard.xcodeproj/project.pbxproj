@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AE38940621D8CB8C0097BE73 /* AXAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE38940521D8CB8C0097BE73 /* AXAttribute.swift */; };
+		AE38940821D8DF3A0097BE73 /* AXUIElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE38940721D8DF3A0097BE73 /* AXUIElement.swift */; };
+		AE38940A21D8DF9F0097BE73 /* AXError.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE38940921D8DF9F0097BE73 /* AXError.swift */; };
 		AE6A00D61ED6A25000A93C2E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6A00D51ED6A25000A93C2E /* AppDelegate.swift */; };
 		AE6A00D81ED6A25000A93C2E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AE6A00D71ED6A25000A93C2E /* Assets.xcassets */; };
 		AE6A00DB1ED6A25000A93C2E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE6A00D91ED6A25000A93C2E /* MainMenu.xib */; };
@@ -19,6 +22,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AE38940521D8CB8C0097BE73 /* AXAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AXAttribute.swift; sourceTree = "<group>"; };
+		AE38940721D8DF3A0097BE73 /* AXUIElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AXUIElement.swift; sourceTree = "<group>"; };
+		AE38940921D8DF9F0097BE73 /* AXError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AXError.swift; sourceTree = "<group>"; };
 		AE6A00D21ED6A25000A93C2E /* Keyboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Keyboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE6A00D51ED6A25000A93C2E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AE6A00D71ED6A25000A93C2E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -43,6 +49,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AE38940421D8CB6D0097BE73 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				AE38940521D8CB8C0097BE73 /* AXAttribute.swift */,
+				AE38940721D8DF3A0097BE73 /* AXUIElement.swift */,
+				AE38940921D8DF9F0097BE73 /* AXError.swift */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
 		AE6A00C91ED6A25000A93C2E = {
 			isa = PBXGroup;
 			children = (
@@ -62,6 +78,7 @@
 		AE6A00D41ED6A25000A93C2E /* keyboard */ = {
 			isa = PBXGroup;
 			children = (
+				AE38940421D8CB6D0097BE73 /* Library */,
 				AE6A00E21ED88F0200A93C2E /* Core */,
 				AE6A00D51ED6A25000A93C2E /* AppDelegate.swift */,
 				AE6A00D71ED6A25000A93C2E /* Assets.xcassets */,
@@ -159,7 +176,10 @@
 				AE6A00E61ED8962500A93C2E /* KeyCode.swift in Sources */,
 				AE86A6ED1EE3160D00891173 /* Window.swift in Sources */,
 				AE825DF11ED93C1F0021C6E3 /* Util.swift in Sources */,
+				AE38940621D8CB8C0097BE73 /* AXAttribute.swift in Sources */,
 				AE6A00D61ED6A25000A93C2E /* AppDelegate.swift in Sources */,
+				AE38940821D8DF3A0097BE73 /* AXUIElement.swift in Sources */,
+				AE38940A21D8DF9F0097BE73 /* AXError.swift in Sources */,
 				AE825DF31EDA85000021C6E3 /* KeySequence.swift in Sources */,
 				AE6A00E81ED8990E00A93C2E /* SuperKey.swift in Sources */,
 			);

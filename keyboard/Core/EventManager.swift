@@ -316,7 +316,11 @@ final class EventManager {
         }
 
         if let frame = windowSize?.rect() {
-            resizeWindow(frame: frame)
+            do {
+                try resizeWindow(frame: frame)
+            } catch {
+                print(error)
+            }
         }
 
         return .prevent
@@ -342,20 +346,12 @@ final class EventManager {
         }
     }
 
-    private func resizeWindow(frame: CGRect) {
-        let source = [
-            "tell application \"System Events\" to tell (process 1 where frontmost is true)",
-            "set position of window 1 to {\(frame.origin.x), \(frame.origin.y)}",
-            "set size of window 1 to {\(frame.width), \(frame.height)}",
-            "end tell",
-        ].joined(separator: "\n")
+    private func resizeWindow(frame: CGRect) throws {
+        guard let app = NSWorkspace.shared.frontmostApplication?.axUIElement() else { return }
+        guard let window = try app.getAttribute(AXAttributes.focusedWindow) else { return }
 
-        guard let script = NSAppleScript(source: source) else {
-            return
-        }
-
-        var error: NSDictionary?
-        script.executeAndReturnError(&error)
+        try window.setAttribute(AXAttributes.position, value: frame.origin)
+        try window.setAttribute(AXAttributes.size, value: frame.size)
     }
 
     private func showOrHideApplication(byBundleIdentifier id: String) {
