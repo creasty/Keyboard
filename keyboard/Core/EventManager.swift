@@ -40,17 +40,4 @@ final class EventManager {
             return Unmanaged.passRetained(cgEvent)
         }
     }
-
-//    private func showOrHideApplication(byBundleIdentifier id: String) {
-//        if let app = workspace.frontmostApplication, app.bundleIdentifier == id {
-//            app.hide()
-//        } else {
-//            workspace.launchApplication(
-//                withBundleIdentifier: id,
-//                options: [],
-//                additionalEventParamDescriptor: nil,
-//                launchIdentifier: nil
-//            )
-//        }
-//    }
 }
