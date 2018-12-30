@@ -1,12 +1,12 @@
 import Cocoa
 
-// Toggle visibility of apps:
+// Swtich between apps:
 //
 //     ;+T   Terminal
 //     ;+F   Finder
 //     ;+B   Bear
 //
-final class AppOpenHandler: Handler {
+final class AppSwitchHandler: Handler {
     private let workspace: NSWorkspace
     private let emitter: Emitter
 
@@ -27,10 +27,10 @@ final class AppOpenHandler: Handler {
 
     private func execute(key: KeyCode) {
         switch key {
-        case .t:
-            showOrHideApplication(byBundleIdentifier: "com.googlecode.iterm2")
         case .f:
             showOrHideApplication(byBundleIdentifier: "com.apple.finder")
+        case .t:
+            showOrHideApplication(byBundleIdentifier: "com.googlecode.iterm2")
         case .b:
             showOrHideApplication(byBundleIdentifier: "net.shinyfrog.bear")
         default:

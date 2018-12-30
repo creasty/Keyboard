@@ -37,9 +37,9 @@ final class NavigationHandler: Handler {
         case .l:
             emitter.emit(key: .rightArrow, flags: [.maskControl, .maskSecondaryFn])
         case .n:
-            emitter.emit(key: .backtick, flags: [.maskCommand])
+            emitter.emit(key: .f1, flags: [.maskCommand])
         case .b:
-            emitter.emit(key: .backtick, flags: [.maskCommand, .maskShift])
+            emitter.emit(key: .f1, flags: [.maskCommand, .maskShift])
         default:
             break
         }
