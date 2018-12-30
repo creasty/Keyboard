@@ -12,7 +12,7 @@ enum WindowSize {
     case bottomLeft
 
     func rect() -> CGRect? {
-        guard let screen = NSScreen.main() else {
+        guard let screen = NSScreen.main else {
             return nil
         }
 

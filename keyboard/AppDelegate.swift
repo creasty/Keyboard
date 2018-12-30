@@ -4,7 +4,7 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     private lazy var statusItem: NSStatusItem = {
-        return NSStatusBar.system().statusItem(withLength: NSSquareStatusItemLength)
+        return NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
     }()
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
@@ -62,6 +62,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     @objc
     private func handleQuit() {
-        NSApplication.shared().terminate(nil)
+        NSApplication.shared.terminate(nil)
     }
 }

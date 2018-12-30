@@ -65,7 +65,7 @@ let emacsApplications: Set<String> = [
     "org.macports.X11",
 ]
 
-extension NSEventModifierFlags {
+extension NSEvent.ModifierFlags {
     func match(
         shift: Bool? = false,
         control: Bool? = false,

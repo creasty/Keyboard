@@ -279,7 +279,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.creasty.keyboard-dev";
 				PRODUCT_DISPLAY_NAME = "Keyboard Dev";
 				PRODUCT_NAME = Keyboard;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -293,7 +293,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.creasty.keyboard;
 				PRODUCT_DISPLAY_NAME = Keyboard;
 				PRODUCT_NAME = Keyboard;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};

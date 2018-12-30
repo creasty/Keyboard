@@ -5,7 +5,7 @@ final class EventManager {
         return EventManager()
     }()
 
-    private let workspace = NSWorkspace.shared()
+    private let workspace = NSWorkspace.shared
     private let seq = KeySequence()
     private let superKey = SuperKey(key: .s)
     private let noremapFlag: CGEventFlags = .maskAlphaShift
@@ -67,7 +67,7 @@ final class EventManager {
         }
     }
 
-    private func updateSuperKeyState(key: KeyCode, flags: NSEventModifierFlags, isKeyDown: Bool, isARepeat: Bool) -> Action? {
+    private func updateSuperKeyState(key: KeyCode, flags: NSEvent.ModifierFlags, isKeyDown: Bool, isARepeat: Bool) -> Action? {
         guard flags.match() else {
             superKey.state = .inactive
             return nil
@@ -124,7 +124,7 @@ final class EventManager {
     //     S+N   Switch to next window
     //     S+B   Switch to previous window
     //
-    private func handleSuperKey(key: KeyCode, flags: NSEventModifierFlags, isKeyDown: Bool) -> Action? {
+    private func handleSuperKey(key: KeyCode, flags: NSEvent.ModifierFlags, isKeyDown: Bool) -> Action? {
         guard superKey.isEnabled else {
             return nil
         }
@@ -159,7 +159,7 @@ final class EventManager {
     }
 
     // Press Cmd-Q twice to "Quit Application"
-    private func handleSafeQuit(key: KeyCode, flags: NSEventModifierFlags, isKeyDown: Bool) -> Action? {
+    private func handleSafeQuit(key: KeyCode, flags: NSEvent.ModifierFlags, isKeyDown: Bool) -> Action? {
         guard isKeyDown else {
             return nil
         }
@@ -191,7 +191,7 @@ final class EventManager {
     //     Ctrl-A    Beginning of line (Shift allowed)
     //     Ctrl-E    End of line (Shift allowed)
     //
-    private func handleEmacsMode(key: KeyCode, flags: NSEventModifierFlags, isKeyDown: Bool) -> Action? {
+    private func handleEmacsMode(key: KeyCode, flags: NSEvent.ModifierFlags, isKeyDown: Bool) -> Action? {
         guard let bundleId = workspace.frontmostApplication?.bundleIdentifier else {
             return nil
         }
@@ -254,7 +254,7 @@ final class EventManager {
     }
 
     // Switch to EISUU with Escape key
-    private func handleEscape(key: KeyCode, flags: NSEventModifierFlags, isKeyDown: Bool) -> Action? {
+    private func handleEscape(key: KeyCode, flags: NSEvent.ModifierFlags, isKeyDown: Bool) -> Action? {
         guard isKeyDown else {
             return nil
         }
@@ -282,7 +282,7 @@ final class EventManager {
     //     Shift-Cmd-Alt-Right    Bottom-right
     //     Shift-Cmd-Alt-Down     Bottom-left
     //
-    private func handleWindowResizer(key: KeyCode, flags: NSEventModifierFlags, isKeyDown: Bool) -> Action? {
+    private func handleWindowResizer(key: KeyCode, flags: NSEvent.ModifierFlags, isKeyDown: Bool) -> Action? {
         guard isKeyDown else {
             return nil
         }
