@@ -22,6 +22,12 @@
 		AE825DF11ED93C1F0021C6E3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE825DF01ED93C1F0021C6E3 /* Constants.swift */; };
 		AE825DF31EDA85000021C6E3 /* KeySequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE825DF21EDA85000021C6E3 /* KeySequence.swift */; };
 		AE86A6ED1EE3160D00891173 /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE86A6EC1EE3160D00891173 /* Window.swift */; };
+		AECCF7CD21D8FA8C00B21C0A /* EventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECCF7CC21D8FA8C00B21C0A /* EventHandler.swift */; };
+		AECCF7CF21D8FAFC00B21C0A /* SuperKeyHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECCF7CE21D8FAFC00B21C0A /* SuperKeyHandler.swift */; };
+		AECCF7D121D8FCE800B21C0A /* NavigationEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECCF7D021D8FCE800B21C0A /* NavigationEventHandler.swift */; };
+		AECCF7D321D8FF2800B21C0A /* EmacsEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECCF7D221D8FF2800B21C0A /* EmacsEventHandler.swift */; };
+		AECCF7D521D8FFE400B21C0A /* EscapeEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECCF7D421D8FFE400B21C0A /* EscapeEventHandler.swift */; };
+		AECCF7D721D9004E00B21C0A /* WindowResizeEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECCF7D621D9004E00B21C0A /* WindowResizeEventHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +48,12 @@
 		AE825DF01ED93C1F0021C6E3 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = Core/Constants.swift; sourceTree = "<group>"; };
 		AE825DF21EDA85000021C6E3 /* KeySequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KeySequence.swift; path = Core/KeySequence.swift; sourceTree = "<group>"; };
 		AE86A6EC1EE3160D00891173 /* Window.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Window.swift; path = Core/Window.swift; sourceTree = "<group>"; };
+		AECCF7CC21D8FA8C00B21C0A /* EventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventHandler.swift; sourceTree = "<group>"; };
+		AECCF7CE21D8FAFC00B21C0A /* SuperKeyHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuperKeyHandler.swift; sourceTree = "<group>"; };
+		AECCF7D021D8FCE800B21C0A /* NavigationEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationEventHandler.swift; sourceTree = "<group>"; };
+		AECCF7D221D8FF2800B21C0A /* EmacsEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmacsEventHandler.swift; sourceTree = "<group>"; };
+		AECCF7D421D8FFE400B21C0A /* EscapeEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EscapeEventHandler.swift; sourceTree = "<group>"; };
+		AECCF7D621D9004E00B21C0A /* WindowResizeEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowResizeEventHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +98,7 @@
 		AE6A00D41ED6A25000A93C2E /* keyboard */ = {
 			isa = PBXGroup;
 			children = (
+				AECCF7CB21D8FA6F00B21C0A /* EventHandlers */,
 				AE38940421D8CB6D0097BE73 /* Extensions */,
 				AE6A00E21ED88F0200A93C2E /* Core */,
 				AE6A00D51ED6A25000A93C2E /* AppDelegate.swift */,
@@ -102,12 +115,25 @@
 				AE6A00E31ED88F3F00A93C2E /* EventManager.swift */,
 				AE6A00E51ED8962500A93C2E /* KeyCode.swift */,
 				AE6A00E71ED8990E00A93C2E /* SuperKey.swift */,
+				AECCF7CE21D8FAFC00B21C0A /* SuperKeyHandler.swift */,
 				AE825DF01ED93C1F0021C6E3 /* Constants.swift */,
 				AE825DF21EDA85000021C6E3 /* KeySequence.swift */,
 				AE86A6EC1EE3160D00891173 /* Window.swift */,
 				AE38940F21D8F74B0097BE73 /* Emitter.swift */,
+				AECCF7CC21D8FA8C00B21C0A /* EventHandler.swift */,
 			);
 			name = Core;
+			sourceTree = "<group>";
+		};
+		AECCF7CB21D8FA6F00B21C0A /* EventHandlers */ = {
+			isa = PBXGroup;
+			children = (
+				AECCF7D021D8FCE800B21C0A /* NavigationEventHandler.swift */,
+				AECCF7D221D8FF2800B21C0A /* EmacsEventHandler.swift */,
+				AECCF7D421D8FFE400B21C0A /* EscapeEventHandler.swift */,
+				AECCF7D621D9004E00B21C0A /* WindowResizeEventHandler.swift */,
+			);
+			path = EventHandlers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -181,8 +207,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AECCF7D121D8FCE800B21C0A /* NavigationEventHandler.swift in Sources */,
+				AECCF7D321D8FF2800B21C0A /* EmacsEventHandler.swift in Sources */,
 				AE38940C21D8E0770097BE73 /* NSEvent.swift in Sources */,
+				AECCF7CD21D8FA8C00B21C0A /* EventHandler.swift in Sources */,
 				AE6A00E41ED88F3F00A93C2E /* EventManager.swift in Sources */,
+				AECCF7CF21D8FAFC00B21C0A /* SuperKeyHandler.swift in Sources */,
 				AE6A00E61ED8962500A93C2E /* KeyCode.swift in Sources */,
 				AE86A6ED1EE3160D00891173 /* Window.swift in Sources */,
 				AE825DF11ED93C1F0021C6E3 /* Constants.swift in Sources */,
@@ -193,7 +223,9 @@
 				AE38940A21D8DF9F0097BE73 /* AXError.swift in Sources */,
 				AE825DF31EDA85000021C6E3 /* KeySequence.swift in Sources */,
 				AE38941021D8F74B0097BE73 /* Emitter.swift in Sources */,
+				AECCF7D521D8FFE400B21C0A /* EscapeEventHandler.swift in Sources */,
 				AE6A00E81ED8990E00A93C2E /* SuperKey.swift in Sources */,
+				AECCF7D721D9004E00B21C0A /* WindowResizeEventHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

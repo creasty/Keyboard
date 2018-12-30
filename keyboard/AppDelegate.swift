@@ -1,8 +1,10 @@
 import Cocoa
 
+// Needs to be globally accesible
+var eventManager: EventManager?
+
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
-
     private lazy var statusItem: NSStatusItem = {
         return NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
     }()
@@ -13,6 +15,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
 
         setupStatusItem()
+        setupEventManager()
         trapKeyEvents()
     }
 
@@ -33,6 +36,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }()
     }
 
+    private func setupEventManager() {
+        eventManager = EventManager()
+        eventManager!.handlers = [
+            NavigationEventHandler(),
+            EmacsEventHandler(),
+            EscapeEventHandler(),
+            WindowResizeEventHandler(),
+        ]
+    }
+
     private func trapKeyEvents() {
         let eventMask = (1 << CGEventType.keyDown.rawValue) | (1 << CGEventType.keyUp.rawValue)
 
@@ -42,7 +55,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             options: .defaultTap,
             eventsOfInterest: CGEventMask(eventMask),
             callback: { (_, _, event, _) -> Unmanaged<CGEvent>? in
-                return EventManager.shared.handle(cgEvent: event)
+                return eventManager!.handle(cgEvent: event)
             },
             userInfo: nil
         ) else {
