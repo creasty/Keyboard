@@ -1,9 +1,7 @@
 import Cocoa
 
 final class EventManager {
-    static let shared: EventManager = {
-        return EventManager()
-    }()
+    static let shared = EventManager()
 
     private let workspace = NSWorkspace.shared
     private let seq = KeySequence()
@@ -345,7 +343,7 @@ final class EventManager {
     }
 
     private func resizeWindow(windowSize: WindowSize) throws {
-        guard let app = NSWorkspace.shared.frontmostApplication?.axUIElement() else { return }
+        guard let app = workspace.frontmostApplication?.axUIElement() else { return }
         guard let window = try app.getAttribute(AXAttributes.focusedWindow) else { return }
         guard let frame = try window.getAttribute(AXAttributes.frame) else { return }
 
