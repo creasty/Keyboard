@@ -99,5 +99,6 @@ For Vim, leave insert mode with EISUU in order to avoid IME from capturing key s
 | Key | App | Bundle ID | URL |
 |:---|:---|:---|:---|
 | `;+F` | Finder | `com.apple.finder` | N/A |
-| `;+T` | iTerm 2 | `com.googlecode.iterm2` | https://www.iterm2.com |
+| `;+M` | iTerm 2 | `com.googlecode.iterm2` | https://www.iterm2.com |
+| `;+T` | Things | `com.culturedcode.ThingsMac` | https://culturedcode.com/things |
 | `;+B` | Bear | `net.shinyfrog.bear` | https://bear.app |

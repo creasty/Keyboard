@@ -2,8 +2,9 @@ import Cocoa
 
 // Swtich between apps:
 //
-//     ;+T   Terminal
 //     ;+F   Finder
+//     ;+M   Terminal
+//     ;+T   Things
 //     ;+B   Bear
 //
 final class AppSwitchHandler: Handler {
@@ -29,8 +30,10 @@ final class AppSwitchHandler: Handler {
         switch key {
         case .f:
             showOrHideApplication(byBundleIdentifier: "com.apple.finder")
-        case .t:
+        case .m:
             showOrHideApplication(byBundleIdentifier: "com.googlecode.iterm2")
+        case .t:
+            showOrHideApplication(byBundleIdentifier: "com.culturedcode.ThingsMac")
         case .b:
             showOrHideApplication(byBundleIdentifier: "net.shinyfrog.bear")
         default:
