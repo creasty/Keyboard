@@ -9,6 +9,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
     }()
 
+    private let appComponent = AppComponent()
+
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         guard isProcessTrusted() else {
             exit(1)
@@ -37,13 +39,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private func setupEventManager() {
-        eventManager = EventManager()
-        eventManager!.handlers = [
-            NavigationHandler(),
-            EmacsHandler(),
-            EscapeHandler(),
-            WindowResizeHandler(),
-        ]
+        eventManager = appComponent.eventManager()
     }
 
     private func trapKeyEvents() {

@@ -10,13 +10,17 @@ import Cocoa
 //     S+B   Switch to previous window
 //
 final class NavigationHandler: Handler {
+    private let emitter: Emitter
+
+    init(emitter: Emitter) {
+        self.emitter = emitter
+    }
+
     private lazy var superKeyHandler: SuperKeyHandler = {
-        return SuperKeyHandler(key: .s) { [weak self] (key) in
+        return SuperKeyHandler(key: .s, emitter: emitter) { [weak self] (key) in
             self?.execute(key: key)
         }
     }()
-
-    private let emitter = Emitter()
 
     func handle(key: KeyCode, flags: NSEvent.ModifierFlags, isKeyDown: Bool, isARepeat: Bool) -> HandlerAction? {
         return superKeyHandler.handle(key: key, flags: flags, isKeyDown: isKeyDown, isARepeat: isARepeat)

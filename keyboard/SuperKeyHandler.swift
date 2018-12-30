@@ -3,12 +3,12 @@ import Cocoa
 final class SuperKeyHandler: Handler {
     private let superKey: SuperKey
     private let callback: (KeyCode) -> Void
+    private let emitter: Emitter
 
-    private let emitter = Emitter()
-
-    init(key: KeyCode, callback: @escaping (KeyCode) -> Void) {
+    init(key: KeyCode, emitter: Emitter, callback: @escaping (KeyCode) -> Void) {
         superKey = SuperKey(key: key)
         self.callback = callback
+        self.emitter = emitter
     }
 
     func handle(key: KeyCode, flags: NSEvent.ModifierFlags, isKeyDown: Bool, isARepeat: Bool) -> HandlerAction? {

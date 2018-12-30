@@ -2,7 +2,11 @@ import Cocoa
 
 // Switch to EISUU with Escape key
 final class EscapeHandler: Handler {
-    private let emitter = Emitter()
+    private let emitter: Emitter
+
+    init(emitter: Emitter) {
+        self.emitter = emitter
+    }
 
     func handle(key: KeyCode, flags: NSEvent.ModifierFlags, isKeyDown: Bool, isARepeat: Bool) -> HandlerAction? {
         guard isKeyDown else {

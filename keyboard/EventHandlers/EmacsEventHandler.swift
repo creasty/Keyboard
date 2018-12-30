@@ -79,8 +79,13 @@ private let emacsApplications: Set<String> = [
 //     Ctrl-E    End of line (Shift allowed)
 //
 final class EmacsHandler: Handler {
-    private let workspace = NSWorkspace.shared
-    private let emitter = Emitter()
+    private let workspace: NSWorkspace
+    private let emitter: Emitter
+
+    init(workspace: NSWorkspace, emitter: Emitter) {
+        self.workspace = workspace
+        self.emitter = emitter
+    }
 
     func handle(key: KeyCode, flags: NSEvent.ModifierFlags, isKeyDown: Bool, isARepeat: Bool) -> HandlerAction? {
         guard let bundleId = workspace.frontmostApplication?.bundleIdentifier else {
