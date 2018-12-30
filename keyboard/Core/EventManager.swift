@@ -6,35 +6,19 @@ final class EventManager {
     private let workspace = NSWorkspace.shared
     private let seq = KeySequence()
     private let superKey = SuperKey(key: .s)
-    private let noremapFlag: CGEventFlags = .maskAlphaShift
+    private let emitter = Emitter()
 
     enum Action {
         case prevent
         case passThrough
-    }
-    enum KeyPressAction {
-        case down
-        case up
-        case both
-
-        func keyDowns() -> [Bool] {
-            switch self {
-            case .down:
-                return [true]
-            case .up:
-                return [false]
-            case .both:
-                return [true, false]
-            }
-        }
     }
 
     private init() {
     }
 
     func handle(cgEvent: CGEvent) -> Unmanaged<CGEvent>? {
-        guard !cgEvent.flags.contains(noremapFlag) else {
-            cgEvent.flags.remove(noremapFlag)
+        guard !cgEvent.flags.contains(Emitter.Const.noremapFlag) else {
+            cgEvent.flags.remove(Emitter.Const.noremapFlag)
             return Unmanaged.passRetained(cgEvent)
         }
         guard let event = NSEvent(cgEvent: cgEvent) else {
@@ -82,13 +66,13 @@ final class EventManager {
 
             switch superKey.state {
             case .activated:
-                press(key: superKey.prefixKey)
+                emitter.emit(key: superKey.prefixKey)
             case .used, .enabled:
                 if let key = superKey.cancel() {
-                    press(key: superKey.prefixKey)
-                    press(key: key)
+                    emitter.emit(key: superKey.prefixKey)
+                    emitter.emit(key: key)
                 } else {
-                    press(key: .command)
+                    emitter.emit(key: .command)
                 }
             default: break
             }
@@ -104,8 +88,8 @@ final class EventManager {
         guard superKey.enable() else {
             superKey.state = .disabled
 
-            press(key: superKey.prefixKey)
-            press(key: key, action: (isKeyDown ? .down : .up))
+            emitter.emit(key: superKey.prefixKey)
+            emitter.emit(key: key, action: (isKeyDown ? .down : .up))
 
             return .prevent
         }
@@ -137,17 +121,17 @@ final class EventManager {
 
             switch key {
             case .h:
-                self?.press(key: .leftArrow, flags: [.maskControl, .maskSecondaryFn])
+                self?.emitter.emit(key: .leftArrow, flags: [.maskControl, .maskSecondaryFn])
             case .j:
-                self?.press(key: .tab, flags: [.maskCommand])
+                self?.emitter.emit(key: .tab, flags: [.maskCommand])
             case .k:
-                self?.press(key: .tab, flags: [.maskCommand, .maskShift])
+                self?.emitter.emit(key: .tab, flags: [.maskCommand, .maskShift])
             case .l:
-                self?.press(key: .rightArrow, flags: [.maskControl, .maskSecondaryFn])
+                self?.emitter.emit(key: .rightArrow, flags: [.maskControl, .maskSecondaryFn])
             case .n:
-                self?.press(key: .backtick, flags: [.maskCommand])
+                self?.emitter.emit(key: .backtick, flags: [.maskCommand])
             case .b:
-                self?.press(key: .backtick, flags: [.maskCommand, .maskShift])
+                self?.emitter.emit(key: .backtick, flags: [.maskCommand, .maskShift])
             default:
                 break
             }
@@ -197,9 +181,9 @@ final class EventManager {
         if !terminalApplications.contains(bundleId) {
             if key == .c && flags.match(control: true) {
                 if isKeyDown {
-                    press(key: .jisEisu)
+                    emitter.emit(key: .jisEisu)
                 }
-                press(key: .escape, action: (isKeyDown ? .down : .up))
+                emitter.emit(key: .escape, action: (isKeyDown ? .down : .up))
                 return .prevent
             }
         }
@@ -243,7 +227,7 @@ final class EventManager {
                     ? remap.1.union(.maskShift)
                     : remap.1
 
-                press(key: remap.0, flags: remapFlags, action: (isKeyDown ? .down : .up))
+                emitter.emit(key: remap.0, flags: remapFlags, action: (isKeyDown ? .down : .up))
                 return .prevent
             }
         }
@@ -263,7 +247,7 @@ final class EventManager {
             return nil
         }
 
-        press(key: .jisEisu)
+        emitter.emit(key: .jisEisu)
 
         return .passThrough
     }
@@ -320,26 +304,6 @@ final class EventManager {
         }
 
         return nil
-    }
-
-    private func press(
-        key: KeyCode,
-        flags: CGEventFlags = [],
-        action: KeyPressAction = .both
-    ) {
-        action.keyDowns().forEach {
-            if !$0 && action == .both {
-                usleep(1000)
-            }
-
-            let e = CGEvent(
-                keyboardEventSource: nil,
-                virtualKey: key.rawValue,
-                keyDown: $0
-            )
-            e?.flags = flags.union(noremapFlag)
-            e?.post(tap: .cghidEventTap)
-        }
     }
 
     private func resizeWindow(windowSize: WindowSize) throws {
