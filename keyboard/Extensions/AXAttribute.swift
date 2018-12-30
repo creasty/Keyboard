@@ -10,8 +10,8 @@ struct AXAttribute<T> {
 
 struct AXAttributes {
     static let frame = AXAttribute<CGRect>("AXFrame")
-    static let position = AXAttribute<CGPoint>("AXPosition")
-    static let size = AXAttribute<CGSize>("AXSize")
-    static let windows = AXAttribute<[AXUIElement]>("AXWindows")
-    static let focusedWindow = AXAttribute<AXUIElement>("AXFocusedWindow")
+    static let position = AXAttribute<CGPoint>(kAXPositionAttribute)
+    static let size = AXAttribute<CGSize>(kAXSizeAttribute)
+    static let windows = AXAttribute<[AXUIElement]>(kAXWindowsAttribute)
+    static let focusedWindow = AXAttribute<AXUIElement>(kAXFocusedWindowAttribute)
 }

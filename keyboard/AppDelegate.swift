@@ -26,6 +26,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         statusItem.menu = {
             let menu = NSMenu()
+            menu.addItem(NSMenuItem(title: "Creasty's Keyboard", action: nil, keyEquivalent: ""))
+            menu.addItem(NSMenuItem.separator())
             menu.addItem(NSMenuItem(title: "Quit", action: #selector(handleQuit), keyEquivalent: "q"))
             return menu
         }()
