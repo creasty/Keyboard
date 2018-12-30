@@ -25,8 +25,8 @@ final class AppComponent {
         return WindowResizeHandler(workspace: nsWorkspace())
     }
 
-    func appOpenHandler() -> AppOpenHandler {
-        return AppOpenHandler(workspace: nsWorkspace(), emitter: emitter())
+    func appSwitchHandler() -> AppSwitchHandler {
+        return AppSwitchHandler(workspace: nsWorkspace(), emitter: emitter())
     }
 
     func eventManager() -> EventManager {
@@ -36,7 +36,7 @@ final class AppComponent {
             emacsHandler(),
             escapeHandler(),
             windowResizeHandler(),
-            appOpenHandler(),
+            appSwitchHandler(),
         ]
         return eventManager
     }

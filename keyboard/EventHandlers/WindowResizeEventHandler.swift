@@ -121,7 +121,7 @@ final class WindowResizeHandler: Handler {
             .map { screen, intersect in (screen, intersect.size.width * intersect.size.height) }
             .max { lhs, rhs in lhs.1 < rhs.1 }?
             .0
-            ) else {
+        ) else {
                 return
         }
 
