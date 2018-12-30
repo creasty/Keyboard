@@ -19,8 +19,8 @@
 		AE6A00E41ED88F3F00A93C2E /* EventManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6A00E31ED88F3F00A93C2E /* EventManager.swift */; };
 		AE6A00E61ED8962500A93C2E /* KeyCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6A00E51ED8962500A93C2E /* KeyCode.swift */; };
 		AE6A00E81ED8990E00A93C2E /* SuperKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6A00E71ED8990E00A93C2E /* SuperKey.swift */; };
-		AE825DF31EDA85000021C6E3 /* KeySequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE825DF21EDA85000021C6E3 /* KeySequence.swift */; };
-		AECCF7CD21D8FA8C00B21C0A /* EventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECCF7CC21D8FA8C00B21C0A /* EventHandler.swift */; };
+		AE825DF31EDA85000021C6E3 /* RepeatedKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE825DF21EDA85000021C6E3 /* RepeatedKey.swift */; };
+		AECCF7CD21D8FA8C00B21C0A /* Handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECCF7CC21D8FA8C00B21C0A /* Handler.swift */; };
 		AECCF7CF21D8FAFC00B21C0A /* SuperKeyHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECCF7CE21D8FAFC00B21C0A /* SuperKeyHandler.swift */; };
 		AECCF7D121D8FCE800B21C0A /* NavigationEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECCF7D021D8FCE800B21C0A /* NavigationEventHandler.swift */; };
 		AECCF7D321D8FF2800B21C0A /* EmacsEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECCF7D221D8FF2800B21C0A /* EmacsEventHandler.swift */; };
@@ -42,11 +42,11 @@
 		AE6A00D71ED6A25000A93C2E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AE6A00DA1ED6A25000A93C2E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		AE6A00DC1ED6A25000A93C2E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AE6A00E31ED88F3F00A93C2E /* EventManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EventManager.swift; path = EventManager.swift; sourceTree = "<group>"; };
-		AE6A00E51ED8962500A93C2E /* KeyCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KeyCode.swift; path = KeyCode.swift; sourceTree = "<group>"; };
-		AE6A00E71ED8990E00A93C2E /* SuperKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SuperKey.swift; path = SuperKey.swift; sourceTree = "<group>"; };
-		AE825DF21EDA85000021C6E3 /* KeySequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KeySequence.swift; path = KeySequence.swift; sourceTree = "<group>"; };
-		AECCF7CC21D8FA8C00B21C0A /* EventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventHandler.swift; sourceTree = "<group>"; };
+		AE6A00E31ED88F3F00A93C2E /* EventManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventManager.swift; sourceTree = "<group>"; };
+		AE6A00E51ED8962500A93C2E /* KeyCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyCode.swift; sourceTree = "<group>"; };
+		AE6A00E71ED8990E00A93C2E /* SuperKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuperKey.swift; sourceTree = "<group>"; };
+		AE825DF21EDA85000021C6E3 /* RepeatedKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepeatedKey.swift; sourceTree = "<group>"; };
+		AECCF7CC21D8FA8C00B21C0A /* Handler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Handler.swift; sourceTree = "<group>"; };
 		AECCF7CE21D8FAFC00B21C0A /* SuperKeyHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuperKeyHandler.swift; sourceTree = "<group>"; };
 		AECCF7D021D8FCE800B21C0A /* NavigationEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationEventHandler.swift; sourceTree = "<group>"; };
 		AECCF7D221D8FF2800B21C0A /* EmacsEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmacsEventHandler.swift; sourceTree = "<group>"; };
@@ -114,14 +114,13 @@
 			isa = PBXGroup;
 			children = (
 				AE38940F21D8F74B0097BE73 /* Emitter.swift */,
-				AECCF7CC21D8FA8C00B21C0A /* EventHandler.swift */,
 				AE6A00E31ED88F3F00A93C2E /* EventManager.swift */,
+				AECCF7CC21D8FA8C00B21C0A /* Handler.swift */,
 				AE6A00E51ED8962500A93C2E /* KeyCode.swift */,
-				AE825DF21EDA85000021C6E3 /* KeySequence.swift */,
+				AE825DF21EDA85000021C6E3 /* RepeatedKey.swift */,
 				AE6A00E71ED8990E00A93C2E /* SuperKey.swift */,
 				AECCF7CE21D8FAFC00B21C0A /* SuperKeyHandler.swift */,
 			);
-			name = Core;
 			path = Core;
 			sourceTree = "<group>";
 		};
@@ -211,7 +210,7 @@
 				AECCF7D121D8FCE800B21C0A /* NavigationEventHandler.swift in Sources */,
 				AECCF7D321D8FF2800B21C0A /* EmacsEventHandler.swift in Sources */,
 				AE38940C21D8E0770097BE73 /* NSEvent.swift in Sources */,
-				AECCF7CD21D8FA8C00B21C0A /* EventHandler.swift in Sources */,
+				AECCF7CD21D8FA8C00B21C0A /* Handler.swift in Sources */,
 				AE6A00E41ED88F3F00A93C2E /* EventManager.swift in Sources */,
 				AECCF7DB21D9072C00B21C0A /* AppComponent.swift in Sources */,
 				AECCF7CF21D8FAFC00B21C0A /* SuperKeyHandler.swift in Sources */,
@@ -222,7 +221,7 @@
 				AE38940821D8DF3A0097BE73 /* AXUIElement.swift in Sources */,
 				AE38940E21D8E0940097BE73 /* DispatchTime.swift in Sources */,
 				AE38940A21D8DF9F0097BE73 /* AXError.swift in Sources */,
-				AE825DF31EDA85000021C6E3 /* KeySequence.swift in Sources */,
+				AE825DF31EDA85000021C6E3 /* RepeatedKey.swift in Sources */,
 				AE38941021D8F74B0097BE73 /* Emitter.swift in Sources */,
 				AECCF7D521D8FFE400B21C0A /* EscapeEventHandler.swift in Sources */,
 				AE6A00E81ED8990E00A93C2E /* SuperKey.swift in Sources */,

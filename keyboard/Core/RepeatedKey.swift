@@ -1,6 +1,6 @@
 import Foundation
 
-final class KeySequence {
+final class RepeatedKey {
     private let threshold: Double = 300 * 1e6
 
     private struct Record {
