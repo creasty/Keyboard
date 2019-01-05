@@ -2,9 +2,9 @@ import Cocoa
 
 // Switch to EISUU with Escape key
 final class EscapeHandler: Handler {
-    private let emitter: Emitter
+    private let emitter: EmitterType
 
-    init(emitter: Emitter) {
+    init(emitter: EmitterType) {
         self.emitter = emitter
     }
 

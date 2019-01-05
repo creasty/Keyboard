@@ -10,9 +10,9 @@ import Cocoa
 //     S+B   Switch to previous window
 //
 final class NavigationHandler: Handler {
-    private let emitter: Emitter
+    private let emitter: EmitterType
 
-    init(emitter: Emitter) {
+    init(emitter: EmitterType) {
         self.emitter = emitter
     }
 

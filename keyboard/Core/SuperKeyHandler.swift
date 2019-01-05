@@ -3,9 +3,9 @@ import Cocoa
 final class SuperKeyHandler: Handler {
     private let superKey: SuperKey
     private let callback: (KeyCode) -> Void
-    private let emitter: Emitter
+    private let emitter: EmitterType
 
-    init(key: KeyCode, emitter: Emitter, callback: @escaping (KeyCode) -> Void) {
+    init(key: KeyCode, emitter: EmitterType, callback: @escaping (KeyCode) -> Void) {
         superKey = SuperKey(key: key)
         self.callback = callback
         self.emitter = emitter

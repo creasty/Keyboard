@@ -9,7 +9,7 @@ import Cocoa
 //
 final class AppSwitchHandler: Handler {
     private let workspace: NSWorkspace
-    private let emitter: Emitter
+    private let emitter: EmitterType
 
     private lazy var superKeyHandler: SuperKeyHandler = {
         return SuperKeyHandler(key: .semicolon, emitter: emitter) { [weak self] (key) in
@@ -17,7 +17,7 @@ final class AppSwitchHandler: Handler {
         }
     }()
 
-    init(workspace: NSWorkspace, emitter: Emitter) {
+    init(workspace: NSWorkspace, emitter: EmitterType) {
         self.workspace = workspace
         self.emitter = emitter
     }

@@ -1,7 +1,7 @@
 import Cocoa
 
 // Needs to be globally accesible
-var eventManager: EventManager?
+var eventManager: EventManagerType?
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {

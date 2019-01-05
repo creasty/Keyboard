@@ -1,9 +1,18 @@
 import Cocoa
 
-final class EventManager {
-    var handlers: [Handler] = []
+protocol EventManagerType {
+    func register(_ handler: Handler)
+    func handle(cgEvent: CGEvent) -> Unmanaged<CGEvent>?
+}
+
+final class EventManager: EventManagerType {
+    private var handlers: [Handler] = []
 
     init() {
+    }
+
+    func register(_ handler: Handler) {
+        handlers.append(handler)
     }
 
     func handle(cgEvent: CGEvent) -> Unmanaged<CGEvent>? {

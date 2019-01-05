@@ -80,9 +80,9 @@ private let emacsApplications: Set<String> = [
 //
 final class EmacsHandler: Handler {
     private let workspace: NSWorkspace
-    private let emitter: Emitter
+    private let emitter: EmitterType
 
-    init(workspace: NSWorkspace, emitter: Emitter) {
+    init(workspace: NSWorkspace, emitter: EmitterType) {
         self.workspace = workspace
         self.emitter = emitter
     }
