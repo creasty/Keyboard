@@ -6,7 +6,7 @@ extension NSEvent.ModifierFlags {
         control: Bool? = false,
         option: Bool? = false,
         command: Bool? = false
-        ) -> Bool {
+    ) -> Bool {
         if let shift = shift, contains(.shift) != shift {
             return false
         }
