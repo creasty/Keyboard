@@ -71,14 +71,13 @@ class SuperKeyHandler: Handler {
         }
 
         superKey.perform(key: key, isKeyDown: isKeyDown) { [weak self] (keys) in
-            print(keys)
-            self?.execute(key: key)
+            self?.execute(keys: keys)
         }
 
         return .prevent
     }
 
-    func execute(key: KeyCode) {
+    func execute(keys: Set<KeyCode>) {
         fatalError("Not implemented")
     }
 }

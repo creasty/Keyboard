@@ -17,15 +17,15 @@ final class AppSwitchHandler: SuperKeyHandler {
         super.init(key: .semicolon, emitter: emitter)
     }
 
-    override func execute(key: KeyCode) {
-        switch key {
-        case .f:
+    override func execute(keys: Set<KeyCode>) {
+        switch keys {
+        case [.f]:
             showOrHideApplication(byBundleIdentifier: "com.apple.finder")
-        case .m:
+        case [.m]:
             showOrHideApplication(byBundleIdentifier: "com.googlecode.iterm2")
-        case .t:
+        case [.t]:
             showOrHideApplication(byBundleIdentifier: "com.culturedcode.ThingsMac")
-        case .b:
+        case [.b]:
             showOrHideApplication(byBundleIdentifier: "net.shinyfrog.bear")
         default:
             break
