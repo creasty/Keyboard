@@ -15,8 +15,7 @@ final class SuperKey {
     private let dispatchDelay: Int = 150 // ms
 
     private var activatedAt: Double = 0
-    private var current: (key: KeyCode, time: DispatchTime)?
-    private var currentWork: DispatchWorkItem?
+    private var current: (key: KeyCode, time: DispatchTime, work: DispatchWorkItem?)?
 
     private var pressedKeys: Set<KeyCode> = []
 
@@ -62,8 +61,7 @@ final class SuperKey {
         let keys = pressedKeys
 
         guard state != .used else {
-            current = (key: key, time: DispatchTime.now())
-            currentWork = nil
+            current = (key: key, time: DispatchTime.now(), work: nil)
             block(keys)
             return
         }
@@ -73,8 +71,7 @@ final class SuperKey {
             block(keys)
         }
         let dispatchTime = DispatchTime.now() + DispatchTimeInterval.milliseconds(dispatchDelay)
-        current = (key: key, time: dispatchTime)
-        currentWork = work
+        current = (key: key, time: dispatchTime, work: work)
         DispatchQueue.global().asyncAfter(deadline: dispatchTime, execute: work)
     }
 
@@ -87,14 +84,10 @@ final class SuperKey {
         pressedKeys = []
 
         guard current.time > DispatchTime.now() else {
-            self.currentWork = nil
             return nil
         }
 
-        if let work = currentWork {
-            self.currentWork = nil
-            work.cancel()
-        }
+        current.work?.cancel()
 
         return current.key
     }
