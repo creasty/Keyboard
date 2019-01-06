@@ -70,11 +70,8 @@ class SuperKeyHandler: Handler {
             return nil
         }
 
-        superKey.perform(key: key) { [weak self] in
-            guard isKeyDown else {
-                return
-            }
-
+        superKey.perform(key: key, isKeyDown: isKeyDown) { [weak self] (keys) in
+            print(keys)
             self?.execute(key: key)
         }
 

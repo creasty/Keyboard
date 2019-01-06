@@ -18,6 +18,8 @@ final class SuperKey {
     private var current: (key: KeyCode, time: DispatchTime)?
     private var currentWork: DispatchWorkItem?
 
+    private var pressedKeys: Set<KeyCode> = []
+
     var state: State = .inactive {
         didSet {
             guard state != oldValue else {
@@ -51,16 +53,25 @@ final class SuperKey {
         return true
     }
 
-    func perform(key: KeyCode, block: @escaping @convention(block) () -> Void) {
+    func perform(key: KeyCode, isKeyDown: Bool, block: @escaping (Set<KeyCode>) -> Void) {
+        guard isKeyDown else {
+            pressedKeys.remove(key)
+            return
+        }
+        pressedKeys.insert(key)
+        let keys = pressedKeys
+
         guard state != .used else {
             current = (key: key, time: DispatchTime.now())
             currentWork = nil
-            block()
+            block(keys)
             return
         }
         state = .used
 
-        let work = DispatchWorkItem(block: block)
+        let work = DispatchWorkItem() {
+            block(keys)
+        }
         let dispatchTime = DispatchTime.now() + DispatchTimeInterval.milliseconds(dispatchDelay)
         current = (key: key, time: dispatchTime)
         currentWork = work
@@ -72,6 +83,8 @@ final class SuperKey {
             return nil
         }
         self.current = nil
+
+        pressedKeys = []
 
         guard current.time > DispatchTime.now() else {
             self.currentWork = nil
