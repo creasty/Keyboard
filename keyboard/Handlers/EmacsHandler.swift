@@ -2,7 +2,6 @@ import Cocoa
 
 private let terminalApplications: Set<String> = [
     "com.apple.Terminal",
-    "iTerm",
     "net.sourceforge.iTerm",
     "com.googlecode.iterm2",
     "co.zeit.hyperterm",
