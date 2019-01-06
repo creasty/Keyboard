@@ -28,8 +28,6 @@ final class SuperKey {
             if state == .activated {
                 activatedAt = DispatchTime.uptimeNanoseconds()
             }
-
-//            NSLog("state = %@", String(describing: state))
         }
     }
 

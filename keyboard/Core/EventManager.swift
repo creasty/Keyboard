@@ -16,8 +16,7 @@ final class EventManager: EventManagerType {
     }
 
     func handle(cgEvent: CGEvent) -> Unmanaged<CGEvent>? {
-        guard !cgEvent.flags.contains(Emitter.Const.noremapFlag) else {
-            cgEvent.flags.remove(Emitter.Const.noremapFlag)
+        guard !Emitter.checkAndRemoveNoremapFlag(cgEvent: cgEvent) else {
             return Unmanaged.passRetained(cgEvent)
         }
         guard let event = NSEvent(cgEvent: cgEvent) else {
@@ -29,8 +28,6 @@ final class EventManager: EventManagerType {
 
         let flags = event.modifierFlags
         let isKeyDown = (event.type == .keyDown)
-
-//        NSLog("\(String(describing: key)) \(isKeyDown ? "down" : "up")")
 
         let finalAction: HandlerAction = {
             for handler in handlers {

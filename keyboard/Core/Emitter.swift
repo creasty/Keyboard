@@ -30,6 +30,14 @@ struct Emitter: EmitterType {
         }
     }
 
+    static func checkAndRemoveNoremapFlag(cgEvent: CGEvent) -> Bool {
+        if cgEvent.flags.contains(Const.noremapFlag) {
+            cgEvent.flags.remove(Const.noremapFlag)
+            return true
+        }
+        return false
+    }
+
     func emit(key: KeyCode) {
         emit(key: key, flags: [], action: .both)
     }
