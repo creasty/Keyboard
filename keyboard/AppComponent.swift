@@ -1,7 +1,7 @@
 import Cocoa
 
 final class AppComponent {
-    func emitter() -> Emitter {
+    func emitter() -> EmitterType {
         return Emitter()
     }
 
@@ -9,35 +9,33 @@ final class AppComponent {
         return NSWorkspace.shared
     }
 
-    func navigationHandler() -> NavigationHandler {
+    func navigationHandler() -> Handler {
         return NavigationHandler(emitter: emitter())
     }
 
-    func emacsHandler() -> EmacsHandler {
+    func emacsHandler() -> Handler {
         return EmacsHandler(workspace: nsWorkspace(), emitter: emitter())
     }
 
-    func escapeHandler() -> EscapeHandler {
+    func escapeHandler() -> Handler {
         return EscapeHandler(emitter: emitter())
     }
 
-    func windowResizeHandler() -> WindowResizeHandler {
+    func windowResizeHandler() -> Handler {
         return WindowResizeHandler(workspace: nsWorkspace())
     }
 
-    func appSwitchHandler() -> AppSwitchHandler {
+    func appSwitchHandler() -> Handler {
         return AppSwitchHandler(workspace: nsWorkspace(), emitter: emitter())
     }
 
-    func eventManager() -> EventManager {
-        let eventManager = EventManager()
-        eventManager.handlers = [
-            navigationHandler(),
-            emacsHandler(),
-            escapeHandler(),
-            windowResizeHandler(),
-            appSwitchHandler(),
-        ]
+    func eventManager() -> EventManagerType {
+        let eventManager: EventManagerType = EventManager()
+        eventManager.register(navigationHandler())
+        eventManager.register(emacsHandler())
+        eventManager.register(escapeHandler())
+        eventManager.register(windowResizeHandler())
+        eventManager.register(appSwitchHandler())
         return eventManager
     }
 }

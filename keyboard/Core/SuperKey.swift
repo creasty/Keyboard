@@ -15,8 +15,9 @@ final class SuperKey {
     private let dispatchDelay: Int = 150 // ms
 
     private var activatedAt: Double = 0
-    private var current: (key: KeyCode, time: DispatchTime)?
-    private var currentWork: DispatchWorkItem?
+    private var current: (key: KeyCode, time: DispatchTime, work: DispatchWorkItem?)?
+
+    private var pressedKeys: Set<KeyCode> = []
 
     var state: State = .inactive {
         didSet {
@@ -27,8 +28,6 @@ final class SuperKey {
             if state == .activated {
                 activatedAt = DispatchTime.uptimeNanoseconds()
             }
-
-//            NSLog("state = %@", String(describing: state))
         }
     }
 
@@ -51,19 +50,26 @@ final class SuperKey {
         return true
     }
 
-    func perform(key: KeyCode, block: @escaping @convention(block) () -> Void) {
+    func perform(key: KeyCode, isKeyDown: Bool, block: @escaping (Set<KeyCode>) -> Void) {
+        guard isKeyDown else {
+            pressedKeys.remove(key)
+            return
+        }
+        pressedKeys.insert(key)
+        let keys = pressedKeys
+
         guard state != .used else {
-            current = (key: key, time: DispatchTime.now())
-            currentWork = nil
-            block()
+            current = (key: key, time: DispatchTime.now(), work: nil)
+            block(keys)
             return
         }
         state = .used
 
-        let work = DispatchWorkItem(block: block)
+        let work = DispatchWorkItem() {
+            block(keys)
+        }
         let dispatchTime = DispatchTime.now() + DispatchTimeInterval.milliseconds(dispatchDelay)
-        current = (key: key, time: dispatchTime)
-        currentWork = work
+        current = (key: key, time: dispatchTime, work: work)
         DispatchQueue.global().asyncAfter(deadline: dispatchTime, execute: work)
     }
 
@@ -73,15 +79,13 @@ final class SuperKey {
         }
         self.current = nil
 
+        pressedKeys = []
+
         guard current.time > DispatchTime.now() else {
-            self.currentWork = nil
             return nil
         }
 
-        if let work = currentWork {
-            self.currentWork = nil
-            work.cancel()
-        }
+        current.work?.cancel()
 
         return current.key
     }

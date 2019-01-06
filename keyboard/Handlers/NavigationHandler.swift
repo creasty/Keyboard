@@ -9,36 +9,27 @@ import Cocoa
 //     S+N   Switch to next window
 //     S+B   Switch to previous window
 //
-final class NavigationHandler: Handler {
-    private let emitter: Emitter
+final class NavigationHandler: SuperKeyHandler {
+    private let emitter: EmitterType
 
-    init(emitter: Emitter) {
+    init(emitter: EmitterType) {
         self.emitter = emitter
+        super.init(key: .s, emitter: emitter)
     }
 
-    private lazy var superKeyHandler: SuperKeyHandler = {
-        return SuperKeyHandler(key: .s, emitter: emitter) { [weak self] (key) in
-            self?.execute(key: key)
-        }
-    }()
-
-    func handle(key: KeyCode, flags: NSEvent.ModifierFlags, isKeyDown: Bool, isARepeat: Bool) -> HandlerAction? {
-        return superKeyHandler.handle(key: key, flags: flags, isKeyDown: isKeyDown, isARepeat: isARepeat)
-    }
-
-    private func execute(key: KeyCode) {
-        switch key {
-        case .h:
+    override func execute(keys: Set<KeyCode>) {
+        switch keys {
+        case [.h]:
             emitter.emit(key: .leftArrow, flags: [.maskControl, .maskSecondaryFn])
-        case .j:
+        case [.j]:
             emitter.emit(key: .tab, flags: [.maskCommand])
-        case .k:
+        case [.k]:
             emitter.emit(key: .tab, flags: [.maskCommand, .maskShift])
-        case .l:
+        case [.l]:
             emitter.emit(key: .rightArrow, flags: [.maskControl, .maskSecondaryFn])
-        case .n:
+        case [.n]:
             emitter.emit(key: .f1, flags: [.maskCommand])
-        case .b:
+        case [.b]:
             emitter.emit(key: .f1, flags: [.maskCommand, .maskShift])
         default:
             break

@@ -1,13 +1,11 @@
 import Cocoa
 
-final class SuperKeyHandler: Handler {
+class SuperKeyHandler: Handler {
     private let superKey: SuperKey
-    private let callback: (KeyCode) -> Void
-    private let emitter: Emitter
+    private let emitter: EmitterType
 
-    init(key: KeyCode, emitter: Emitter, callback: @escaping (KeyCode) -> Void) {
+    init(key: KeyCode, emitter: EmitterType) {
         superKey = SuperKey(key: key)
-        self.callback = callback
         self.emitter = emitter
     }
 
@@ -72,14 +70,14 @@ final class SuperKeyHandler: Handler {
             return nil
         }
 
-        superKey.perform(key: key) { [weak self] in
-            guard isKeyDown else {
-                return
-            }
-
-            self?.callback(key)
+        superKey.perform(key: key, isKeyDown: isKeyDown) { [weak self] (keys) in
+            self?.execute(keys: keys)
         }
 
         return .prevent
+    }
+
+    func execute(keys: Set<KeyCode>) {
+        fatalError("Not implemented")
     }
 }
