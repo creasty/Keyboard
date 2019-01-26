@@ -51,6 +51,12 @@ private enum WindowSize {
 
 // Window resizer:
 //
+//     S+D+F  Full
+//     S+D+H  Left
+//     S+D+J  Bottom
+//     S+D+K  Top
+//     S+D+L  Right
+//
 //           Cmd-Alt-/        Full
 //           Cmd-Alt-Left     Left
 //           Cmd-Alt-Up       Top
@@ -68,33 +74,63 @@ final class WindowResizeHandler: Handler {
         self.workspace = workspace
     }
 
-    func handle(key: KeyCode, flags: NSEvent.ModifierFlags, isKeyDown: Bool, isARepeat: Bool) -> HandlerAction? {
-        guard isKeyDown else {
-            return nil
-        }
-        guard flags.match(shift: nil, option: true, command: true) else {
-            return nil
-        }
+    func activateSuperKeys() -> [KeyCode] {
+        return [.s]
+    }
+
+    func handle(keyEvent: KeyEvent) -> HandlerAction? {
+//        guard keyEvent.isDown else {
+//            return nil
+//        }
+//        guard keyEvent.match(shift: nil, option: true, command: true) else {
+//            return nil
+//        }
+//
+//        var windowSize: WindowSize?
+//
+//        if keyEvent.shift {
+//            switch keyEvent.code {
+//            case .leftArrow:  windowSize = .topLeft
+//            case .upArrow:    windowSize = .topRight
+//            case .rightArrow: windowSize = .bottomRight
+//            case .downArrow:  windowSize = .bottomLeft
+//            default: break
+//            }
+//        } else {
+//            switch keyEvent.code {
+//            case .slash:      windowSize = .full
+//            case .leftArrow:  windowSize = .left
+//            case .upArrow:    windowSize = .top
+//            case .rightArrow: windowSize = .right
+//            case .downArrow:  windowSize = .bottom
+//            default: break
+//            }
+//        }
+//
+//        if let windowSize = windowSize {
+//            do {
+//                try resizeWindow(windowSize: windowSize)
+//            } catch {
+//                print(error)
+//            }
+//
+//            return .prevent
+//        }
+
+        return nil
+    }
+
+    func handleSuperKey(prefix: KeyCode, keys: Set<KeyCode>) -> Bool {
+        guard prefix == .s else { return false }
 
         var windowSize: WindowSize?
-
-        if flags.contains(.shift) {
-            switch key {
-            case .leftArrow:  windowSize = .topLeft
-            case .upArrow:    windowSize = .topRight
-            case .rightArrow: windowSize = .bottomRight
-            case .downArrow:  windowSize = .bottomLeft
-            default: break
-            }
-        } else {
-            switch key {
-            case .slash:      windowSize = .full
-            case .leftArrow:  windowSize = .left
-            case .upArrow:    windowSize = .top
-            case .rightArrow: windowSize = .right
-            case .downArrow:  windowSize = .bottom
-            default: break
-            }
+        switch keys {
+        case [.d, .f]: windowSize = .full
+        case [.d, .h]: windowSize = .left
+        case [.d, .k]: windowSize = .top
+        case [.d, .l]: windowSize = .right
+        case [.d, .j]: windowSize = .bottom
+        default: break
         }
 
         if let windowSize = windowSize {
@@ -104,10 +140,10 @@ final class WindowResizeHandler: Handler {
                 print(error)
             }
 
-            return .prevent
+            return true
         }
 
-        return nil
+        return false
     }
 
     private func resizeWindow(windowSize: WindowSize) throws {
@@ -122,7 +158,7 @@ final class WindowResizeHandler: Handler {
             .max { lhs, rhs in lhs.1 < rhs.1 }?
             .0
         ) else {
-                return
+            return
         }
 
         let newFrame = windowSize.rect(screenFrame: screen.frame)

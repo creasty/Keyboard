@@ -9,30 +9,45 @@ import Cocoa
 //     S+N   Switch to next window
 //     S+B   Switch to previous window
 //
-final class NavigationHandler: SuperKeyHandler {
+final class NavigationHandler: Handler {
     private let emitter: EmitterType
 
     init(emitter: EmitterType) {
         self.emitter = emitter
-        super.init(key: .s, emitter: emitter)
     }
 
-    override func execute(keys: Set<KeyCode>) {
+    func activateSuperKeys() -> [KeyCode] {
+        return [.s]
+    }
+
+    func handle(keyEvent: KeyEvent) -> HandlerAction? {
+        return nil
+    }
+
+    func handleSuperKey(prefix: KeyCode, keys: Set<KeyCode>) -> Bool {
+        guard prefix == .s else { return false }
+
         switch keys {
         case [.h]:
-            emitter.emit(key: .leftArrow, flags: [.maskControl, .maskSecondaryFn])
+            emitter.emit(code: .leftArrow, flags: [.maskControl, .maskSecondaryFn])
+            return true
         case [.j]:
-            emitter.emit(key: .tab, flags: [.maskCommand])
+            emitter.emit(code: .tab, flags: [.maskCommand])
+            return true
         case [.k]:
-            emitter.emit(key: .tab, flags: [.maskCommand, .maskShift])
+            emitter.emit(code: .tab, flags: [.maskCommand, .maskShift])
+            return true
         case [.l]:
-            emitter.emit(key: .rightArrow, flags: [.maskControl, .maskSecondaryFn])
+            emitter.emit(code: .rightArrow, flags: [.maskControl, .maskSecondaryFn])
+            return true
         case [.n]:
-            emitter.emit(key: .f1, flags: [.maskCommand])
+            emitter.emit(code: .f1, flags: [.maskCommand])
+            return true
         case [.b]:
-            emitter.emit(key: .f1, flags: [.maskCommand, .maskShift])
+            emitter.emit(code: .f1, flags: [.maskCommand, .maskShift])
+            return true
         default:
-            break
+            return false
         }
     }
 }

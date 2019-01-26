@@ -126,3 +126,57 @@ enum KeyCode: UInt16 {
     case jisEisu =         0x66
     case jisKana =         0x68
 }
+
+struct KeyEvent {
+    let code: KeyCode
+    let shift: Bool
+    let control: Bool
+    let option: Bool
+    let command: Bool
+
+    let flags: NSEvent.ModifierFlags
+
+    let isDown: Bool
+    let isARepeat: Bool
+
+    init?(nsEvent: NSEvent) {
+        guard let code = KeyCode(rawValue: nsEvent.keyCode) else {
+            return nil
+        }
+
+        self.code = code
+        flags = nsEvent.modifierFlags
+        shift = nsEvent.modifierFlags.contains(.shift)
+        control = nsEvent.modifierFlags.contains(.control)
+        option = nsEvent.modifierFlags.contains(.option)
+        command = nsEvent.modifierFlags.contains(.command)
+
+        isDown = (nsEvent.type == .keyDown)
+        isARepeat = nsEvent.isARepeat
+    }
+
+    func match(
+        code: KeyCode? = nil,
+        shift: Bool? = false,
+        control: Bool? = false,
+        option: Bool? = false,
+        command: Bool? = false
+    ) -> Bool {
+        if let code = code, self.code != code {
+            return false
+        }
+        if let shift = shift, self.shift != shift {
+            return false
+        }
+        if let control = control, self.control != control {
+            return false
+        }
+        if let option = option, self.option != option {
+            return false
+        }
+        if let command = command, self.command != command {
+            return false
+        }
+        return true
+    }
+}

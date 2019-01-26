@@ -1,10 +1,10 @@
 import Cocoa
 
 protocol EmitterType {
-    func emit(key: KeyCode)
-    func emit(key: KeyCode, flags: CGEventFlags)
-    func emit(key: KeyCode, action: Emitter.Action)
-    func emit(key: KeyCode, flags: CGEventFlags, action: Emitter.Action)
+    func emit(code: KeyCode)
+    func emit(code: KeyCode, flags: CGEventFlags)
+    func emit(code: KeyCode, action: Emitter.Action)
+    func emit(code: KeyCode, flags: CGEventFlags, action: Emitter.Action)
 }
 
 struct Emitter: EmitterType {
@@ -38,19 +38,19 @@ struct Emitter: EmitterType {
         return false
     }
 
-    func emit(key: KeyCode) {
-        emit(key: key, flags: [], action: .both)
+    func emit(code: KeyCode) {
+        emit(code: code, flags: [], action: .both)
     }
 
-    func emit(key: KeyCode, flags: CGEventFlags) {
-        emit(key: key, flags: flags, action: .both)
+    func emit(code: KeyCode, flags: CGEventFlags) {
+        emit(code: code, flags: flags, action: .both)
     }
 
-    func emit(key: KeyCode, action: Action) {
-        emit(key: key, flags: [], action: action)
+    func emit(code: KeyCode, action: Action) {
+        emit(code: code, flags: [], action: action)
     }
 
-    func emit(key: KeyCode, flags: CGEventFlags, action: Action) {
+    func emit(code: KeyCode, flags: CGEventFlags, action: Action) {
         action.keyDowns().forEach {
             if !$0 && action == .both {
                 usleep(Const.pauseInterval)
@@ -58,7 +58,7 @@ struct Emitter: EmitterType {
 
             let e = CGEvent(
                 keyboardEventSource: nil,
-                virtualKey: key.rawValue,
+                virtualKey: code.rawValue,
                 keyDown: $0
             )
             e?.flags = flags.union(Const.noremapFlag)

@@ -10,7 +10,6 @@
 		AE38940621D8CB8C0097BE73 /* AXAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE38940521D8CB8C0097BE73 /* AXAttribute.swift */; };
 		AE38940821D8DF3A0097BE73 /* AXUIElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE38940721D8DF3A0097BE73 /* AXUIElement.swift */; };
 		AE38940A21D8DF9F0097BE73 /* AXError.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE38940921D8DF9F0097BE73 /* AXError.swift */; };
-		AE38940C21D8E0770097BE73 /* NSEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE38940B21D8E0770097BE73 /* NSEvent.swift */; };
 		AE38940E21D8E0940097BE73 /* DispatchTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE38940D21D8E0940097BE73 /* DispatchTime.swift */; };
 		AE38941021D8F74B0097BE73 /* Emitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE38940F21D8F74B0097BE73 /* Emitter.swift */; };
 		AE6A00D61ED6A25000A93C2E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6A00D51ED6A25000A93C2E /* AppDelegate.swift */; };
@@ -20,8 +19,9 @@
 		AE6A00E61ED8962500A93C2E /* KeyCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6A00E51ED8962500A93C2E /* KeyCode.swift */; };
 		AE6A00E81ED8990E00A93C2E /* SuperKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6A00E71ED8990E00A93C2E /* SuperKey.swift */; };
 		AE825DF31EDA85000021C6E3 /* RepeatedKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE825DF21EDA85000021C6E3 /* RepeatedKey.swift */; };
+		AEC1049021FC733400B58342 /* InputSourceHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEC1048F21FC733400B58342 /* InputSourceHandler.swift */; };
+		AEC1049221FC7D5000B58342 /* TISInputSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEC1049121FC7D5000B58342 /* TISInputSource.swift */; };
 		AECCF7CD21D8FA8C00B21C0A /* Handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECCF7CC21D8FA8C00B21C0A /* Handler.swift */; };
-		AECCF7CF21D8FAFC00B21C0A /* SuperKeyHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECCF7CE21D8FAFC00B21C0A /* SuperKeyHandler.swift */; };
 		AECCF7D121D8FCE800B21C0A /* NavigationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECCF7D021D8FCE800B21C0A /* NavigationHandler.swift */; };
 		AECCF7D321D8FF2800B21C0A /* EmacsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECCF7D221D8FF2800B21C0A /* EmacsHandler.swift */; };
 		AECCF7D521D8FFE400B21C0A /* EscapeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECCF7D421D8FFE400B21C0A /* EscapeHandler.swift */; };
@@ -34,7 +34,6 @@
 		AE38940521D8CB8C0097BE73 /* AXAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AXAttribute.swift; sourceTree = "<group>"; };
 		AE38940721D8DF3A0097BE73 /* AXUIElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AXUIElement.swift; sourceTree = "<group>"; };
 		AE38940921D8DF9F0097BE73 /* AXError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AXError.swift; sourceTree = "<group>"; };
-		AE38940B21D8E0770097BE73 /* NSEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSEvent.swift; sourceTree = "<group>"; };
 		AE38940D21D8E0940097BE73 /* DispatchTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchTime.swift; sourceTree = "<group>"; };
 		AE38940F21D8F74B0097BE73 /* Emitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emitter.swift; sourceTree = "<group>"; };
 		AE6A00D21ED6A25000A93C2E /* Keyboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Keyboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -46,8 +45,9 @@
 		AE6A00E51ED8962500A93C2E /* KeyCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyCode.swift; sourceTree = "<group>"; };
 		AE6A00E71ED8990E00A93C2E /* SuperKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuperKey.swift; sourceTree = "<group>"; };
 		AE825DF21EDA85000021C6E3 /* RepeatedKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepeatedKey.swift; sourceTree = "<group>"; };
+		AEC1048F21FC733400B58342 /* InputSourceHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputSourceHandler.swift; sourceTree = "<group>"; };
+		AEC1049121FC7D5000B58342 /* TISInputSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TISInputSource.swift; sourceTree = "<group>"; };
 		AECCF7CC21D8FA8C00B21C0A /* Handler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Handler.swift; sourceTree = "<group>"; };
-		AECCF7CE21D8FAFC00B21C0A /* SuperKeyHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuperKeyHandler.swift; sourceTree = "<group>"; };
 		AECCF7D021D8FCE800B21C0A /* NavigationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationHandler.swift; sourceTree = "<group>"; };
 		AECCF7D221D8FF2800B21C0A /* EmacsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmacsHandler.swift; sourceTree = "<group>"; };
 		AECCF7D421D8FFE400B21C0A /* EscapeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EscapeHandler.swift; sourceTree = "<group>"; };
@@ -74,7 +74,7 @@
 				AE38940921D8DF9F0097BE73 /* AXError.swift */,
 				AE38940721D8DF3A0097BE73 /* AXUIElement.swift */,
 				AE38940D21D8E0940097BE73 /* DispatchTime.swift */,
-				AE38940B21D8E0770097BE73 /* NSEvent.swift */,
+				AEC1049121FC7D5000B58342 /* TISInputSource.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -119,7 +119,6 @@
 				AE6A00E51ED8962500A93C2E /* KeyCode.swift */,
 				AE825DF21EDA85000021C6E3 /* RepeatedKey.swift */,
 				AE6A00E71ED8990E00A93C2E /* SuperKey.swift */,
-				AECCF7CE21D8FAFC00B21C0A /* SuperKeyHandler.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -130,6 +129,7 @@
 				AECCF7DC21D90B5B00B21C0A /* AppSwitchHandler.swift */,
 				AECCF7D221D8FF2800B21C0A /* EmacsHandler.swift */,
 				AECCF7D421D8FFE400B21C0A /* EscapeHandler.swift */,
+				AEC1048F21FC733400B58342 /* InputSourceHandler.swift */,
 				AECCF7D021D8FCE800B21C0A /* NavigationHandler.swift */,
 				AECCF7D621D9004E00B21C0A /* WindowResizeHandler.swift */,
 			);
@@ -207,13 +207,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AEC1049021FC733400B58342 /* InputSourceHandler.swift in Sources */,
 				AECCF7D121D8FCE800B21C0A /* NavigationHandler.swift in Sources */,
 				AECCF7D321D8FF2800B21C0A /* EmacsHandler.swift in Sources */,
-				AE38940C21D8E0770097BE73 /* NSEvent.swift in Sources */,
 				AECCF7CD21D8FA8C00B21C0A /* Handler.swift in Sources */,
 				AE6A00E41ED88F3F00A93C2E /* EventManager.swift in Sources */,
 				AECCF7DB21D9072C00B21C0A /* AppComponent.swift in Sources */,
-				AECCF7CF21D8FAFC00B21C0A /* SuperKeyHandler.swift in Sources */,
 				AE6A00E61ED8962500A93C2E /* KeyCode.swift in Sources */,
 				AE38940621D8CB8C0097BE73 /* AXAttribute.swift in Sources */,
 				AE6A00D61ED6A25000A93C2E /* AppDelegate.swift in Sources */,
@@ -221,6 +220,7 @@
 				AE38940821D8DF3A0097BE73 /* AXUIElement.swift in Sources */,
 				AE38940E21D8E0940097BE73 /* DispatchTime.swift in Sources */,
 				AE38940A21D8DF9F0097BE73 /* AXError.swift in Sources */,
+				AEC1049221FC7D5000B58342 /* TISInputSource.swift in Sources */,
 				AE825DF31EDA85000021C6E3 /* RepeatedKey.swift in Sources */,
 				AE38941021D8F74B0097BE73 /* Emitter.swift in Sources */,
 				AECCF7D521D8FFE400B21C0A /* EscapeHandler.swift in Sources */,

@@ -24,11 +24,18 @@ List of hacks
 
 ### Window/space navigations
 
-`S` acts as "super key" that doesn't require any modifier keys.
+| Key | Description |
+|:---|:---|
+| `S+H` | Move to left space |
+| `S+L` | Move to right space |
+| `S+J` | Switch to next application |
+| `S+K` | Switch to previous application |
+| `S+N` | Switch to next window |
+| `S+B` | Switch to previous window |
 
-<details>
+*`S` acts as a 'super key' that doesn't require any modifier keys.*
 
-<summary>Requirements</summary>
+<details><summary>Requirements</summary>
 
 Open "System Preferences" and set the following shortcuts:
 
@@ -43,16 +50,6 @@ Open "System Preferences" and set the following shortcuts:
 | ![](https://user-images.githubusercontent.com/1695538/50548207-12b02800-0c8c-11e9-8dd9-527d4aed2b69.png) | ![](https://user-images.githubusercontent.com/1695538/50548209-1643af00-0c8c-11e9-9bf8-1e86ca13f4fb.png) |
 
 </details>
-<br>
-
-| Key | Description |
-|:---|:---|
-| `S+H` | Move to left space |
-| `S+L` | Move to right space |
-| `S+J` | Switch to next application |
-| `S+K` | Switch to previous application |
-| `S+N` | Switch to next window |
-| `S+B` | Switch to previous window |
 
 ### Emacs mode
 
@@ -73,19 +70,23 @@ Open "System Preferences" and set the following shortcuts:
 
 | Key | Description |
 |:---|:---|
-| `Cmd-Alt-/` | Full |
-| `Cmd-Alt-Left` | Left |
-| `Cmd-Alt-Up` | Top |
-| `Cmd-Alt-Right` | Right |
-| `Cmd-Alt-Down` | Bottom |
-| `Shift-Cmd-Alt-Left` | Top-left |
-| `Shift-Cmd-Alt-Up` | Top-right |
-| `Shift-Cmd-Alt-Right` | Bottom-right |
-| `Shift-Cmd-Alt-Down` | Bottom-left |
+| `S+D+F` | Full |
+| `S+D+H` | Left |
+| `S+D+J` | Bottom |
+| `S+D+K` | Top |
+| `S+D+L` | Right |
+
+*`S` acts as a 'super key' that doesn't require any modifier keys.*
+
+### Switch input source
+
+| Key | Description |
+|:---|:---|
+| `Ctrl-;` | Selects next source in the input menu |
 
 ### Switch input source with Escape key
 
-For Vim, leave insert mode with EISUU in order to avoid IME from capturing key strokes.
+Change the input source to English as you leave 'insert mode' in Vim with `Escape` key so it can prevent IME from capturing key strokes in 'normal mode'.
 
 | Key | Description |
 |:---|:---|
@@ -94,11 +95,11 @@ For Vim, leave insert mode with EISUU in order to avoid IME from capturing key s
 
 ### Switch between apps
 
-`;` acts as "super key" that doesn't require any modifier keys.
-
 | Key | App | Bundle ID | URL |
 |:---|:---|:---|:---|
 | `;+F` | Finder | `com.apple.finder` | N/A |
 | `;+M` | iTerm 2 | `com.googlecode.iterm2` | https://www.iterm2.com |
 | `;+T` | Things | `com.culturedcode.ThingsMac` | https://culturedcode.com/things |
 | `;+B` | Bear | `net.shinyfrog.bear` | https://bear.app |
+
+*`;` acts as a 'super key' that doesn't require any modifier keys.*

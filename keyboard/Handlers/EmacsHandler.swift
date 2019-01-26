@@ -86,17 +86,17 @@ final class EmacsHandler: Handler {
         self.emitter = emitter
     }
 
-    func handle(key: KeyCode, flags: NSEvent.ModifierFlags, isKeyDown: Bool, isARepeat: Bool) -> HandlerAction? {
+    func handle(keyEvent: KeyEvent) -> HandlerAction? {
         guard let bundleId = workspace.frontmostApplication?.bundleIdentifier else {
             return nil
         }
 
         if !terminalApplications.contains(bundleId) {
-            if key == .c && flags.match(control: true) {
-                if isKeyDown {
-                    emitter.emit(key: .jisEisu)
+            if keyEvent.match(code: .c, control: true) {
+                if keyEvent.isDown {
+                    emitter.emit(code: .jisEisu)
                 }
-                emitter.emit(key: .escape, action: (isKeyDown ? .down : .up))
+                emitter.emit(code: .escape, action: (keyEvent.isDown ? .down : .up))
                 return .prevent
             }
         }
@@ -104,8 +104,8 @@ final class EmacsHandler: Handler {
         if !emacsApplications.contains(bundleId) {
             var remap: (KeyCode, CGEventFlags)? = nil
 
-            if flags.match(control: true) {
-                switch key {
+            if keyEvent.match(control: true) {
+                switch keyEvent.code {
                 case .d:
                     remap = (.forwardDelete, [])
                 case .h:
@@ -116,8 +116,8 @@ final class EmacsHandler: Handler {
                     break
                 }
             }
-            if flags.match(shift: nil, control: true) {
-                switch key {
+            if keyEvent.match(shift: nil, control: true) {
+                switch keyEvent.code {
                 case .p:
                     remap = (.upArrow, [])
                 case .n:
@@ -136,15 +136,19 @@ final class EmacsHandler: Handler {
             }
 
             if let remap = remap {
-                let remapFlags = flags.contains(.shift)
+                let remapFlags = keyEvent.flags.contains(.shift)
                     ? remap.1.union(.maskShift)
                     : remap.1
 
-                emitter.emit(key: remap.0, flags: remapFlags, action: (isKeyDown ? .down : .up))
+                emitter.emit(code: remap.0, flags: remapFlags, action: (keyEvent.isDown ? .down : .up))
                 return .prevent
             }
         }
 
         return nil
+    }
+
+    func handleSuperKey(prefix: KeyCode, keys: Set<KeyCode>) -> Bool {
+        return false
     }
 }
