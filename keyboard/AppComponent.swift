@@ -29,6 +29,10 @@ final class AppComponent {
         return AppSwitchHandler(workspace: nsWorkspace(), emitter: emitter())
     }
 
+    func inputMethodHandler() -> Handler {
+        return InputMethodHandler(emitter: emitter())
+    }
+
     func eventManager() -> EventManagerType {
         let eventManager: EventManagerType = EventManager(emitter: emitter())
         eventManager.register(handler: navigationHandler())
@@ -36,6 +40,7 @@ final class AppComponent {
         eventManager.register(handler: escapeHandler())
         eventManager.register(handler: windowResizeHandler())
         eventManager.register(handler: appSwitchHandler())
+        eventManager.register(handler: inputMethodHandler())
         return eventManager
     }
 }

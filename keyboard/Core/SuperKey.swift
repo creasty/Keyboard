@@ -70,7 +70,7 @@ final class SuperKey {
         }
         let dispatchTime = DispatchTime.now() + DispatchTimeInterval.milliseconds(dispatchDelay)
         current = (key: key, time: dispatchTime, work: work)
-        DispatchQueue.global().asyncAfter(deadline: dispatchTime, execute: work)
+        DispatchQueue.main.asyncAfter(deadline: dispatchTime, execute: work)
     }
 
     func cancel() -> KeyCode? {
