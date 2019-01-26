@@ -20,4 +20,8 @@ final class EscapeHandler: Handler {
 
         return .passThrough
     }
+
+    func handleSuperKey(prefix: KeyCode, keys: Set<KeyCode>) -> Bool {
+        return false
+    }
 }

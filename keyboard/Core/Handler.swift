@@ -7,4 +7,5 @@ enum HandlerAction {
 
 protocol Handler {
     func handle(keyEvent: KeyEvent) -> HandlerAction?
+    func handleSuperKey(prefix: KeyCode, keys: Set<KeyCode>) -> Bool
 }

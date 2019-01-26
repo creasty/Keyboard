@@ -7,28 +7,39 @@ import Cocoa
 //     ;+T   Things
 //     ;+B   Bear
 //
-final class AppSwitchHandler: SuperKeyHandler {
+final class AppSwitchHandler: Handler {
     private let workspace: NSWorkspace
     private let emitter: EmitterType
 
     init(workspace: NSWorkspace, emitter: EmitterType) {
         self.workspace = workspace
         self.emitter = emitter
-        super.init(key: .semicolon, emitter: emitter)
     }
 
-    override func execute(keys: Set<KeyCode>) {
+    func handle(keyEvent: KeyEvent) -> HandlerAction? {
+        return nil
+    }
+
+    func handleSuperKey(prefix: KeyCode, keys: Set<KeyCode>) -> Bool {
+        guard prefix == .semicolon else {
+            return false
+        }
+
         switch keys {
         case [.f]:
             showOrHideApplication(byBundleIdentifier: "com.apple.finder")
+            return true
         case [.m]:
             showOrHideApplication(byBundleIdentifier: "com.googlecode.iterm2")
+            return true
         case [.t]:
             showOrHideApplication(byBundleIdentifier: "com.culturedcode.ThingsMac")
+            return true
         case [.b]:
             showOrHideApplication(byBundleIdentifier: "net.shinyfrog.bear")
+            return true
         default:
-            break
+            return false
         }
     }
 

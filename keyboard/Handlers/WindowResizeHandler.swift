@@ -110,6 +110,10 @@ final class WindowResizeHandler: Handler {
         return nil
     }
 
+    func handleSuperKey(prefix: KeyCode, keys: Set<KeyCode>) -> Bool {
+        return false
+    }
+
     private func resizeWindow(windowSize: WindowSize) throws {
         guard let app = workspace.frontmostApplication?.axUIElement() else { return }
         guard let window = try app.getAttribute(AXAttributes.focusedWindow) else { return }

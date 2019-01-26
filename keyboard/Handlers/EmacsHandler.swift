@@ -147,4 +147,8 @@ final class EmacsHandler: Handler {
 
         return nil
     }
+
+    func handleSuperKey(prefix: KeyCode, keys: Set<KeyCode>) -> Bool {
+        return false
+    }
 }
