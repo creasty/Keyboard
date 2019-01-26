@@ -129,9 +129,9 @@
 				AECCF7DC21D90B5B00B21C0A /* AppSwitchHandler.swift */,
 				AECCF7D221D8FF2800B21C0A /* EmacsHandler.swift */,
 				AECCF7D421D8FFE400B21C0A /* EscapeHandler.swift */,
+				AEC1048F21FC733400B58342 /* InputMethodHandler.swift */,
 				AECCF7D021D8FCE800B21C0A /* NavigationHandler.swift */,
 				AECCF7D621D9004E00B21C0A /* WindowResizeHandler.swift */,
-				AEC1048F21FC733400B58342 /* InputMethodHandler.swift */,
 			);
 			path = Handlers;
 			sourceTree = "<group>";
