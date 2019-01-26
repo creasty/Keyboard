@@ -16,6 +16,12 @@ final class AppSwitchHandler: Handler {
         self.emitter = emitter
     }
 
+    func activateSuperKeys() -> [KeyCode] {
+        return [
+            .semicolon,
+        ]
+    }
+
     func handle(keyEvent: KeyEvent) -> HandlerAction? {
         return nil
     }

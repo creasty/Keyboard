@@ -9,10 +9,7 @@ final class EventManager: EventManagerType {
     private let emitter: EmitterType
 
     private var handlers: [Handler] = []
-    private var superKeys: [SuperKey] = [
-        SuperKey(key: .s),
-        SuperKey(key: .semicolon),
-    ]
+    private var superKeys: [KeyCode: SuperKey] = [:]
 
     init(emitter: EmitterType) {
         self.emitter = emitter
@@ -20,6 +17,12 @@ final class EventManager: EventManagerType {
 
     func register(handler: Handler) {
         handlers.append(handler)
+
+        handler.activateSuperKeys().forEach {
+            if superKeys[$0] == nil {
+                superKeys[$0] = SuperKey(key: $0)
+            }
+        }
     }
 
     func handle(cgEvent: CGEvent) -> Unmanaged<CGEvent>? {
@@ -46,7 +49,7 @@ final class EventManager: EventManagerType {
 
 extension EventManager: Handler {
     func handle(keyEvent: KeyEvent) -> HandlerAction? {
-        for superKey in superKeys {
+        for (_, superKey) in superKeys {
             if let action = updateState(superKey: superKey, keyEvent: keyEvent) {
                 return action
             }

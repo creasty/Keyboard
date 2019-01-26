@@ -16,6 +16,12 @@ final class NavigationHandler: Handler {
         self.emitter = emitter
     }
 
+    func activateSuperKeys() -> [KeyCode] {
+        return [
+            .s,
+        ]
+    }
+
     func handle(keyEvent: KeyEvent) -> HandlerAction? {
         return nil
     }
