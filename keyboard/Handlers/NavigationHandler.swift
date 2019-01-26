@@ -17,9 +17,7 @@ final class NavigationHandler: Handler {
     }
 
     func activateSuperKeys() -> [KeyCode] {
-        return [
-            .s,
-        ]
+        return [.s]
     }
 
     func handle(keyEvent: KeyEvent) -> HandlerAction? {
@@ -27,9 +25,7 @@ final class NavigationHandler: Handler {
     }
 
     func handleSuperKey(prefix: KeyCode, keys: Set<KeyCode>) -> Bool {
-        guard prefix == .s else {
-            return false
-        }
+        guard prefix == .s else { return false }
 
         switch keys {
         case [.h]:

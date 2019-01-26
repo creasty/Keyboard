@@ -17,9 +17,7 @@ final class AppSwitchHandler: Handler {
     }
 
     func activateSuperKeys() -> [KeyCode] {
-        return [
-            .semicolon,
-        ]
+        return [.semicolon]
     }
 
     func handle(keyEvent: KeyEvent) -> HandlerAction? {
@@ -27,9 +25,7 @@ final class AppSwitchHandler: Handler {
     }
 
     func handleSuperKey(prefix: KeyCode, keys: Set<KeyCode>) -> Bool {
-        guard prefix == .semicolon else {
-            return false
-        }
+        guard prefix == .semicolon else { return false }
 
         switch keys {
         case [.f]:
