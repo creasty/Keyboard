@@ -20,7 +20,7 @@ final class EventManager: EventManagerType {
 
         handler.activateSuperKeys().forEach {
             if superKeys[$0] == nil {
-                superKeys[$0] = SuperKey(key: $0)
+                superKeys[$0] = SuperKey(prefix: $0)
             }
         }
     }
@@ -86,7 +86,7 @@ extension EventManager {
             return nil
         }
 
-        if keyEvent.code == superKey.prefixKey {
+        if keyEvent.code == superKey.prefix {
             guard !keyEvent.isARepeat else {
                 return .prevent
             }
@@ -97,10 +97,10 @@ extension EventManager {
 
             switch superKey.state {
             case .activated:
-                emitter.emit(code: superKey.prefixKey)
+                emitter.emit(code: superKey.prefix)
             case .used, .enabled:
                 if let key = superKey.cancel() {
-                    emitter.emit(code: superKey.prefixKey)
+                    emitter.emit(code: superKey.prefix)
                     emitter.emit(code: key)
                 } else {
                     emitter.emit(code: .command)
@@ -119,7 +119,7 @@ extension EventManager {
         guard superKey.enable() else {
             superKey.state = .disabled
 
-            emitter.emit(code: superKey.prefixKey)
+            emitter.emit(code: superKey.prefix)
             emitter.emit(code: keyEvent.code, action: (keyEvent.isDown ? .down : .up))
 
             return .prevent
@@ -137,7 +137,7 @@ extension EventManager {
         }
 
         superKey.perform(key: keyEvent.code, isKeyDown: keyEvent.isDown) { [weak self] (keys) in
-            self?.handleSuperKey(prefix: superKey.prefixKey, keys: keys)
+            self?.handleSuperKey(prefix: superKey.prefix, keys: keys)
         }
 
         return .prevent
