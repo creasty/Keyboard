@@ -1,11 +1,11 @@
 import Cocoa
 import InputMethodKit
 
-// Input Method switching
+// Input source switching
 //
-//     Ctrl-; Select next source in Input menu
+//     Ctrl-; Select next source in the input menu
 //
-final class InputMethodHandler: Handler {
+final class InputSourceHandler: Handler {
     private let emitter: EmitterType
     private let inputSources: [TISInputSource]
 
@@ -22,7 +22,7 @@ final class InputMethodHandler: Handler {
         guard !keyEvent.isARepeat else { return nil }
         guard keyEvent.match(code: .semicolon, control: true) else { return nil }
 
-        changeInput()
+        changeSource()
         return .prevent
     }
 
@@ -30,7 +30,7 @@ final class InputMethodHandler: Handler {
         return false
     }
 
-    private func changeInput() {
+    private func changeSource() {
         guard let i = inputSources.firstIndex(where: { $0.isSelected }) else { return }
 
         let current = inputSources[i]

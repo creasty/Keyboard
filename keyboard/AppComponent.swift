@@ -30,7 +30,7 @@ final class AppComponent {
     }
 
     func inputMethodHandler() -> Handler {
-        return InputMethodHandler(emitter: emitter())
+        return InputSourceHandler(emitter: emitter())
     }
 
     func eventManager() -> EventManagerType {

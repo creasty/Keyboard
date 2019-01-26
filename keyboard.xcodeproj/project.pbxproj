@@ -19,7 +19,7 @@
 		AE6A00E61ED8962500A93C2E /* KeyCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6A00E51ED8962500A93C2E /* KeyCode.swift */; };
 		AE6A00E81ED8990E00A93C2E /* SuperKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6A00E71ED8990E00A93C2E /* SuperKey.swift */; };
 		AE825DF31EDA85000021C6E3 /* RepeatedKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE825DF21EDA85000021C6E3 /* RepeatedKey.swift */; };
-		AEC1049021FC733400B58342 /* InputMethodHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEC1048F21FC733400B58342 /* InputMethodHandler.swift */; };
+		AEC1049021FC733400B58342 /* InputSourceHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEC1048F21FC733400B58342 /* InputSourceHandler.swift */; };
 		AEC1049221FC7D5000B58342 /* TISInputSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEC1049121FC7D5000B58342 /* TISInputSource.swift */; };
 		AECCF7CD21D8FA8C00B21C0A /* Handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECCF7CC21D8FA8C00B21C0A /* Handler.swift */; };
 		AECCF7D121D8FCE800B21C0A /* NavigationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECCF7D021D8FCE800B21C0A /* NavigationHandler.swift */; };
@@ -45,7 +45,7 @@
 		AE6A00E51ED8962500A93C2E /* KeyCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyCode.swift; sourceTree = "<group>"; };
 		AE6A00E71ED8990E00A93C2E /* SuperKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuperKey.swift; sourceTree = "<group>"; };
 		AE825DF21EDA85000021C6E3 /* RepeatedKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepeatedKey.swift; sourceTree = "<group>"; };
-		AEC1048F21FC733400B58342 /* InputMethodHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputMethodHandler.swift; sourceTree = "<group>"; };
+		AEC1048F21FC733400B58342 /* InputSourceHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputSourceHandler.swift; sourceTree = "<group>"; };
 		AEC1049121FC7D5000B58342 /* TISInputSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TISInputSource.swift; sourceTree = "<group>"; };
 		AECCF7CC21D8FA8C00B21C0A /* Handler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Handler.swift; sourceTree = "<group>"; };
 		AECCF7D021D8FCE800B21C0A /* NavigationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationHandler.swift; sourceTree = "<group>"; };
@@ -129,7 +129,7 @@
 				AECCF7DC21D90B5B00B21C0A /* AppSwitchHandler.swift */,
 				AECCF7D221D8FF2800B21C0A /* EmacsHandler.swift */,
 				AECCF7D421D8FFE400B21C0A /* EscapeHandler.swift */,
-				AEC1048F21FC733400B58342 /* InputMethodHandler.swift */,
+				AEC1048F21FC733400B58342 /* InputSourceHandler.swift */,
 				AECCF7D021D8FCE800B21C0A /* NavigationHandler.swift */,
 				AECCF7D621D9004E00B21C0A /* WindowResizeHandler.swift */,
 			);
@@ -207,7 +207,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AEC1049021FC733400B58342 /* InputMethodHandler.swift in Sources */,
+				AEC1049021FC733400B58342 /* InputSourceHandler.swift in Sources */,
 				AECCF7D121D8FCE800B21C0A /* NavigationHandler.swift in Sources */,
 				AECCF7D321D8FF2800B21C0A /* EmacsHandler.swift in Sources */,
 				AECCF7CD21D8FA8C00B21C0A /* Handler.swift in Sources */,
