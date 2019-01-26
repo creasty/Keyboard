@@ -20,17 +20,17 @@ final class NavigationHandler: SuperKeyHandler {
     override func execute(keys: Set<KeyCode>) {
         switch keys {
         case [.h]:
-            emitter.emit(key: .leftArrow, flags: [.maskControl, .maskSecondaryFn])
+            emitter.emit(code: .leftArrow, flags: [.maskControl, .maskSecondaryFn])
         case [.j]:
-            emitter.emit(key: .tab, flags: [.maskCommand])
+            emitter.emit(code: .tab, flags: [.maskCommand])
         case [.k]:
-            emitter.emit(key: .tab, flags: [.maskCommand, .maskShift])
+            emitter.emit(code: .tab, flags: [.maskCommand, .maskShift])
         case [.l]:
-            emitter.emit(key: .rightArrow, flags: [.maskControl, .maskSecondaryFn])
+            emitter.emit(code: .rightArrow, flags: [.maskControl, .maskSecondaryFn])
         case [.n]:
-            emitter.emit(key: .f1, flags: [.maskCommand])
+            emitter.emit(code: .f1, flags: [.maskCommand])
         case [.b]:
-            emitter.emit(key: .f1, flags: [.maskCommand, .maskShift])
+            emitter.emit(code: .f1, flags: [.maskCommand, .maskShift])
         default:
             break
         }

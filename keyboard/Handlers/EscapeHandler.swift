@@ -16,7 +16,7 @@ final class EscapeHandler: Handler {
             return nil
         }
 
-        emitter.emit(key: .jisEisu)
+        emitter.emit(code: .jisEisu)
 
         return .passThrough
     }

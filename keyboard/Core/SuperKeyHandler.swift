@@ -31,13 +31,13 @@ class SuperKeyHandler: Handler {
 
             switch superKey.state {
             case .activated:
-                emitter.emit(key: superKey.prefixKey)
+                emitter.emit(code: superKey.prefixKey)
             case .used, .enabled:
                 if let key = superKey.cancel() {
-                    emitter.emit(key: superKey.prefixKey)
-                    emitter.emit(key: key)
+                    emitter.emit(code: superKey.prefixKey)
+                    emitter.emit(code: key)
                 } else {
-                    emitter.emit(key: .command)
+                    emitter.emit(code: .command)
                 }
             default: break
             }
@@ -53,8 +53,8 @@ class SuperKeyHandler: Handler {
         guard superKey.enable() else {
             superKey.state = .disabled
 
-            emitter.emit(key: superKey.prefixKey)
-            emitter.emit(key: keyEvent.code, action: (keyEvent.isDown ? .down : .up))
+            emitter.emit(code: superKey.prefixKey)
+            emitter.emit(code: keyEvent.code, action: (keyEvent.isDown ? .down : .up))
 
             return .prevent
         }
