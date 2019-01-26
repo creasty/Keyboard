@@ -8,14 +8,11 @@ final class EscapeHandler: Handler {
         self.emitter = emitter
     }
 
-    func handle(key: KeyCode, flags: NSEvent.ModifierFlags, isKeyDown: Bool, isARepeat: Bool) -> HandlerAction? {
-        guard isKeyDown else {
+    func handle(keyEvent: KeyEvent) -> HandlerAction? {
+        guard keyEvent.isDown else {
             return nil
         }
-        guard key == .escape else {
-            return nil
-        }
-        guard flags.match() else {
+        guard keyEvent.match(code: .escape) else {
             return nil
         }
 

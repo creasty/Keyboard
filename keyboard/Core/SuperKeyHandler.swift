@@ -9,22 +9,22 @@ class SuperKeyHandler: Handler {
         self.emitter = emitter
     }
 
-    func handle(key: KeyCode, flags: NSEvent.ModifierFlags, isKeyDown: Bool, isARepeat: Bool) -> HandlerAction? {
-        return updateState(key: key, flags: flags, isKeyDown: isKeyDown, isARepeat: isARepeat)
-            ?? execute(key: key, flags: flags, isKeyDown: isKeyDown)
+    func handle(keyEvent: KeyEvent) -> HandlerAction? {
+        return updateState(keyEvent: keyEvent)
+            ?? execute(keyEvent: keyEvent)
     }
 
-    private func updateState(key: KeyCode, flags: NSEvent.ModifierFlags, isKeyDown: Bool, isARepeat: Bool) -> HandlerAction? {
-        guard flags.match() else {
+    private func updateState(keyEvent: KeyEvent) -> HandlerAction? {
+        guard keyEvent.match() else {
             superKey.state = .inactive
             return nil
         }
 
-        if key == superKey.prefixKey {
-            guard !isARepeat else {
+        if keyEvent.code == superKey.prefixKey {
+            guard !keyEvent.isARepeat else {
                 return .prevent
             }
-            guard !isKeyDown else {
+            guard !keyEvent.isDown else {
                 superKey.state = .activated
                 return .prevent
             }
@@ -46,7 +46,7 @@ class SuperKeyHandler: Handler {
             return .prevent
         }
 
-        guard isKeyDown else {
+        guard keyEvent.isDown else {
             return nil
         }
 
@@ -54,7 +54,7 @@ class SuperKeyHandler: Handler {
             superKey.state = .disabled
 
             emitter.emit(key: superKey.prefixKey)
-            emitter.emit(key: key, action: (isKeyDown ? .down : .up))
+            emitter.emit(key: keyEvent.code, action: (keyEvent.isDown ? .down : .up))
 
             return .prevent
         }
@@ -62,15 +62,15 @@ class SuperKeyHandler: Handler {
         return nil
     }
 
-    private func execute(key: KeyCode, flags: NSEvent.ModifierFlags, isKeyDown: Bool) -> HandlerAction? {
+    private func execute(keyEvent: KeyEvent) -> HandlerAction? {
         guard superKey.isEnabled else {
             return nil
         }
-        guard flags.match() else {
+        guard keyEvent.match() else {
             return nil
         }
 
-        superKey.perform(key: key, isKeyDown: isKeyDown) { [weak self] (keys) in
+        superKey.perform(key: keyEvent.code, isKeyDown: keyEvent.isDown) { [weak self] (keys) in
             self?.execute(keys: keys)
         }
 

@@ -22,28 +22,29 @@ final class EventManager: EventManagerType {
         guard let event = NSEvent(cgEvent: cgEvent) else {
             return Unmanaged.passRetained(cgEvent)
         }
-        guard let key = KeyCode(rawValue: event.keyCode) else {
+        guard let keyEvent = KeyEvent(nsEvent: event) else {
             return Unmanaged.passRetained(cgEvent)
         }
 
-        let flags = event.modifierFlags
-        let isKeyDown = (event.type == .keyDown)
+        let action = handle(keyEvent: keyEvent) ?? .passThrough
 
-        let finalAction: HandlerAction = {
-            for handler in handlers {
-                if let action = handler.handle(key: key, flags: flags, isKeyDown: isKeyDown, isARepeat: event.isARepeat) {
-                    return action
-                }
-            }
-
-            return .passThrough
-        }()
-
-        switch finalAction {
+        switch action {
         case .prevent:
             return nil
         case .passThrough:
             return Unmanaged.passRetained(cgEvent)
         }
+    }
+}
+
+extension EventManager: Handler {
+    func handle(keyEvent: KeyEvent) -> HandlerAction? {
+        for handler in handlers {
+            if let action = handler.handle(keyEvent: keyEvent) {
+                return action
+            }
+        }
+
+        return nil
     }
 }

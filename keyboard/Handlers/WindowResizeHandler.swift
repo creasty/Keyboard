@@ -68,18 +68,18 @@ final class WindowResizeHandler: Handler {
         self.workspace = workspace
     }
 
-    func handle(key: KeyCode, flags: NSEvent.ModifierFlags, isKeyDown: Bool, isARepeat: Bool) -> HandlerAction? {
-        guard isKeyDown else {
+    func handle(keyEvent: KeyEvent) -> HandlerAction? {
+        guard keyEvent.isDown else {
             return nil
         }
-        guard flags.match(shift: nil, option: true, command: true) else {
+        guard keyEvent.match(shift: nil, option: true, command: true) else {
             return nil
         }
 
         var windowSize: WindowSize?
 
-        if flags.contains(.shift) {
-            switch key {
+        if keyEvent.shift {
+            switch keyEvent.code {
             case .leftArrow:  windowSize = .topLeft
             case .upArrow:    windowSize = .topRight
             case .rightArrow: windowSize = .bottomRight
@@ -87,7 +87,7 @@ final class WindowResizeHandler: Handler {
             default: break
             }
         } else {
-            switch key {
+            switch keyEvent.code {
             case .slash:      windowSize = .full
             case .leftArrow:  windowSize = .left
             case .upArrow:    windowSize = .top

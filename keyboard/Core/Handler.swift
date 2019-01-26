@@ -6,5 +6,5 @@ enum HandlerAction {
 }
 
 protocol Handler {
-    func handle(key: KeyCode, flags: NSEvent.ModifierFlags, isKeyDown: Bool, isARepeat: Bool) -> HandlerAction?
+    func handle(keyEvent: KeyEvent) -> HandlerAction?
 }
