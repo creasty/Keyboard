@@ -3,7 +3,7 @@ import InputMethodKit
 
 // Input Method switching
 //
-//     J+K Select next source
+//     Ctrl-; Select next source in Input menu
 //
 final class InputMethodHandler: Handler {
     private let emitter: EmitterType
@@ -17,29 +17,31 @@ final class InputMethodHandler: Handler {
         self.inputSources = inputSourceList.filter { $0.isKeyboardInputSource && $0.isSelectable }
     }
 
-    func activateSuperKeys() -> [KeyCode] {
-        return [.f]
-    }
-
     func handle(keyEvent: KeyEvent) -> HandlerAction? {
-        return nil
+        guard keyEvent.isDown else { return nil }
+        guard !keyEvent.isARepeat else { return nil }
+        guard keyEvent.match(code: .semicolon, control: true) else { return nil }
+
+        changeInput()
+        return .prevent
     }
 
     func handleSuperKey(prefix: KeyCode, keys: Set<KeyCode>) -> Bool {
-        guard prefix == .f else { return false }
-
-        switch keys {
-        case [.j]:
-            changeInput()
-            return true
-        default:
-            return false
-        }
+        return false
     }
 
     private func changeInput() {
         guard let i = inputSources.firstIndex(where: { $0.isSelected }) else { return }
+
+        let current = inputSources[i]
         let next = inputSources[(i + 1) % inputSources.count]
+
+        if current.isCJKV, let nonCJKV = inputSources.first(where: { !$0.isCJKV }) {
+            // Workaround for TIS CJKV layout bug:
+            // when it's CJKV, select nonCJKV input first and then return
+            TISSelectInputSource(nonCJKV)
+        }
+
         TISSelectInputSource(next)
     }
 }
