@@ -16,10 +16,10 @@ $ brew cask install creasty/tools/keyboard
 ```
 
 
-List of hacks
--------------
+List of actions
+---------------
 
-### Window/space navigations
+### Window/space navigation
 
 | Key | Description |
 |:---|:---|
@@ -48,6 +48,18 @@ Open "System Preferences" and set the following shortcuts:
 
 </details>
 
+### Window resizing/positioning
+
+| Key | Description |
+|:---|:---|
+| `S+D+F` | Full screen |
+| `S+D+H` | Left half |
+| `S+D+J` | Bottom half |
+| `S+D+K` | Top half |
+| `S+D+L` | Right half |
+
+*`S` acts as a 'super key' that doesn't require any modifier keys.*
+
 ### Emacs mode
 
 | Key | Description | Shift allowed |
@@ -62,18 +74,6 @@ Open "System Preferences" and set the following shortcuts:
 | `Ctrl-F` | → | YES |
 | `Ctrl-A` | Beginning of line | YES |
 | `Ctrl-E` | End of line | YES |
-
-### Window resizing/positioning
-
-| Key | Description |
-|:---|:---|
-| `S+D+F` | Full |
-| `S+D+H` | Left |
-| `S+D+J` | Bottom |
-| `S+D+K` | Top |
-| `S+D+L` | Right |
-
-*`S` acts as a 'super key' that doesn't require any modifier keys.*
 
 ### Switch input source
 
