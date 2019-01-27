@@ -29,6 +29,7 @@ deploy:
   file_glob: true
   file: build/*.zip
   on:
+    tags: true
     repo: creasty/Keyboard
 
 notifications:
