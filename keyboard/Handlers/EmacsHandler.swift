@@ -136,7 +136,7 @@ final class EmacsHandler: Handler {
             }
 
             if let remap = remap {
-                let remapFlags = keyEvent.flags.contains(.shift)
+                let remapFlags = keyEvent.shift
                     ? remap.1.union(.maskShift)
                     : remap.1
 
