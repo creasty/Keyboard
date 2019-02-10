@@ -29,6 +29,7 @@ List of actions
 | `S+K` | Switch to previous application |
 | `S+N` | Switch to next window |
 | `S+B` | Switch to previous window |
+| `S+M` | Mission control |
 
 *`S` acts as a 'super key' that doesn't require any modifier keys.*
 
@@ -95,7 +96,7 @@ Change the input source to English as you leave 'insert mode' in Vim with `Escap
 | Key | App | Bundle ID | URL |
 |:---|:---|:---|:---|
 | `;+F` | Finder | `com.apple.finder` | N/A |
-| `;+M` | iTerm 2 | `com.googlecode.iterm2` | https://www.iterm2.com |
+| `;+M` | Alacritty | `io.alacritty` | https://github.com/jwilm/alacritty |
 | `;+T` | Things | `com.culturedcode.ThingsMac` | https://culturedcode.com/things |
 | `;+B` | Bear | `net.shinyfrog.bear` | https://bear.app |
 
