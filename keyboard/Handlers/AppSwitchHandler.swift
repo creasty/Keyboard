@@ -1,5 +1,32 @@
 import Cocoa
 
+protocol ApplicationLaunchable {
+    var workspace: NSWorkspace { get }
+
+    func showOrHideApplication(_ id: String)
+}
+
+extension ApplicationLaunchable {
+    func showOrHideApplication(_ id: String) {
+        if let app = workspace.runningApplications.first(where: { $0.bundleIdentifier == id }) {
+            if app.isActive {
+                app.hide()
+            } else {
+                app.unhide()
+                app.activate(options: [.activateIgnoringOtherApps])
+            }
+            return
+        }
+
+        workspace.launchApplication(
+            withBundleIdentifier: id,
+            options: [],
+            additionalEventParamDescriptor: nil,
+            launchIdentifier: nil
+        )
+    }
+}
+
 // Swtich between apps:
 //
 //     ;+F   Finder
