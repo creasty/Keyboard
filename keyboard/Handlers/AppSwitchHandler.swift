@@ -1,5 +1,32 @@
 import Cocoa
 
+protocol ApplicationLaunchable {
+    var workspace: NSWorkspace { get }
+
+    func showOrHideApplication(_ id: String)
+}
+
+extension ApplicationLaunchable {
+    func showOrHideApplication(_ id: String) {
+        if let app = workspace.runningApplications.first(where: { $0.bundleIdentifier == id }) {
+            if app.isActive {
+                app.hide()
+            } else {
+                app.unhide()
+                app.activate(options: [.activateIgnoringOtherApps])
+            }
+            return
+        }
+
+        workspace.launchApplication(
+            withBundleIdentifier: id,
+            options: [],
+            additionalEventParamDescriptor: nil,
+            launchIdentifier: nil
+        )
+    }
+}
+
 // Swtich between apps:
 //
 //     ;+F   Finder
@@ -7,8 +34,8 @@ import Cocoa
 //     ;+T   Things
 //     ;+B   Bear
 //
-final class AppSwitchHandler: Handler {
-    private let workspace: NSWorkspace
+final class AppSwitchHandler: Handler, ApplicationLaunchable {
+    let workspace: NSWorkspace
     private let emitter: EmitterType
 
     init(workspace: NSWorkspace, emitter: EmitterType) {
@@ -29,32 +56,19 @@ final class AppSwitchHandler: Handler {
 
         switch keys {
         case [.f]:
-            showOrHideApplication(byBundleIdentifier: "com.apple.finder")
+            showOrHideApplication("com.apple.finder")
             return true
         case [.m]:
-            showOrHideApplication(byBundleIdentifier: "com.googlecode.iterm2")
+            showOrHideApplication("io.alacritty")
             return true
         case [.t]:
-            showOrHideApplication(byBundleIdentifier: "com.culturedcode.ThingsMac")
+            showOrHideApplication("com.culturedcode.ThingsMac")
             return true
         case [.b]:
-            showOrHideApplication(byBundleIdentifier: "net.shinyfrog.bear")
+            showOrHideApplication("net.shinyfrog.bear")
             return true
         default:
             return false
-        }
-    }
-
-    private func showOrHideApplication(byBundleIdentifier id: String) {
-        if let app = workspace.frontmostApplication, app.bundleIdentifier == id {
-            app.hide()
-        } else {
-            workspace.launchApplication(
-                withBundleIdentifier: id,
-                options: [],
-                additionalEventParamDescriptor: nil,
-                launchIdentifier: nil
-            )
         }
     }
 }

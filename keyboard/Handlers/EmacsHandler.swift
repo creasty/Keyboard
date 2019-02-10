@@ -6,6 +6,7 @@ private let terminalApplications: Set<String> = [
     "com.googlecode.iterm2",
     "co.zeit.hyperterm",
     "co.zeit.hyper",
+    "io.alacritty",
 ]
 
 private let emacsApplications: Set<String> = [
@@ -44,6 +45,7 @@ private let emacsApplications: Set<String> = [
     "com.googlecode.iterm2",
     "co.zeit.hyperterm",
     "co.zeit.hyper",
+    "io.alacritty",
 
     // vi
     "org.vim.MacVim",
@@ -136,7 +138,7 @@ final class EmacsHandler: Handler {
             }
 
             if let remap = remap {
-                let remapFlags = keyEvent.flags.contains(.shift)
+                let remapFlags = keyEvent.shift
                     ? remap.1.union(.maskShift)
                     : remap.1
 

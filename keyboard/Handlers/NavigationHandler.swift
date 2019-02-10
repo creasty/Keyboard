@@ -8,11 +8,14 @@ import Cocoa
 //     S+K   Switch to previous application
 //     S+N   Switch to next window
 //     S+B   Switch to previous window
+//     S+M   Mission Control
 //
-final class NavigationHandler: Handler {
+final class NavigationHandler: Handler, ApplicationLaunchable {
+    let workspace: NSWorkspace
     private let emitter: EmitterType
 
-    init(emitter: EmitterType) {
+    init(workspace: NSWorkspace, emitter: EmitterType) {
+        self.workspace = workspace
         self.emitter = emitter
     }
 
@@ -45,6 +48,9 @@ final class NavigationHandler: Handler {
             return true
         case [.b]:
             emitter.emit(code: .f1, flags: [.maskCommand, .maskShift])
+            return true
+        case [.m]:
+            showOrHideApplication("com.apple.exposelauncher")
             return true
         default:
             return false

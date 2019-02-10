@@ -134,8 +134,6 @@ struct KeyEvent {
     let option: Bool
     let command: Bool
 
-    let flags: NSEvent.ModifierFlags
-
     let isDown: Bool
     let isARepeat: Bool
 
@@ -145,7 +143,6 @@ struct KeyEvent {
         }
 
         self.code = code
-        flags = nsEvent.modifierFlags
         shift = nsEvent.modifierFlags.contains(.shift)
         control = nsEvent.modifierFlags.contains(.control)
         option = nsEvent.modifierFlags.contains(.option)

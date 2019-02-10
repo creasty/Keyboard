@@ -10,7 +10,7 @@ final class AppComponent {
     }
 
     func navigationHandler() -> Handler {
-        return NavigationHandler(emitter: emitter())
+        return NavigationHandler(workspace: nsWorkspace(), emitter: emitter())
     }
 
     func emacsHandler() -> Handler {
