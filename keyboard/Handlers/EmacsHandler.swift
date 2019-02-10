@@ -6,6 +6,7 @@ private let terminalApplications: Set<String> = [
     "com.googlecode.iterm2",
     "co.zeit.hyperterm",
     "co.zeit.hyper",
+    "io.alacritty",
 ]
 
 private let emacsApplications: Set<String> = [
@@ -44,6 +45,7 @@ private let emacsApplications: Set<String> = [
     "com.googlecode.iterm2",
     "co.zeit.hyperterm",
     "co.zeit.hyper",
+    "io.alacritty",
 
     // vi
     "org.vim.MacVim",
