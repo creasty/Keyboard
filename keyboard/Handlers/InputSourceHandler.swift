@@ -36,7 +36,7 @@ final class InputSourceHandler: Handler {
         let current = inputSources[i]
         let next = inputSources[(i + 1) % inputSources.count]
 
-        if current.isCJKV, let nonCJKV = inputSources.first(where: { !$0.isCJKV }) {
+        if !current.isCJKV && next.isCJKV, let nonCJKV = inputSources.first(where: { !$0.isCJKV }) {
             // Workaround for TIS CJKV layout bug:
             // when it's CJKV, select nonCJKV input first and then return
             TISSelectInputSource(nonCJKV)
