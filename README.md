@@ -23,25 +23,23 @@ List of actions
 
 | Key | Description |
 |:---|:---|
-| `S+H` | Move to left space |
-| `S+L` | Move to right space |
-| `S+J` | Switch to next application |
-| `S+K` | Switch to previous application |
-| `S+N` | Switch to next window |
-| `S+B` | Switch to previous window |
-| `S+M` | Mission control |
+| <kbd>S+H</kbd> | Move to left space |
+| <kbd>S+L</kbd> | Move to right space |
+| <kbd>S+J</kbd> | Switch to next application |
+| <kbd>S+K</kbd> | Switch to previous application |
+| <kbd>S+N</kbd> | Switch to next window |
+| <kbd>S+B</kbd> | Switch to previous window |
+| <kbd>S+M</kbd> | Mission control |
 
 *`S` acts as a 'super key' that doesn't require any modifier keys.*
 
 <details><summary>Requirements</summary>
 
-Open "System Preferences" and set the following shortcuts:
+Open "System Preferences" and set the following shortcuts.
 
-- Mission Control
-  - "Move left a space" `Ctrl-LeftArrow`
-  - "Move right a space" `Ctrl-RightArrow`
-- Keyboard
-  - "Move focus to next window" `Cmd-F1`
+- `Mission Control` > `Move left a space` <kbd>Ctrl-LeftArrow</kbd>
+- `Mission Control` > `Move right a space` <kbd>Ctrl-RightArrow</kbd>
+- `Keyboard` > `Move focus to next window` <kbd>Cmd-F1</kbd>
 
 | 1 | 2 |
 |---|---|
@@ -53,11 +51,11 @@ Open "System Preferences" and set the following shortcuts:
 
 | Key | Description |
 |:---|:---|
-| `S+D+F` | Full screen |
-| `S+D+H` | Left half |
-| `S+D+J` | Bottom half |
-| `S+D+K` | Top half |
-| `S+D+L` | Right half |
+| <kbd>S+D+F</kbd> | Full screen |
+| <kbd>S+D+H</kbd> | Left half |
+| <kbd>S+D+J</kbd> | Bottom half |
+| <kbd>S+D+K</kbd> | Top half |
+| <kbd>S+D+L</kbd> | Right half |
 
 *`S` acts as a 'super key' that doesn't require any modifier keys.*
 
@@ -65,39 +63,39 @@ Open "System Preferences" and set the following shortcuts:
 
 | Key | Description | Shift allowed |
 |:---|:---|:---|
-| `Ctrl-C` | Escape | NO |
-| `Ctrl-D` | Forward delete | NO |
-| `Ctrl-H` | Backspace | NO |
-| `Ctrl-J` | Enter | NO |
-| `Ctrl-P` | ↑ | YES |
-| `Ctrl-N` | ↓ | YES |
-| `Ctrl-B` | ← | YES |
-| `Ctrl-F` | → | YES |
-| `Ctrl-A` | Beginning of line | YES |
-| `Ctrl-E` | End of line | YES |
+| <kbd>Ctrl-C</kbd> | Escape | NO |
+| <kbd>Ctrl-D</kbd> | Forward delete | NO |
+| <kbd>Ctrl-H</kbd> | Backspace | NO |
+| <kbd>Ctrl-J</kbd> | Enter | NO |
+| <kbd>Ctrl-P</kbd> | ↑ | YES |
+| <kbd>Ctrl-N</kbd> | ↓ | YES |
+| <kbd>Ctrl-B</kbd> | ← | YES |
+| <kbd>Ctrl-F</kbd> | → | YES |
+| <kbd>Ctrl-A</kbd> | Beginning of line | YES |
+| <kbd>Ctrl-E</kbd> | End of line | YES |
 
 ### Switch input source
 
 | Key | Description |
 |:---|:---|
-| `Ctrl-;` | Selects next source in the input menu |
+| <kbd>Ctrl-;</kbd> | Selects next source in the input menu |
 
 ### Switch input source with Escape key
 
-Change the input source to English as you leave 'insert mode' in Vim with `Escape` key so it can prevent IME from capturing key strokes in 'normal mode'.
+Change the input source to English as you leave 'insert mode' in Vim with <kbd>Escape</kbd> key so it can prevent IME from capturing key strokes in 'normal mode'.
 
 | Key | Description |
 |:---|:---|
-| `Ctrl-C` | Invokes `EISUU, Escape` |
-| `Escape` | Invokes `EISUU, Escape` |
+| <kbd>Ctrl-C</kbd> | Invokes <kbd>EISUU, Escape</kbd> |
+| <kbd>Escape</kbd> | Invokes <kbd>EISUU, Escape</kbd> |
 
 ### Switch between apps
 
 | Key | App | Bundle ID | URL |
 |:---|:---|:---|:---|
-| `;+F` | Finder | `com.apple.finder` | N/A |
-| `;+M` | Alacritty | `io.alacritty` | https://github.com/jwilm/alacritty |
-| `;+T` | Things | `com.culturedcode.ThingsMac` | https://culturedcode.com/things |
-| `;+B` | Bear | `net.shinyfrog.bear` | https://bear.app |
+| <kbd>;+F</kbd> | Finder | `com.apple.finder` | N/A |
+| <kbd>;+M</kbd> | Alacritty | `io.alacritty` | https://github.com/jwilm/alacritty |
+| <kbd>;+T</kbd> | Things | `com.culturedcode.ThingsMac` | https://culturedcode.com/things |
+| <kbd>;+B</kbd> | Bear | `net.shinyfrog.bear` | https://bear.app |
 
 *`;` acts as a 'super key' that doesn't require any modifier keys.*
