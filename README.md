@@ -97,6 +97,7 @@ Change the input source to English as you leave 'insert mode' in Vim with <kbd>E
 | <kbd>;+M</kbd> | Alacritty | `io.alacritty` | https://github.com/jwilm/alacritty |
 | <kbd>;+T</kbd> | Things | `com.culturedcode.ThingsMac` | https://culturedcode.com/things |
 | <kbd>;+B</kbd> | Bear | `net.shinyfrog.bear` | https://bear.app |
+| <kbd>;+N</kbd> | Notion | `notion.id` | https://www.notion.so |
 
 *`;` acts as a 'super key' that doesn't require any modifier keys.*
 
