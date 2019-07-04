@@ -67,6 +67,9 @@ final class AppSwitchHandler: Handler, ApplicationLaunchable {
         case [.b]:
             showOrHideApplication("net.shinyfrog.bear")
             return true
+        case [.n]:
+            showOrHideApplication("notion.id")
+            return true
         default:
             return false
         }

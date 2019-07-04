@@ -3,39 +3,40 @@ import Foundation
 final class RepeatedKey {
     private let threshold: Double = 300 * 1e6
 
-    private struct Record {
-        let timestamp: Double
-        let count: Int
+    private var state: (count: Int, timestamp: Double)?
 
-        init(count: Int = 1) {
-            timestamp = DispatchTime.uptimeNanoseconds()
-            self.count = count
-        }
-    }
-
-    private var records = [String: Record]()
-
-    func count(forKey key: String) -> Int {
-        guard let record = records[key] else {
+    func count() -> Int {
+        guard let state = state else {
             return 0
         }
 
-        let t = DispatchTime.uptimeNanoseconds()
-        guard t - record.timestamp < threshold else {
-            records[key] = nil
+        guard now() - state.timestamp < threshold else {
+            self.state = nil
             return 0
         }
 
-        return record.count
+        return state.count
     }
 
-    func record(forKey key: String) -> Int {
-        let n = count(forKey: key) + 1
-        records[key] = Record(count: n)
+    func record() -> Int {
+        let n = count() + 1
+        self.state = (count: n, timestamp: now())
         return n
     }
 
-    func reset(forKey key: String) {
-        records[key] = nil
+    func reset() {
+        state = nil
+    }
+
+    func match(at exactCount: Int) -> Bool {
+        if record() == exactCount {
+            reset()
+            return true
+        }
+        return false
+    }
+
+    private func now() -> Double {
+        return DispatchTime.uptimeNanoseconds()
     }
 }
