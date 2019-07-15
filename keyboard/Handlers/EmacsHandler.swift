@@ -1,6 +1,6 @@
 import Cocoa
 
-private let terminalApplications: Set<String> = [
+private let escapeKeyDisabledApps: Set<String> = [
     "com.apple.Terminal",
     "net.sourceforge.iTerm",
     "com.googlecode.iterm2",
@@ -9,7 +9,11 @@ private let terminalApplications: Set<String> = [
     "io.alacritty",
 ]
 
-private let emacsApplications: Set<String> = [
+private let advancedCursorKeysDisabledApps: Set<String> = [
+    "com.microsoft.VSCode",
+]
+
+private let allCursorKeysDisabledApps: Set<String> = [
     // eclipse
     "org.eclipse.eclipse",
     "org.eclipse.platform.ide",
@@ -69,15 +73,15 @@ private let emacsApplications: Set<String> = [
 // Emacs mode:
 //
 //     Ctrl-C    Escape
-//     Ctrl-D    Forward delete
-//     Ctrl-H    Backspace
+//     Ctrl-D    Forward delete                       Advanced
+//     Ctrl-H    Backspace                            Advanced
 //     Ctrl-J    Enter
 //     Ctrl-P    ↑
 //     Ctrl-N    ↓
 //     Ctrl-B    ←
 //     Ctrl-F    →
-//     Ctrl-A    Beginning of line (Shift allowed)
-//     Ctrl-E    End of line (Shift allowed)
+//     Ctrl-A    Beginning of line (Shift allowed)    Advanced
+//     Ctrl-E    End of line (Shift allowed)          Advanced
 //
 final class EmacsHandler: Handler {
     private let workspace: NSWorkspace
@@ -93,7 +97,11 @@ final class EmacsHandler: Handler {
             return nil
         }
 
-        if !terminalApplications.contains(bundleId) {
+        let escapeKeyEnabled = !escapeKeyDisabledApps.contains(bundleId)
+        let cursorKeysEnabled = !allCursorKeysDisabledApps.contains(bundleId)
+        let advancedCursorKeysEnabled = !advancedCursorKeysDisabledApps.contains(bundleId)
+
+        if escapeKeyEnabled {
             if keyEvent.match(code: .c, control: true) {
                 if keyEvent.isDown {
                     emitter.emit(code: .jisEisu)
@@ -103,15 +111,19 @@ final class EmacsHandler: Handler {
             }
         }
 
-        if !emacsApplications.contains(bundleId) {
+        if cursorKeysEnabled {
             var remap: (KeyCode, CGEventFlags)? = nil
 
             if keyEvent.match(control: true) {
                 switch keyEvent.code {
                 case .d:
-                    remap = (.forwardDelete, [])
+                    if advancedCursorKeysEnabled {
+                        remap = (.forwardDelete, [])
+                    }
                 case .h:
-                    remap = (.backspace, [])
+                    if advancedCursorKeysEnabled {
+                        remap = (.backspace, [])
+                    }
                 case .j:
                     remap = (.enter, [])
                 default:
@@ -129,9 +141,13 @@ final class EmacsHandler: Handler {
                 case .f:
                     remap = (.rightArrow, [])
                 case .a:
-                    remap = (.leftArrow, [.maskCommand])
+                    if advancedCursorKeysEnabled {
+                        remap = (.leftArrow, [.maskCommand])
+                    }
                 case .e:
-                    remap = (.rightArrow, [.maskCommand])
+                    if advancedCursorKeysEnabled {
+                        remap = (.rightArrow, [.maskCommand])
+                    }
                 default:
                     break
                 }
