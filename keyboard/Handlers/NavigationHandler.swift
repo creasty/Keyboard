@@ -1,6 +1,5 @@
 import Cocoa
-
-private let witchBundleId = "com.manytricks.WitchWrapper"
+import PreferencePanes
 
 // Window/Space navigations:
 //
@@ -15,9 +14,7 @@ private let witchBundleId = "com.manytricks.WitchWrapper"
 final class NavigationHandler: Handler, ApplicationLaunchable {
     let workspace: NSWorkspace
     private let emitter: EmitterType
-    private lazy var hasWitch: Bool = {
-        return workspace.absolutePathForApplication(withBundleIdentifier: witchBundleId) != nil
-    }()
+    private let hasWitch = true // FIXME
 
     init(workspace: NSWorkspace, emitter: EmitterType) {
         self.workspace = workspace
@@ -63,7 +60,7 @@ final class NavigationHandler: Handler, ApplicationLaunchable {
                 emitter.emit(code: .f1, flags: [.maskCommand])
             }
             return true
-        case [.b]:
+        case [.b], [.p]:
             if hasWitch {
                 emitter.emit(code: .tab, flags: [.maskControl, .maskAlternate, .maskShift])
             } else {
