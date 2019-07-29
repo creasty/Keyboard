@@ -1,5 +1,7 @@
 import Cocoa
 
+private let witchBundleId = "com.manytricks.WitchWrapper"
+
 // Window/Space navigations:
 //
 //     S+H   Move to left space
@@ -13,6 +15,9 @@ import Cocoa
 final class NavigationHandler: Handler, ApplicationLaunchable {
     let workspace: NSWorkspace
     private let emitter: EmitterType
+    private lazy var hasWitch: Bool = {
+        return workspace.absolutePathForApplication(withBundleIdentifier: witchBundleId) != nil
+    }()
 
     init(workspace: NSWorkspace, emitter: EmitterType) {
         self.workspace = workspace
@@ -35,19 +40,35 @@ final class NavigationHandler: Handler, ApplicationLaunchable {
             emitter.emit(code: .leftArrow, flags: [.maskControl, .maskSecondaryFn])
             return true
         case [.j]:
-            emitter.emit(code: .tab, flags: [.maskCommand])
+            if hasWitch {
+                emitter.emit(code: .tab, flags: [.maskAlternate])
+            } else {
+                emitter.emit(code: .tab, flags: [.maskCommand])
+            }
             return true
         case [.k]:
-            emitter.emit(code: .tab, flags: [.maskCommand, .maskShift])
+            if hasWitch {
+                emitter.emit(code: .tab, flags: [.maskAlternate, .maskShift])
+            } else {
+                emitter.emit(code: .tab, flags: [.maskCommand, .maskShift])
+            }
             return true
         case [.l]:
             emitter.emit(code: .rightArrow, flags: [.maskControl, .maskSecondaryFn])
             return true
         case [.n]:
-            emitter.emit(code: .f1, flags: [.maskCommand])
+            if hasWitch {
+                emitter.emit(code: .tab, flags: [.maskControl, .maskAlternate])
+            } else {
+                emitter.emit(code: .f1, flags: [.maskCommand])
+            }
             return true
         case [.b]:
-            emitter.emit(code: .f1, flags: [.maskCommand, .maskShift])
+            if hasWitch {
+                emitter.emit(code: .tab, flags: [.maskControl, .maskAlternate, .maskShift])
+            } else {
+                emitter.emit(code: .f1, flags: [.maskCommand, .maskShift])
+            }
             return true
         case [.m]:
             showOrHideApplication("com.apple.exposelauncher")
