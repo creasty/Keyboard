@@ -5,8 +5,14 @@ final class AppComponent {
 
     let nsWorkspace = NSWorkspace.shared
 
+    let fileManager = FileManager.default
+
     func navigationHandler() -> Handler {
-        return NavigationHandler(workspace: nsWorkspace, emitter: emitter)
+        return NavigationHandler(
+            workspace: nsWorkspace,
+            fileManager: fileManager,
+            emitter: emitter
+        )
     }
 
     func emacsHandler() -> Handler {
