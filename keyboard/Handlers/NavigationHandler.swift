@@ -1,5 +1,7 @@
 import Cocoa
-import PreferencePanes
+
+private let witch3BundleId = "com.manytricks.WitchWrapper"
+private let witch4PrefPanePath = "Library/PreferencePanes/Witch.prefPane"
 
 // Window/Space navigations:
 //
@@ -13,11 +15,31 @@ import PreferencePanes
 //
 final class NavigationHandler: Handler, ApplicationLaunchable {
     let workspace: NSWorkspace
+    private let fileManager: FileManager
     private let emitter: EmitterType
-    private let hasWitch = true // FIXME
 
-    init(workspace: NSWorkspace, emitter: EmitterType) {
+    private var homeDirectory: URL {
+        if #available(OSX 10.12, *) {
+            return fileManager.homeDirectoryForCurrentUser
+        } else {
+            return URL(fileURLWithPath: NSHomeDirectory())
+        }
+    }
+
+    private lazy var hasWitch3: Bool = {
+        return workspace.absolutePathForApplication(withBundleIdentifier: witch3BundleId) != nil
+    }()
+    private lazy var hasWitch4: Bool = {
+        let prefPath = homeDirectory.appendingPathComponent(witch4PrefPanePath, isDirectory: false).path
+        return fileManager.fileExists(atPath: prefPath)
+    }()
+    private lazy var hasWitch: Bool = {
+        return hasWitch4 || hasWitch3
+    }()
+
+    init(workspace: NSWorkspace, fileManager: FileManager, emitter: EmitterType) {
         self.workspace = workspace
+        self.fileManager = fileManager
         self.emitter = emitter
     }
 
