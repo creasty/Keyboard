@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		31C7CD28248546F000A97A11 /* WordMotionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C7CD27248546F000A97A11 /* WordMotionHandler.swift */; };
+		31C7CD2A24854BB700A97A11 /* CursorKeyHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C7CD2924854BB700A97A11 /* CursorKeyHandler.swift */; };
 		AE38940621D8CB8C0097BE73 /* AXAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE38940521D8CB8C0097BE73 /* AXAttribute.swift */; };
 		AE38940821D8DF3A0097BE73 /* AXUIElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE38940721D8DF3A0097BE73 /* AXUIElement.swift */; };
 		AE38940A21D8DF9F0097BE73 /* AXError.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE38940921D8DF9F0097BE73 /* AXError.swift */; };
@@ -34,6 +35,7 @@
 
 /* Begin PBXFileReference section */
 		31C7CD27248546F000A97A11 /* WordMotionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordMotionHandler.swift; sourceTree = "<group>"; };
+		31C7CD2924854BB700A97A11 /* CursorKeyHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CursorKeyHandler.swift; sourceTree = "<group>"; };
 		AE38940521D8CB8C0097BE73 /* AXAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AXAttribute.swift; sourceTree = "<group>"; };
 		AE38940721D8DF3A0097BE73 /* AXUIElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AXUIElement.swift; sourceTree = "<group>"; };
 		AE38940921D8DF9F0097BE73 /* AXError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AXError.swift; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 				AECCF7D021D8FCE800B21C0A /* NavigationHandler.swift */,
 				AECCF7D621D9004E00B21C0A /* WindowResizeHandler.swift */,
 				31C7CD27248546F000A97A11 /* WordMotionHandler.swift */,
+				31C7CD2924854BB700A97A11 /* CursorKeyHandler.swift */,
 			);
 			path = Handlers;
 			sourceTree = "<group>";
@@ -220,6 +223,7 @@
 				AECCF7D321D8FF2800B21C0A /* EmacsHandler.swift in Sources */,
 				AECCF7CD21D8FA8C00B21C0A /* Handler.swift in Sources */,
 				AE6A00E41ED88F3F00A93C2E /* EventManager.swift in Sources */,
+				31C7CD2A24854BB700A97A11 /* CursorKeyHandler.swift in Sources */,
 				AECCF7DB21D9072C00B21C0A /* AppComponent.swift in Sources */,
 				AE6A00E61ED8962500A93C2E /* KeyCode.swift in Sources */,
 				AE38940621D8CB8C0097BE73 /* AXAttribute.swift in Sources */,
