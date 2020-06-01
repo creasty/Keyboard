@@ -1,7 +1,7 @@
 Keyboard
 ========
 
-[![Build Status](https://travis-ci.org/creasty/Keyboard.svg?branch=master)](https://travis-ci.org/creasty/Keyboard)
+[![Build Status](https://travis-ci.com/creasty/Keyboard.svg?branch=master)](https://travis-ci.com/creasty/Keyboard)
 [![GitHub release](https://img.shields.io/github/release/creasty/Keyboard.svg)](https://github.com/creasty/Keyboard/releases)
 [![License](https://img.shields.io/github/license/creasty/Keyboard.svg)](./LICENSE)
 
