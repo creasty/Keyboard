@@ -1,7 +1,24 @@
 import Cocoa
 
 // Needs to be globally accesible
-var eventManager: EventManagerType?
+var _eventManager: EventManagerType?
+var _eventTap: CFMachPort?
+
+let eventTapCallback: CGEventTapCallBack = { (_, type, event, _) in
+    switch type {
+    case .tapDisabledByTimeout:
+        if let tap = _eventTap {
+            CGEvent.tapEnable(tap: tap, enable: true) // Re-enable
+        }
+    case .keyUp, .keyDown:
+        if let manager = _eventManager {
+            return manager.handle(cgEvent: event)
+        }
+    default:
+        break
+    }
+    return Unmanaged.passRetained(event)
+}
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -39,28 +56,27 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private func setupEventManager() {
-        eventManager = appComponent.eventManager()
+        _eventManager = appComponent.eventManager()
     }
 
     private func trapKeyEvents() {
         let eventMask = (1 << CGEventType.keyDown.rawValue) | (1 << CGEventType.keyUp.rawValue)
 
-        guard let eventTap = CGEvent.tapCreate(
+        guard let tap = CGEvent.tapCreate(
             tap: .cghidEventTap,
             place: .headInsertEventTap,
             options: .defaultTap,
             eventsOfInterest: CGEventMask(eventMask),
-            callback: { (_, _, event, _) -> Unmanaged<CGEvent>? in
-                return eventManager!.handle(cgEvent: event)
-            },
+            callback: eventTapCallback,
             userInfo: nil
         ) else {
             fatalError("Failed to create event tap")
         }
+        _eventTap = tap
 
-        let runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, 0)
+        let runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, tap, 0)
         CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, .commonModes)
-        CGEvent.tapEnable(tap: eventTap, enable: true)
+        CGEvent.tapEnable(tap: tap, enable: true)
         CFRunLoopRun()
     }
 
