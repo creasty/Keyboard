@@ -1,25 +1,5 @@
 import Cocoa
 
-// Needs to be globally accesible
-var _eventManager: EventManagerType?
-var _eventTap: CFMachPort?
-
-let eventTapCallback: CGEventTapCallBack = { (_, type, event, _) in
-    switch type {
-    case .tapDisabledByTimeout:
-        if let tap = _eventTap {
-            CGEvent.tapEnable(tap: tap, enable: true) // Re-enable
-        }
-    case .keyUp, .keyDown:
-        if let manager = _eventManager {
-            return manager.handle(cgEvent: event)
-        }
-    default:
-        break
-    }
-    return Unmanaged.passRetained(event)
-}
-
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     private lazy var statusItem: NSStatusItem = {
@@ -62,21 +42,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private func trapKeyEvents() {
         let eventMask = (1 << CGEventType.keyDown.rawValue) | (1 << CGEventType.keyUp.rawValue)
 
-        guard let tap = CGEvent.tapCreate(
+        guard let eventTap = CGEvent.tapCreate(
             tap: .cghidEventTap,
             place: .headInsertEventTap,
             options: .defaultTap,
             eventsOfInterest: CGEventMask(eventMask),
-            callback: eventTapCallback,
+            callback: appComponent.eventTapCallback,
             userInfo: nil
         ) else {
             fatalError("Failed to create event tap")
         }
-        _eventTap = tap
+        _eventTap = eventTap
 
-        let runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, tap, 0)
+        let runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, 0)
         CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, .commonModes)
-        CGEvent.tapEnable(tap: tap, enable: true)
+        CGEvent.tapEnable(tap: eventTap, enable: true)
         CFRunLoopRun()
     }
 

@@ -1,11 +1,30 @@
 import Cocoa
 
+// Needs to be globally accesible
+var _eventManager: EventManagerType?
+var _eventTap: CFMachPort?
+
 final class AppComponent {
-    private(set) lazy var emitter: EmitterType = Emitter()
-
     let nsWorkspace = NSWorkspace.shared
-
     let fileManager = FileManager.default
+
+    let eventTapCallback: CGEventTapCallBack = { (proxy, type, event, _) in
+        switch type {
+        case .tapDisabledByTimeout:
+            if let tap = _eventTap {
+                CGEvent.tapEnable(tap: tap, enable: true) // Re-enable
+            }
+        case .keyUp, .keyDown:
+            if let manager = _eventManager {
+                return manager.handle(proxy: proxy, cgEvent: event)
+            }
+        default:
+            break
+        }
+        return Unmanaged.passRetained(event)
+    }
+
+    private(set) var emitter: EmitterType = Emitter()
 
     func navigationHandler() -> Handler {
         return NavigationHandler(
@@ -28,11 +47,11 @@ final class AppComponent {
     }
 
     func appSwitchHandler() -> Handler {
-        return AppSwitchHandler(workspace: nsWorkspace, emitter: emitter)
+        return AppSwitchHandler(workspace: nsWorkspace)
     }
 
     func inputMethodHandler() -> Handler {
-        return InputSourceHandler(emitter: emitter)
+        return InputSourceHandler()
     }
 
     func appQuithHandler() -> Handler {

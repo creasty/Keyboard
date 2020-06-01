@@ -1,15 +1,15 @@
 import Cocoa
 
 protocol EmitterType {
+    func setProxy(_ proxy: CGEventTapProxy?)
     func emit(code: KeyCode)
     func emit(code: KeyCode, flags: CGEventFlags)
     func emit(code: KeyCode, action: Emitter.Action)
     func emit(code: KeyCode, flags: CGEventFlags, action: Emitter.Action)
 }
 
-struct Emitter: EmitterType {
+class Emitter: EmitterType {
     struct Const {
-        static let noremapFlag: CGEventFlags = .maskAlphaShift
         static let pauseInterval: UInt32 = 1000
     }
 
@@ -30,12 +30,10 @@ struct Emitter: EmitterType {
         }
     }
 
-    static func checkAndRemoveNoremapFlag(cgEvent: CGEvent) -> Bool {
-        if cgEvent.flags.contains(Const.noremapFlag) {
-            cgEvent.flags.remove(Const.noremapFlag)
-            return true
-        }
-        return false
+    private var proxy: CGEventTapProxy?
+
+    func setProxy(_ proxy: CGEventTapProxy?) {
+        self.proxy = proxy
     }
 
     func emit(code: KeyCode) {
@@ -61,8 +59,9 @@ struct Emitter: EmitterType {
                 virtualKey: code.rawValue,
                 keyDown: $0
             )
-            e?.flags = flags.union(Const.noremapFlag)
-            e?.post(tap: .cghidEventTap)
+            e?.flags = flags
+            e?.tapPostEvent(proxy)
         }
     }
 }
+
