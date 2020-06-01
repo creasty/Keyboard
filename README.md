@@ -19,6 +19,8 @@ $ brew cask install creasty/tools/keyboard
 List of actions
 ---------------
 
+`+` denotes a key sequence of the 'super key' mode which is activated by the first letter with no modifier keys pressed.
+
 ### Window/space navigation
 
 | Key | Description |
@@ -30,8 +32,6 @@ List of actions
 | <kbd>S+N</kbd> | Switch to next window |
 | <kbd>S+B</kbd> | Switch to previous window |
 | <kbd>S+M</kbd> | Mission control |
-
-*`S` acts as a 'super key' that doesn't require any modifier keys.*
 
 <details><summary>Requirements</summary>
 
@@ -57,8 +57,6 @@ Open "System Preferences" and set the following shortcuts.
 | <kbd>S+D+K</kbd> | Top half |
 | <kbd>S+D+L</kbd> | Right half |
 
-*`S` acts as a 'super key' that doesn't require any modifier keys.*
-
 ### Emacs mode
 
 | Key | Description | Shift allowed |
@@ -73,6 +71,15 @@ Open "System Preferences" and set the following shortcuts.
 | <kbd>Ctrl-F</kbd> | → | YES |
 | <kbd>Ctrl-A</kbd> | Beginning of line | YES |
 | <kbd>Ctrl-E</kbd> | End of line | YES |
+
+### Word motions
+
+| Key | Description |
+|:---|:---|
+| <kbd>A+D</kbd> | Delete word after cursor |
+| <kbd>A+H</kbd> | Delete word before cursor |
+| <kbd>A+B</kbd> | Move cursor backward by word |
+| <kbd>A+F</kbd> | Move cursor forward by word |
 
 ### Switch input source
 
@@ -98,8 +105,6 @@ Change the input source to English as you leave 'insert mode' in Vim with <kbd>E
 | <kbd>;+T</kbd> | Things | `com.culturedcode.ThingsMac` | https://culturedcode.com/things |
 | <kbd>;+B</kbd> | Bear | `net.shinyfrog.bear` | https://bear.app |
 | <kbd>;+N</kbd> | Notion | `notion.id` | https://www.notion.so |
-
-*`;` acts as a 'super key' that doesn't require any modifier keys.*
 
 ### Fool-safe "Quit Application"
 

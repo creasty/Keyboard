@@ -37,6 +37,10 @@ final class AppComponent {
     func emacsHandler() -> Handler {
         return EmacsHandler(workspace: nsWorkspace, emitter: emitter)
     }
+    
+    func wordMotionHandler() -> Handler {
+        return WordMotionHandler(workspace: nsWorkspace, emitter: emitter)
+    }
 
     func escapeHandler() -> Handler {
         return EscapeHandler(emitter: emitter)
@@ -62,6 +66,7 @@ final class AppComponent {
         let eventManager: EventManagerType = EventManager(emitter: emitter)
         eventManager.register(handler: navigationHandler())
         eventManager.register(handler: emacsHandler())
+        eventManager.register(handler: wordMotionHandler())
         eventManager.register(handler: escapeHandler())
         eventManager.register(handler: windowResizeHandler())
         eventManager.register(handler: appSwitchHandler())

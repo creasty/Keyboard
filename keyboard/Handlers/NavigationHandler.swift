@@ -14,6 +14,10 @@ private let witch4PrefPanePath = "Library/PreferencePanes/Witch.prefPane"
 //     S+M   Mission Control
 //
 final class NavigationHandler: Handler, ApplicationLaunchable {
+    struct Const {
+        static let superKey: KeyCode = .s
+    }
+
     let workspace: NSWorkspace
     private let fileManager: FileManager
     private let emitter: EmitterType
@@ -44,7 +48,7 @@ final class NavigationHandler: Handler, ApplicationLaunchable {
     }
 
     func activateSuperKeys() -> [KeyCode] {
-        return [.s]
+        return [Const.superKey]
     }
 
     func handle(keyEvent: KeyEvent) -> HandlerAction? {
@@ -52,7 +56,7 @@ final class NavigationHandler: Handler, ApplicationLaunchable {
     }
 
     func handleSuperKey(prefix: KeyCode, keys: Set<KeyCode>) -> Bool {
-        guard prefix == .s else { return false }
+        guard prefix == Const.superKey else { return false }
 
         switch keys {
         case [.h]:

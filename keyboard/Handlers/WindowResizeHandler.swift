@@ -68,6 +68,10 @@ private enum WindowSize {
 //     Shift-Cmd-Alt-Down     Bottom-left
 //
 final class WindowResizeHandler: Handler {
+    struct Const {
+        static let superKey: KeyCode = .s
+    }
+
     private let workspace: NSWorkspace
 
     init(workspace: NSWorkspace) {
@@ -75,7 +79,7 @@ final class WindowResizeHandler: Handler {
     }
 
     func activateSuperKeys() -> [KeyCode] {
-        return [.s]
+        return [Const.superKey]
     }
 
     func handle(keyEvent: KeyEvent) -> HandlerAction? {
@@ -121,7 +125,7 @@ final class WindowResizeHandler: Handler {
     }
 
     func handleSuperKey(prefix: KeyCode, keys: Set<KeyCode>) -> Bool {
-        guard prefix == .s else { return false }
+        guard prefix == Const.superKey else { return false }
 
         var windowSize: WindowSize?
         switch keys {
