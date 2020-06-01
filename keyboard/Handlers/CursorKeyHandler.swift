@@ -3,7 +3,7 @@ import Cocoa
 final class CursorKeyHandler: Handler {
     struct Const {
         static let superKey: KeyCode = .c
-        static let speedKey: KeyCode = .x
+        static let speedKey: KeyCode = .s
         static let pauseInterval: UInt32 = 1000
     }
     
@@ -38,6 +38,19 @@ final class CursorKeyHandler: Handler {
         case [.l]:
             moveCursor(.translate(x: 10, y: 0))
             return true
+        
+        case [.h, .j]:
+            moveCursor(.translate(x: -10, y: 10))
+            return true
+        case [.j, .l]:
+            moveCursor(.translate(x: 10, y: 10))
+            return true
+        case [.k, .l]:
+            moveCursor(.translate(x: 10, y: -10))
+            return true
+        case [.h, .k]:
+            moveCursor(.translate(x: -10, y: -10))
+            return true
 
         case [Const.speedKey, .h]:
             moveCursor(.translatePropotionally(rx: -0.1, ry: 0))
@@ -52,17 +65,33 @@ final class CursorKeyHandler: Handler {
             moveCursor(.translatePropotionally(rx: 0.1, ry: 0))
             return true
 
+        case [Const.speedKey, .h, .j]:
+            moveCursor(.translatePropotionally(rx: -0.1, ry: 0.1))
+            return true
+        case [Const.speedKey, .j, .l]:
+            moveCursor(.translatePropotionally(rx: 0.1, ry: 0.1))
+            return true
+        case [Const.speedKey, .k, .l]:
+            moveCursor(.translatePropotionally(rx: 0.1, ry: -0.1))
+            return true
+        case [Const.speedKey, .h, .k]:
+            moveCursor(.translatePropotionally(rx: -0.1, ry: -0.1))
+            return true
+
         case [.y]:
             moveCursor(.movePropotionallyTo(rx: 0.1, ry: 0.1))
             return true
         case [.u]:
-            moveCursor(.movePropotionallyTo(rx: 0.9, ry: 0.1))
+            moveCursor(.movePropotionallyTo(rx: 0.1, ry: 0.9))
             return true
         case [.i]:
-            moveCursor(.movePropotionallyTo(rx: 0.1, ry: 0.9))
+            moveCursor(.movePropotionallyTo(rx: 0.9, ry: 0.1))
             return true
         case [.o]:
             moveCursor(.movePropotionallyTo(rx: 0.9, ry: 0.9))
+            return true
+        case [.u, .i]:
+            moveCursor(.movePropotionallyTo(rx: 0.5, ry: 0.5))
             return true
 
         case [.m]:
