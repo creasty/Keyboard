@@ -51,7 +51,7 @@ final class AppComponent {
     }
     
     func cursorKeyHandler() -> Handler {
-        return CursorKeyHandler(workspace: nsWorkspace)
+        return CursorKeyHandler()
     }
 
     func appSwitchHandler() -> Handler {

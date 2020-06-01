@@ -3,6 +3,8 @@ import Cocoa
 final class CursorKeyHandler: Handler {
     struct Const {
         static let superKey: KeyCode = .c
+        static let speedKey: KeyCode = .x
+        static let pauseInterval: UInt32 = 1000
     }
     
     enum Movement {
@@ -10,12 +12,6 @@ final class CursorKeyHandler: Handler {
         case translatePropotionally(rx: CGFloat, ry: CGFloat)
         case moveTo(x: CGFloat, y: CGFloat)
         case movePropotionallyTo(rx: CGFloat, ry: CGFloat)
-    }
-
-    private let workspace: NSWorkspace
-
-    init(workspace: NSWorkspace) {
-        self.workspace = workspace
     }
 
     func activateSuperKeys() -> [KeyCode] {
@@ -42,17 +38,38 @@ final class CursorKeyHandler: Handler {
         case [.l]:
             moveCursor(.translate(x: 10, y: 0))
             return true
-        case [.d, .h]:
+
+        case [Const.speedKey, .h]:
             moveCursor(.translatePropotionally(rx: -0.1, ry: 0))
             return true
-        case [.d, .j]:
+        case [Const.speedKey, .j]:
             moveCursor(.translatePropotionally(rx: 0, ry: 0.1))
             return true
-        case [.d, .k]:
+        case [Const.speedKey, .k]:
             moveCursor(.translatePropotionally(rx: 0, ry: -0.1))
             return true
-        case [.d, .l]:
+        case [Const.speedKey, .l]:
             moveCursor(.translatePropotionally(rx: 0.1, ry: 0))
+            return true
+
+        case [.y]:
+            moveCursor(.movePropotionallyTo(rx: 0.1, ry: 0.1))
+            return true
+        case [.u]:
+            moveCursor(.movePropotionallyTo(rx: 0.9, ry: 0.1))
+            return true
+        case [.i]:
+            moveCursor(.movePropotionallyTo(rx: 0.1, ry: 0.9))
+            return true
+        case [.o]:
+            moveCursor(.movePropotionallyTo(rx: 0.9, ry: 0.9))
+            return true
+
+        case [.m]:
+            mouseClick(.left)
+            return true
+        case [.comma]:
+            mouseClick(.right)
             return true
         default:
             break
@@ -90,12 +107,53 @@ final class CursorKeyHandler: Handler {
             location.y = screenRect.minY + screenRect.height * ry
         }
 
+        // -1 to workaround for currentScreen being lost
+        location.x = max(screenRect.minX, min(location.x, screenRect.maxX - 1))
+        location.y = max(screenRect.minY, min(location.y, screenRect.maxY - 1))
+
         let event = CGEvent(
             mouseEventSource: nil,
             mouseType: .mouseMoved,
             mouseCursorPosition: location,
-            mouseButton: .left
+            mouseButton: .right
         )
         event?.post(tap: .cghidEventTap)
+    }
+    
+    func mouseClick(_ button: CGMouseButton) {
+        guard let voidEvent = CGEvent(source: nil) else { return }
+
+        switch button {
+        case .right:
+            CGEvent(
+                mouseEventSource: nil,
+                mouseType: .rightMouseDown,
+                mouseCursorPosition: voidEvent.location,
+                mouseButton: .right
+            )?.post(tap: .cghidEventTap)
+            usleep(Const.pauseInterval)
+            CGEvent(
+                mouseEventSource: nil,
+                mouseType: .rightMouseUp,
+                mouseCursorPosition: voidEvent.location,
+                mouseButton: .right
+            )?.post(tap: .cghidEventTap)
+        case .left:
+            CGEvent(
+                mouseEventSource: nil,
+                mouseType: .leftMouseDown,
+                mouseCursorPosition: voidEvent.location,
+                mouseButton: .left
+            )?.post(tap: .cghidEventTap)
+            usleep(Const.pauseInterval)
+            CGEvent(
+                mouseEventSource: nil,
+                mouseType: .leftMouseUp,
+                mouseCursorPosition: voidEvent.location,
+                mouseButton: .left
+            )?.post(tap: .cghidEventTap)
+        case .center:
+            break
+        }
     }
 }
