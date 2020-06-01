@@ -35,6 +35,10 @@ extension ApplicationLaunchable {
 //     ;+B   Bear
 //
 final class AppSwitchHandler: Handler, ApplicationLaunchable {
+    struct Const {
+        static let superKey: KeyCode = .semicolon
+    }
+
     let workspace: NSWorkspace
 
     init(workspace: NSWorkspace) {
@@ -42,7 +46,7 @@ final class AppSwitchHandler: Handler, ApplicationLaunchable {
     }
 
     func activateSuperKeys() -> [KeyCode] {
-        return [.semicolon]
+        return [Const.superKey]
     }
 
     func handle(keyEvent: KeyEvent) -> HandlerAction? {
@@ -50,7 +54,7 @@ final class AppSwitchHandler: Handler, ApplicationLaunchable {
     }
 
     func handleSuperKey(prefix: KeyCode, keys: Set<KeyCode>) -> Bool {
-        guard prefix == .semicolon else { return false }
+        guard prefix == Const.superKey else { return false }
 
         switch keys {
         case [.f]:
