@@ -36,11 +36,9 @@ extension ApplicationLaunchable {
 //
 final class AppSwitchHandler: Handler, ApplicationLaunchable {
     let workspace: NSWorkspace
-    private let emitter: EmitterType
 
-    init(workspace: NSWorkspace, emitter: EmitterType) {
+    init(workspace: NSWorkspace) {
         self.workspace = workspace
-        self.emitter = emitter
     }
 
     func activateSuperKeys() -> [KeyCode] {

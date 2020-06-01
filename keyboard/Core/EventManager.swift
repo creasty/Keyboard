@@ -2,7 +2,7 @@ import Cocoa
 
 protocol EventManagerType {
     func register(handler: Handler)
-    func handle(cgEvent: CGEvent) -> Unmanaged<CGEvent>?
+    func handle(proxy: CGEventTapProxy, cgEvent: CGEvent) -> Unmanaged<CGEvent>?
 }
 
 final class EventManager: EventManagerType {
@@ -25,10 +25,9 @@ final class EventManager: EventManagerType {
         }
     }
 
-    func handle(cgEvent: CGEvent) -> Unmanaged<CGEvent>? {
-        guard !Emitter.checkAndRemoveNoremapFlag(cgEvent: cgEvent) else {
-            return Unmanaged.passRetained(cgEvent)
-        }
+    func handle(proxy: CGEventTapProxy, cgEvent: CGEvent) -> Unmanaged<CGEvent>? {
+        emitter.setProxy(proxy)
+
         guard let event = NSEvent(cgEvent: cgEvent) else {
             return Unmanaged.passRetained(cgEvent)
         }

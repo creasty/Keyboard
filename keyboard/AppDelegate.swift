@@ -1,8 +1,5 @@
 import Cocoa
 
-// Needs to be globally accesible
-var eventManager: EventManagerType?
-
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     private lazy var statusItem: NSStatusItem = {
@@ -39,7 +36,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private func setupEventManager() {
-        eventManager = appComponent.eventManager()
+        _eventManager = appComponent.eventManager()
     }
 
     private func trapKeyEvents() {
@@ -50,13 +47,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             place: .headInsertEventTap,
             options: .defaultTap,
             eventsOfInterest: CGEventMask(eventMask),
-            callback: { (_, _, event, _) -> Unmanaged<CGEvent>? in
-                return eventManager!.handle(cgEvent: event)
-            },
+            callback: appComponent.eventTapCallback,
             userInfo: nil
         ) else {
             fatalError("Failed to create event tap")
         }
+        _eventTap = eventTap
 
         let runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, 0)
         CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, .commonModes)

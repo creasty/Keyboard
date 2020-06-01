@@ -6,12 +6,9 @@ import InputMethodKit
 //     Ctrl-; Select next source in the input menu
 //
 final class InputSourceHandler: Handler {
-    private let emitter: EmitterType
     private let inputSources: [TISInputSource]
 
-    init(emitter: EmitterType) {
-        self.emitter = emitter
-
+    init() {
         let inputSourceNSArray = TISCreateInputSourceList(nil, false).takeRetainedValue() as NSArray
         let inputSourceList = inputSourceNSArray as! [TISInputSource]
         self.inputSources = inputSourceList.filter { $0.isKeyboardInputSource && $0.isSelectable }
