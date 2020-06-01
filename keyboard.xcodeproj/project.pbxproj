@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		31C7CD28248546F000A97A11 /* WordMotionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C7CD27248546F000A97A11 /* WordMotionHandler.swift */; };
 		AE38940621D8CB8C0097BE73 /* AXAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE38940521D8CB8C0097BE73 /* AXAttribute.swift */; };
 		AE38940821D8DF3A0097BE73 /* AXUIElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE38940721D8DF3A0097BE73 /* AXUIElement.swift */; };
 		AE38940A21D8DF9F0097BE73 /* AXError.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE38940921D8DF9F0097BE73 /* AXError.swift */; };
@@ -32,6 +33,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		31C7CD27248546F000A97A11 /* WordMotionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordMotionHandler.swift; sourceTree = "<group>"; };
 		AE38940521D8CB8C0097BE73 /* AXAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AXAttribute.swift; sourceTree = "<group>"; };
 		AE38940721D8DF3A0097BE73 /* AXUIElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AXUIElement.swift; sourceTree = "<group>"; };
 		AE38940921D8DF9F0097BE73 /* AXError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AXError.swift; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 				AEC1048F21FC733400B58342 /* InputSourceHandler.swift */,
 				AECCF7D021D8FCE800B21C0A /* NavigationHandler.swift */,
 				AECCF7D621D9004E00B21C0A /* WindowResizeHandler.swift */,
+				31C7CD27248546F000A97A11 /* WordMotionHandler.swift */,
 			);
 			path = Handlers;
 			sourceTree = "<group>";
@@ -180,6 +183,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -223,6 +227,7 @@
 				AECCF7DD21D90B5B00B21C0A /* AppSwitchHandler.swift in Sources */,
 				AE38940821D8DF3A0097BE73 /* AXUIElement.swift in Sources */,
 				AE38940E21D8E0940097BE73 /* DispatchTime.swift in Sources */,
+				31C7CD28248546F000A97A11 /* WordMotionHandler.swift in Sources */,
 				AE38940A21D8DF9F0097BE73 /* AXError.swift in Sources */,
 				AEC1049221FC7D5000B58342 /* TISInputSource.swift in Sources */,
 				AE825DF31EDA85000021C6E3 /* RepeatedKey.swift in Sources */,
