@@ -33,16 +33,16 @@ final class WordMotionHandler: Handler {
 
         switch keys {
         case [.d]:
-            emitter.emit(code: .forwardDelete, flags: .maskAlternate)
+            emitter.emit(keyCode: .forwardDelete, flags: .maskAlternate, action: .both)
             return true
         case [.h]:
-            emitter.emit(code: .backspace, flags: .maskAlternate)
+            emitter.emit(keyCode: .backspace, flags: .maskAlternate, action: .both)
             return true
         case [.b]:
-            emitter.emit(code: .leftArrow, flags: .maskAlternate)
+            emitter.emit(keyCode: .leftArrow, flags: .maskAlternate, action: .both)
             return true
         case [.f]:
-            emitter.emit(code: .rightArrow, flags: .maskAlternate)
+            emitter.emit(keyCode: .rightArrow, flags: .maskAlternate, action: .both)
             return true
         default:
             break

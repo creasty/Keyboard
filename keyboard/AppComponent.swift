@@ -51,7 +51,7 @@ final class AppComponent {
     }
     
     func cursorKeyHandler() -> Handler {
-        return CursorKeyHandler()
+        return CursorKeyHandler(emitter: emitter)
     }
 
     func appSwitchHandler() -> Handler {

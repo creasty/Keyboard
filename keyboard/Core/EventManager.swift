@@ -96,13 +96,13 @@ extension EventManager {
 
             switch superKey.state {
             case .activated:
-                emitter.emit(code: superKey.prefix)
+                emitter.emit(keyCode: superKey.prefix, flags: [], action: .both)
             case .used, .enabled:
                 if let key = superKey.cancel() {
-                    emitter.emit(code: superKey.prefix)
-                    emitter.emit(code: key)
+                    emitter.emit(keyCode: superKey.prefix, flags: [], action: .both)
+                    emitter.emit(keyCode: key, flags: [], action: .both)
                 } else {
-                    emitter.emit(code: .command)
+                    emitter.emit(keyCode: .command, flags: [], action: .both)
                 }
             default: break
             }
@@ -118,8 +118,8 @@ extension EventManager {
         guard superKey.enable() else {
             superKey.state = .disabled
 
-            emitter.emit(code: superKey.prefix)
-            emitter.emit(code: keyEvent.code, action: (keyEvent.isDown ? .down : .up))
+            emitter.emit(keyCode: superKey.prefix, flags: [], action: .both)
+            emitter.emit(keyCode: keyEvent.code, flags: [], action: (keyEvent.isDown ? .down : .up))
 
             return .prevent
         }

@@ -6,7 +6,7 @@ final class CursorKeyHandler: Handler {
         static let speedKey: KeyCode = .s
         static let pauseInterval: UInt32 = 1000
     }
-    
+
     enum Movement {
         case translate(x: CGFloat, y: CGFloat)
         case translatePropotionally(rx: CGFloat, ry: CGFloat)
@@ -14,10 +14,16 @@ final class CursorKeyHandler: Handler {
         case movePropotionallyTo(rx: CGFloat, ry: CGFloat)
     }
 
+    private let emitter: EmitterType
+
+    init(emitter: EmitterType) {
+        self.emitter = emitter
+    }
+
     func activateSuperKeys() -> [KeyCode] {
         return [Const.superKey]
     }
-    
+
     func handle(keyEvent: KeyEvent) -> HandlerAction? {
         return nil
     }
@@ -38,7 +44,7 @@ final class CursorKeyHandler: Handler {
         case [.l]:
             moveCursor(.translate(x: 10, y: 0))
             return true
-        
+
         case [.h, .j]:
             moveCursor(.translate(x: -10, y: 10))
             return true
@@ -95,10 +101,10 @@ final class CursorKeyHandler: Handler {
             return true
 
         case [.m]:
-            mouseClick(.left)
+            emitter.emit(mouseClick: .left)
             return true
         case [.comma]:
-            mouseClick(.right)
+            emitter.emit(mouseClick: .right)
             return true
         default:
             break
@@ -132,49 +138,6 @@ final class CursorKeyHandler: Handler {
         location.x = max(screenRect.minX, min(location.x, screenRect.maxX - 1))
         location.y = max(screenRect.minY, min(location.y, screenRect.maxY - 1))
 
-        let event = CGEvent(
-            mouseEventSource: nil,
-            mouseType: .mouseMoved,
-            mouseCursorPosition: location,
-            mouseButton: .right
-        )
-        event?.post(tap: .cghidEventTap)
-    }
-    
-    func mouseClick(_ button: CGMouseButton) {
-        guard let voidEvent = CGEvent(source: nil) else { return }
-
-        switch button {
-        case .right:
-            CGEvent(
-                mouseEventSource: nil,
-                mouseType: .rightMouseDown,
-                mouseCursorPosition: voidEvent.location,
-                mouseButton: .right
-            )?.post(tap: .cghidEventTap)
-            usleep(Const.pauseInterval)
-            CGEvent(
-                mouseEventSource: nil,
-                mouseType: .rightMouseUp,
-                mouseCursorPosition: voidEvent.location,
-                mouseButton: .right
-            )?.post(tap: .cghidEventTap)
-        case .left:
-            CGEvent(
-                mouseEventSource: nil,
-                mouseType: .leftMouseDown,
-                mouseCursorPosition: voidEvent.location,
-                mouseButton: .left
-            )?.post(tap: .cghidEventTap)
-            usleep(Const.pauseInterval)
-            CGEvent(
-                mouseEventSource: nil,
-                mouseType: .leftMouseUp,
-                mouseCursorPosition: voidEvent.location,
-                mouseButton: .left
-            )?.post(tap: .cghidEventTap)
-        case .center:
-            break
-        }
+        emitter.emit(mouseMoveTo: location)
     }
 }

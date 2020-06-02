@@ -60,37 +60,37 @@ final class NavigationHandler: Handler, ApplicationLaunchable {
 
         switch keys {
         case [.h]:
-            emitter.emit(code: .leftArrow, flags: [.maskControl, .maskSecondaryFn])
+            emitter.emit(keyCode: .leftArrow, flags: [.maskControl, .maskSecondaryFn], action: .both)
             return true
         case [.j]:
             if hasWitch {
-                emitter.emit(code: .tab, flags: [.maskAlternate])
+                emitter.emit(keyCode: .tab, flags: [.maskAlternate], action: .both)
             } else {
-                emitter.emit(code: .tab, flags: [.maskCommand])
+                emitter.emit(keyCode: .tab, flags: [.maskCommand], action: .both)
             }
             return true
         case [.k]:
             if hasWitch {
-                emitter.emit(code: .tab, flags: [.maskAlternate, .maskShift])
+                emitter.emit(keyCode: .tab, flags: [.maskAlternate, .maskShift], action: .both)
             } else {
-                emitter.emit(code: .tab, flags: [.maskCommand, .maskShift])
+                emitter.emit(keyCode: .tab, flags: [.maskCommand, .maskShift], action: .both)
             }
             return true
         case [.l]:
-            emitter.emit(code: .rightArrow, flags: [.maskControl, .maskSecondaryFn])
+            emitter.emit(keyCode: .rightArrow, flags: [.maskControl, .maskSecondaryFn], action: .both)
             return true
         case [.n]:
             if hasWitch {
-                emitter.emit(code: .tab, flags: [.maskControl, .maskAlternate])
+                emitter.emit(keyCode: .tab, flags: [.maskControl, .maskAlternate], action: .both)
             } else {
-                emitter.emit(code: .f1, flags: [.maskCommand])
+                emitter.emit(keyCode: .f1, flags: [.maskCommand], action: .both)
             }
             return true
         case [.b], [.p]:
             if hasWitch {
-                emitter.emit(code: .tab, flags: [.maskControl, .maskAlternate, .maskShift])
+                emitter.emit(keyCode: .tab, flags: [.maskControl, .maskAlternate, .maskShift], action: .both)
             } else {
-                emitter.emit(code: .f1, flags: [.maskCommand, .maskShift])
+                emitter.emit(keyCode: .f1, flags: [.maskCommand, .maskShift], action: .both)
             }
             return true
         case [.m]:

@@ -104,9 +104,9 @@ final class EmacsHandler: Handler {
         if escapeKeyEnabled {
             if keyEvent.match(code: .c, control: true) {
                 if keyEvent.isDown {
-                    emitter.emit(code: .jisEisu)
+                    emitter.emit(keyCode: .jisEisu, flags: [], action: .both)
                 }
-                emitter.emit(code: .escape, action: (keyEvent.isDown ? .down : .up))
+                emitter.emit(keyCode: .escape, flags: [], action: (keyEvent.isDown ? .down : .up))
                 return .prevent
             }
         }
@@ -158,7 +158,7 @@ final class EmacsHandler: Handler {
                     ? remap.1.union(.maskShift)
                     : remap.1
 
-                emitter.emit(code: remap.0, flags: remapFlags, action: (keyEvent.isDown ? .down : .up))
+                emitter.emit(keyCode: remap.0, flags: remapFlags, action: (keyEvent.isDown ? .down : .up))
                 return .prevent
             }
         }
