@@ -5,6 +5,8 @@ var _eventManager: EventManagerType?
 var _eventTap: CFMachPort?
 
 final class AppComponent {
+    let showHighlightCallback: () -> Void
+
     let nsWorkspace = NSWorkspace.shared
     let fileManager = FileManager.default
 
@@ -25,6 +27,10 @@ final class AppComponent {
     }
 
     private(set) var emitter: EmitterType = Emitter()
+
+    init(showHighlightCallback: @escaping () -> Void) {
+        self.showHighlightCallback = showHighlightCallback
+    }
 
     func navigationHandler() -> Handler {
         return NavigationHandler(
@@ -51,7 +57,7 @@ final class AppComponent {
     }
     
     func mouseHandler() -> Handler {
-        return MouseHandler(emitter: emitter)
+        return MouseHandler(emitter: emitter, showHighlight: showHighlightCallback)
     }
 
     func appSwitchHandler() -> Handler {

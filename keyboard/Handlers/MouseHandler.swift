@@ -16,9 +16,11 @@ final class MouseHandler: Handler {
     }
 
     private let emitter: EmitterType
+    private let showHighlight: () -> Void
 
-    init(emitter: EmitterType) {
+    init(emitter: EmitterType, showHighlight: @escaping () -> Void) {
         self.emitter = emitter
+        self.showHighlight = showHighlight
     }
 
     func activateSuperKeys() -> [KeyCode] {
@@ -86,19 +88,19 @@ final class MouseHandler: Handler {
             return true
 
         case [.y]:
-            moveCursor(.movePropotionallyTo(rx: 0.1, ry: 0.1))
+            moveCursor(.movePropotionallyTo(rx: 0.1, ry: 0.1), highlight: true)
             return true
         case [.u]:
-            moveCursor(.movePropotionallyTo(rx: 0.1, ry: 0.9))
+            moveCursor(.movePropotionallyTo(rx: 0.1, ry: 0.9), highlight: true)
             return true
         case [.i]:
-            moveCursor(.movePropotionallyTo(rx: 0.9, ry: 0.1))
+            moveCursor(.movePropotionallyTo(rx: 0.9, ry: 0.1), highlight: true)
             return true
         case [.o]:
-            moveCursor(.movePropotionallyTo(rx: 0.9, ry: 0.9))
+            moveCursor(.movePropotionallyTo(rx: 0.9, ry: 0.9), highlight: true)
             return true
         case [.u, .i]:
-            moveCursor(.movePropotionallyTo(rx: 0.5, ry: 0.5))
+            moveCursor(.movePropotionallyTo(rx: 0.5, ry: 0.5), highlight: true)
             return true
 
         case [Const.scrollKey, .h]:
@@ -114,6 +116,10 @@ final class MouseHandler: Handler {
             emitter.emit(mouseScroll: .init(x: -50, y: 0))
             return true
 
+        case [.space]:
+            showHighlight()
+            return true
+
         case [.m]:
             emitter.emit(mouseClick: .left)
             return true
@@ -127,7 +133,7 @@ final class MouseHandler: Handler {
         return false
     }
 
-    func moveCursor(_ movement: Movement) {
+    func moveCursor(_ movement: Movement, highlight: Bool = false) {
         guard let screenRect = NSScreen.currentScreenRect else { return }
         guard let voidEvent = CGEvent(source: nil) else { return }
 
@@ -153,5 +159,11 @@ final class MouseHandler: Handler {
         location.y = max(screenRect.minY, min(location.y, screenRect.maxY - 1))
 
         emitter.emit(mouseMoveTo: location)
+
+        if highlight {
+            DispatchQueue.main.async {
+                self.showHighlight()
+            }
+        }
     }
 }

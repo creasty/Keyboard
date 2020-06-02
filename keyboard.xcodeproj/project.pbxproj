@@ -10,7 +10,7 @@
 		31C7CD28248546F000A97A11 /* WordMotionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C7CD27248546F000A97A11 /* WordMotionHandler.swift */; };
 		31C7CD2A24854BB700A97A11 /* MouseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C7CD2924854BB700A97A11 /* MouseHandler.swift */; };
 		31C7CD2C2485DBFB00A97A11 /* NSScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C7CD2B2485DBFB00A97A11 /* NSScreen.swift */; };
-		31C7CD2E2485F7CE00A97A11 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 31C7CD2D2485F7CE00A97A11 /* MainMenu.xib */; };
+		31E66C2B2485FD7B004BBEFD /* HighlighterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E66C2A2485FD7B004BBEFD /* HighlighterView.swift */; };
 		AE38940621D8CB8C0097BE73 /* AXAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE38940521D8CB8C0097BE73 /* AXAttribute.swift */; };
 		AE38940821D8DF3A0097BE73 /* AXUIElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE38940721D8DF3A0097BE73 /* AXUIElement.swift */; };
 		AE38940A21D8DF9F0097BE73 /* AXError.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE38940921D8DF9F0097BE73 /* AXError.swift */; };
@@ -39,7 +39,7 @@
 		31C7CD27248546F000A97A11 /* WordMotionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordMotionHandler.swift; sourceTree = "<group>"; };
 		31C7CD2924854BB700A97A11 /* MouseHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MouseHandler.swift; sourceTree = "<group>"; };
 		31C7CD2B2485DBFB00A97A11 /* NSScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSScreen.swift; sourceTree = "<group>"; };
-		31C7CD2D2485F7CE00A97A11 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
+		31E66C2A2485FD7B004BBEFD /* HighlighterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlighterView.swift; sourceTree = "<group>"; };
 		AE38940521D8CB8C0097BE73 /* AXAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AXAttribute.swift; sourceTree = "<group>"; };
 		AE38940721D8DF3A0097BE73 /* AXUIElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AXUIElement.swift; sourceTree = "<group>"; };
 		AE38940921D8DF9F0097BE73 /* AXError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AXError.swift; sourceTree = "<group>"; };
@@ -117,6 +117,7 @@
 				AE6A00D71ED6A25000A93C2E /* Assets.xcassets */,
 				AE6A00DC1ED6A25000A93C2E /* Info.plist */,
 				AE6A00D91ED6A25000A93C2E /* MainMenu.xib */,
+				31E66C2A2485FD7B004BBEFD /* HighlighterView.swift */,
 			);
 			path = keyboard;
 			sourceTree = "<group>";
@@ -235,6 +236,7 @@
 				AE38940621D8CB8C0097BE73 /* AXAttribute.swift in Sources */,
 				AE6A00D61ED6A25000A93C2E /* AppDelegate.swift in Sources */,
 				AECCF7DD21D90B5B00B21C0A /* AppSwitchHandler.swift in Sources */,
+				31E66C2B2485FD7B004BBEFD /* HighlighterView.swift in Sources */,
 				AE38940821D8DF3A0097BE73 /* AXUIElement.swift in Sources */,
 				AE38940E21D8E0940097BE73 /* DispatchTime.swift in Sources */,
 				31C7CD28248546F000A97A11 /* WordMotionHandler.swift in Sources */,
