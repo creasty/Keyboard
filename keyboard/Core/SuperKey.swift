@@ -17,10 +17,10 @@ final class SuperKey {
     private var activatedAt: Double = 0
     private var current: (key: KeyCode, time: DispatchTime, work: DispatchWorkItem?)?
 
-    var prefixKey: KeyCode?
+    private(set) var prefixKey: KeyCode?
     private var pressedKeys: Set<KeyCode> = []
 
-    var state: State = .inactive {
+    private(set) var state: State = .inactive {
         didSet {
             guard state != oldValue else {
                 return
@@ -34,6 +34,18 @@ final class SuperKey {
 
     var isEnabled: Bool {
         return [.enabled, .used].contains(state)
+    }
+
+    func activate(prefixKey: KeyCode) -> Bool {
+        guard state == .inactive else { return false }
+
+        self.prefixKey = prefixKey
+        state = .activated
+        return true
+    }
+
+    func inactivate() {
+        state = .inactive
     }
 
     func enable() -> Bool {

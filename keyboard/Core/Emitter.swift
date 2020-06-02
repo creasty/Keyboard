@@ -5,14 +5,14 @@ enum EmitterKeyAction {
     case up
     case both
 
-    fileprivate var keyDowns: [(isDown: Bool, pause: Bool)] {
+    fileprivate var keyDowns: [Bool] {
         switch self {
         case .down:
-            return [(isDown: true, pause: false)]
+            return [true]
         case .up:
-            return [(isDown: false, pause: false)]
+            return [false]
         case .both:
-            return [(isDown: true, pause: true), (isDown: false, pause: false)]
+            return [true, false]
         }
     }
 }
@@ -42,7 +42,6 @@ protocol EmitterType {
 
 class Emitter: EmitterType {
     struct Const {
-        // NOTE: it's not possible to post consecutive events
         static let pauseInterval: UInt32 = 1000
     }
 
@@ -53,15 +52,18 @@ class Emitter: EmitterType {
     }
 
     func emit(keyCode: KeyCode, flags: CGEventFlags, action: EmitterKeyAction) {
+        var shouldPause = false
+
         action.keyDowns.forEach {
-            if $0.pause {
-                usleep(Const.pauseInterval)
+            if shouldPause {
+                pause()
             }
+            shouldPause = true
 
             let e = CGEvent(
                 keyboardEventSource: nil,
                 virtualKey: keyCode.rawValue,
-                keyDown: $0.isDown
+                keyDown: $0
             )
             e?.flags = flags
             e?.tapPostEvent(proxy)
@@ -89,7 +91,7 @@ class Emitter: EmitterType {
             mouseButton: cgMouseButton
         )?.post(tap: .cghidEventTap)
 
-        usleep(Const.pauseInterval)
+        pause()
 
         CGEvent(
             mouseEventSource: nil,
@@ -108,5 +110,10 @@ class Emitter: EmitterType {
             wheel2: Int32(point.x),
             wheel3: 0
         )?.post(tap: .cghidEventTap)
+    }
+
+    func pause() {
+        // NOTE: it's not possible to post consecutive events
+        usleep(Const.pauseInterval)
     }
 }

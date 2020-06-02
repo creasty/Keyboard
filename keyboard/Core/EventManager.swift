@@ -69,18 +69,16 @@ extension EventManager: Handler {
     }
 }
 
-extension EventManager {
-    private func updateSuperKey(keyEvent: KeyEvent) -> HandlerAction? {
+private extension EventManager {
+    func updateSuperKey(keyEvent: KeyEvent) -> HandlerAction? {
         guard keyEvent.match() else {
-            superKey.state = .inactive
+            superKey.inactivate()
             return nil
         }
 
         if superKeyPrefixes.contains(keyEvent.code) {
             // Activte the mode
-            if keyEvent.isDown, superKey.state == .inactive {
-                superKey.prefixKey = keyEvent.code
-                superKey.state = .activated
+            if keyEvent.isDown, superKey.activate(prefixKey: keyEvent.code) {
                 return .prevent
             }
 
@@ -91,7 +89,7 @@ extension EventManager {
                     case .activated:
                         emitter.emit(keyCode: prefixKey, flags: [], action: .both)
                     case .used, .enabled:
-                        // Abort a pending operation, if any
+                        // Abort a pending operation if any
                         if let pendingKey = superKey.cancel() {
                             emitter.emit(keyCode: prefixKey, flags: [], action: .both)
                             emitter.emit(keyCode: pendingKey, flags: [], action: .both)
@@ -103,7 +101,7 @@ extension EventManager {
                     }
 
                     // Restore the state
-                    superKey.state = .inactive
+                    superKey.inactivate()
                 }
 
                 // Always ignore the prefix key
@@ -124,7 +122,7 @@ extension EventManager {
         return nil
     }
 
-    private func handleSuperKey(keyEvent: KeyEvent) -> HandlerAction? {
+    func handleSuperKey(keyEvent: KeyEvent) -> HandlerAction? {
         guard superKey.isEnabled, let prefixKey = superKey.prefixKey else {
             return nil
         }

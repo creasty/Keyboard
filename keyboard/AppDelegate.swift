@@ -23,13 +23,35 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         setupWindow()
         setupStatusItem()
         setupEventManager()
-        trapKeyEvents()
+        setupEventTap()
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
     }
 
-    private func setupStatusItem() {
+    private func isProcessTrusted() -> Bool {
+        let promptKey = kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String
+        let opts = [promptKey: true] as CFDictionary
+        return AXIsProcessTrustedWithOptions(opts)
+    }
+
+    @objc
+    private func handleQuit() {
+        NSApplication.shared.terminate(nil)
+    }
+}
+
+private extension AppDelegate {
+    func setupWindow() {
+        let window = NSWindow(contentRect: .zero, styleMask: .borderless, backing: .buffered, defer: true)
+        window.isOpaque = false
+        window.makeKeyAndOrderFront(nil)
+        window.backgroundColor = .clear
+        window.level = .floating
+        self.window = window
+    }
+
+    func setupStatusItem() {
         if let button = statusItem.button {
             button.title = "K"
         }
@@ -43,20 +65,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }()
     }
 
-    private func setupEventManager() {
+    func setupEventManager() {
         _eventManager = appComponent.eventManager()
     }
 
-    private func setupWindow() {
-        let window = NSWindow(contentRect: .zero, styleMask: .borderless, backing: .buffered, defer: true)
-        window.isOpaque = false
-        window.makeKeyAndOrderFront(nil)
-        window.backgroundColor = .clear
-        window.level = .floating
-        self.window = window
-    }
-
-    private func trapKeyEvents() {
+    func setupEventTap() {
         let eventMask = (1 << CGEventType.keyDown.rawValue) | (1 << CGEventType.keyUp.rawValue)
 
         guard let eventTap = CGEvent.tapCreate(
@@ -77,19 +90,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         CFRunLoopRun()
     }
 
-    private func isProcessTrusted() -> Bool {
-        let promptKey = kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String
-        let opts = [promptKey: true] as CFDictionary
-
-        return AXIsProcessTrustedWithOptions(opts)
-    }
-
-    @objc
-    private func handleQuit() {
-        NSApplication.shared.terminate(nil)
-    }
-
-    private func showHighlight() {
+    func showHighlight() {
         guard let screen = NSScreen.currentScreen else { return }
         guard let window = window else { return }
 
@@ -112,7 +113,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         DispatchQueue.main.asyncAfter(deadline: dispatchTime, execute: work)
     }
 
-    private func hideHighlight() {
+    func hideHighlight() {
         window?.contentView = nil
         window?.setFrame(.zero, display: false)
     }
