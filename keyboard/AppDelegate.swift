@@ -6,13 +6,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
     }()
 
-    private let appComponent = AppComponent()
+    private lazy var appComponent: AppComponent = {
+        return AppComponent(showHighlightCallback: { [weak self] in
+            self?.showHighlight()
+        })
+    }()
 
+    private var window: NSWindow?
+    private var highlighterWork: DispatchWorkItem?
+    
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         guard isProcessTrusted() else {
             exit(1)
         }
 
+        setupWindow()
         setupStatusItem()
         setupEventManager()
         trapKeyEvents()
@@ -37,6 +45,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func setupEventManager() {
         _eventManager = appComponent.eventManager()
+    }
+
+    private func setupWindow() {
+        let window = NSWindow(contentRect: .zero, styleMask: .borderless, backing: .buffered, defer: true)
+        window.isOpaque = false
+        window.makeKeyAndOrderFront(nil)
+        window.backgroundColor = .clear
+        window.level = .floating
+        self.window = window
     }
 
     private func trapKeyEvents() {
@@ -70,5 +87,33 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @objc
     private func handleQuit() {
         NSApplication.shared.terminate(nil)
+    }
+
+    private func showHighlight() {
+        guard let screen = NSScreen.currentScreen else { return }
+        guard let window = window else { return }
+
+        let highlighterView = HighlighterView(frame: screen.frame)
+        highlighterView.location = {
+            var mouseLocation = NSEvent.mouseLocation
+            mouseLocation.x -= screen.frame.origin.x
+            mouseLocation.y -= screen.frame.origin.y
+            return mouseLocation
+        }()
+
+        highlighterWork?.cancel()
+        let work = DispatchWorkItem() { self.hideHighlight() }
+        highlighterWork = work
+
+        window.contentView = highlighterView
+        window.setFrame(screen.frame, display: true)
+
+        let dispatchTime = DispatchTime.now() + DispatchTimeInterval.seconds(1)
+        DispatchQueue.main.asyncAfter(deadline: dispatchTime, execute: work)
+    }
+
+    private func hideHighlight() {
+        window?.contentView = nil
+        window?.setFrame(.zero, display: false)
     }
 }

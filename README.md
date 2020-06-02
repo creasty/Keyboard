@@ -114,7 +114,7 @@ Cursor pointer:
 | <kbd>C+S+J+L</kbd> | ↘ |
 | <kbd>C+S+K+L</kbd> | ↗ |
 | <kbd>C+S+H+K</kbd> | ↖️ |
-| | **Quick jump actions** |
+| | **Quick jump actions** (Highlight enabled) |
 | <kbd>C+Y</kbd> | Top-left corner |
 | <kbd>C+U</kbd> | Bottom-left corner |
 | <kbd>C+I</kbd> | Top-right corner |
@@ -129,6 +129,12 @@ Scroll:
 | <kbd>C+X+J</kbd> | :arrow_down: |
 | <kbd>C+X+K</kbd> | :arrow_up: |
 | <kbd>C+X+L</kbd> | :arrow_right: |
+
+Highlight:
+
+| Key | Description |
+|:---|:---|
+| <kbd>C+Space</kbd> | Highlight the location of the mouse pointer |
 
 ### Switch input source
 
