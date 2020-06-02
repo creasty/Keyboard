@@ -1,7 +1,10 @@
 import Foundation
 
 final class SuperKey {
-    let prefix: KeyCode
+    struct Const {
+        static let downThresholdMs: Double = 50
+        static let dispatchDelayMs: Int = 150
+    }
 
     enum State {
         case inactive
@@ -11,12 +14,10 @@ final class SuperKey {
         case disabled
     }
 
-    private let downThreshold: Double = 50 // ms
-    private let dispatchDelay: Int = 150 // ms
-
     private var activatedAt: Double = 0
     private var current: (key: KeyCode, time: DispatchTime, work: DispatchWorkItem?)?
 
+    var prefixKey: KeyCode?
     private var pressedKeys: Set<KeyCode> = []
 
     var state: State = .inactive {
@@ -35,15 +36,12 @@ final class SuperKey {
         return [.enabled, .used].contains(state)
     }
 
-    init(prefix: KeyCode) {
-        self.prefix = prefix
-    }
-
     func enable() -> Bool {
         guard state == .activated else {
             return true
         }
-        guard DispatchTime.uptimeNanoseconds() - activatedAt > downThreshold * 1e6 else {
+        guard DispatchTime.uptimeNanoseconds() - activatedAt > Const.downThresholdMs * 1e6 else {
+            state = .disabled
             return false
         }
         state = .enabled
@@ -68,23 +66,19 @@ final class SuperKey {
         let work = DispatchWorkItem() {
             block(keys)
         }
-        let dispatchTime = DispatchTime.now() + DispatchTimeInterval.milliseconds(dispatchDelay)
+        let dispatchTime = DispatchTime.now() + DispatchTimeInterval.milliseconds(Const.dispatchDelayMs)
         current = (key: key, time: dispatchTime, work: work)
         DispatchQueue.main.asyncAfter(deadline: dispatchTime, execute: work)
     }
 
     func cancel() -> KeyCode? {
-        guard let current = current else {
-            return nil
-        }
+        guard let current = current else { return nil }
         self.current = nil
 
+        prefixKey = nil
         pressedKeys = []
 
-        guard current.time > DispatchTime.now() else {
-            return nil
-        }
-
+        guard current.time > DispatchTime.now() else { return nil }
         current.work?.cancel()
 
         return current.key

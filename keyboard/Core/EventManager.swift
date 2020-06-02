@@ -8,8 +8,9 @@ protocol EventManagerType {
 final class EventManager: EventManagerType {
     private let emitter: EmitterType
 
-    private var handlers: [Handler] = []
-    private var superKeys: [KeyCode: SuperKey] = [:]
+    private var handlers = [Handler]()
+    private let superKey = SuperKey()
+    private var superKeyPrefixes = Set<KeyCode>()
 
     init(emitter: EmitterType) {
         self.emitter = emitter
@@ -19,9 +20,7 @@ final class EventManager: EventManagerType {
         handlers.append(handler)
 
         handler.activateSuperKeys().forEach {
-            if superKeys[$0] == nil {
-                superKeys[$0] = SuperKey(prefix: $0)
-            }
+            superKeyPrefixes.insert($0)
         }
     }
 
@@ -35,7 +34,10 @@ final class EventManager: EventManagerType {
             return Unmanaged.passRetained(cgEvent)
         }
 
-        let action = handle(keyEvent: keyEvent) ?? .passThrough
+        let action = updateSuperKey(keyEvent: keyEvent)
+            ?? handleSuperKey(keyEvent: keyEvent)
+            ?? handle(keyEvent: keyEvent)
+            ?? .passThrough
 
         switch action {
         case .prevent:
@@ -48,21 +50,11 @@ final class EventManager: EventManagerType {
 
 extension EventManager: Handler {
     func handle(keyEvent: KeyEvent) -> HandlerAction? {
-        for (_, superKey) in superKeys {
-            if let action = updateState(superKey: superKey, keyEvent: keyEvent) {
-                return action
-            }
-            if let action = execute(superKey: superKey, keyEvent: keyEvent) {
-                return action
-            }
-        }
-
         for handler in handlers {
             if let action = handler.handle(keyEvent: keyEvent) {
                 return action
             }
         }
-
         return nil
     }
 
@@ -73,53 +65,58 @@ extension EventManager: Handler {
                 return true
             }
         }
-
         return false
     }
 }
 
 extension EventManager {
-    private func updateState(superKey: SuperKey, keyEvent: KeyEvent) -> HandlerAction? {
+    private func updateSuperKey(keyEvent: KeyEvent) -> HandlerAction? {
         guard keyEvent.match() else {
             superKey.state = .inactive
             return nil
         }
 
-        if keyEvent.code == superKey.prefix {
-            guard !keyEvent.isARepeat else {
-                return .prevent
-            }
-            guard !keyEvent.isDown else {
+        if superKeyPrefixes.contains(keyEvent.code) {
+            // Activte the mode
+            if keyEvent.isDown, superKey.state == .inactive {
+                superKey.prefixKey = keyEvent.code
                 superKey.state = .activated
                 return .prevent
             }
 
-            switch superKey.state {
-            case .activated:
-                emitter.emit(keyCode: superKey.prefix, flags: [], action: .both)
-            case .used, .enabled:
-                if let key = superKey.cancel() {
-                    emitter.emit(keyCode: superKey.prefix, flags: [], action: .both)
-                    emitter.emit(keyCode: key, flags: [], action: .both)
-                } else {
-                    emitter.emit(keyCode: .command, flags: [], action: .both)
+            if let prefixKey = superKey.prefixKey, prefixKey == keyEvent.code {
+                // Cancel on the final keyup
+                if !keyEvent.isDown && !keyEvent.isARepeat {
+                    switch superKey.state {
+                    case .activated:
+                        emitter.emit(keyCode: prefixKey, flags: [], action: .both)
+                    case .used, .enabled:
+                        // Abort a pending operation, if any
+                        if let pendingKey = superKey.cancel() {
+                            emitter.emit(keyCode: prefixKey, flags: [], action: .both)
+                            emitter.emit(keyCode: pendingKey, flags: [], action: .both)
+                        } else {
+                            // Trigger any key events to clean up
+                            emitter.emit(keyCode: .command, flags: [], action: .both)
+                        }
+                    default: break
+                    }
+
+                    // Restore the state
+                    superKey.state = .inactive
                 }
-            default: break
+
+                // Always ignore the prefix key
+                return .prevent
             }
-
-            superKey.state = .inactive
-            return .prevent
         }
 
-        guard keyEvent.isDown else {
-            return nil
-        }
-
-        guard superKey.enable() else {
-            superKey.state = .disabled
-
-            emitter.emit(keyCode: superKey.prefix, flags: [], action: .both)
-            emitter.emit(keyCode: keyEvent.code, flags: [], action: (keyEvent.isDown ? .down : .up))
+        // Disable when another key was pressed immediately after the activation
+        if keyEvent.isDown, !superKey.enable() {
+            if let prefixKey = superKey.prefixKey {
+                emitter.emit(keyCode: prefixKey, flags: [], action: .both)
+            }
+            emitter.emit(keyCode: keyEvent.code, flags: [], action: .down)
 
             return .prevent
         }
@@ -127,8 +124,8 @@ extension EventManager {
         return nil
     }
 
-    private func execute(superKey: SuperKey, keyEvent: KeyEvent) -> HandlerAction? {
-        guard superKey.isEnabled else {
+    private func handleSuperKey(keyEvent: KeyEvent) -> HandlerAction? {
+        guard superKey.isEnabled, let prefixKey = superKey.prefixKey else {
             return nil
         }
         guard keyEvent.match() else {
@@ -136,7 +133,7 @@ extension EventManager {
         }
 
         superKey.perform(key: keyEvent.code, isKeyDown: keyEvent.isDown) { [weak self] (keys) in
-            self?.handleSuperKey(prefix: superKey.prefix, keys: keys)
+            self?.handleSuperKey(prefix: prefixKey, keys: keys)
         }
 
         return .prevent
