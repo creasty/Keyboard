@@ -74,12 +74,12 @@ final class AppComponent {
 
     func eventManager() -> EventManagerType {
         let eventManager: EventManagerType = EventManager(emitter: emitter)
-        eventManager.register(handler: navigationHandler())
         eventManager.register(handler: emacsHandler())
-        eventManager.register(handler: wordMotionHandler())
         eventManager.register(handler: escapeHandler())
-        eventManager.register(handler: windowResizeHandler())
+        eventManager.register(handler: navigationHandler())
         eventManager.register(handler: mouseHandler())
+        eventManager.register(handler: wordMotionHandler())
+        eventManager.register(handler: windowResizeHandler())
         eventManager.register(handler: appSwitchHandler())
         eventManager.register(handler: inputMethodHandler())
         eventManager.register(handler: appQuithHandler())
