@@ -83,6 +83,15 @@ Open "System Preferences" and set the following shortcuts.
 
 ### Mouse keys
 
+Mouse button:
+
+| Key | Description |
+|:---|:---|
+| <kbd>C+M</kbd> | Left click |
+| <kbd>C+,</kbd> | Right click |
+
+Cursor pointer:
+
 | Key | Description |
 |:---|:---|
 | | **Parallel movements (10px)** |
@@ -111,9 +120,15 @@ Open "System Preferences" and set the following shortcuts.
 | <kbd>C+I</kbd> | Top-right corner |
 | <kbd>C+O</kbd> | Bottom-right corner |
 | <kbd>C+U+I</kbd> | Center of screen |
-| | **Button actions** |
-| <kbd>C+M</kbd> | Left click |
-| <kbd>C+,</kbd> | Right click |
+
+Scroll:
+
+| Key | Description |
+|:---|:---|
+| <kbd>C+X+H</kbd> | :arrow_left: |
+| <kbd>C+X+J</kbd> | :arrow_down: |
+| <kbd>C+X+K</kbd> | :arrow_up: |
+| <kbd>C+X+L</kbd> | :arrow_right: |
 
 ### Switch input source
 
