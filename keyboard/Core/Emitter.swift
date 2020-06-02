@@ -73,7 +73,7 @@ class Emitter: EmitterType {
             mouseType: .mouseMoved,
             mouseCursorPosition: location,
             mouseButton: .right
-        )?.tapPostEvent(proxy)
+        )?.post(tap: .cghidEventTap)
     }
 
     func emit(mouseClick button: EmitterMouseButton) {
@@ -86,7 +86,7 @@ class Emitter: EmitterType {
             mouseType: downEventType,
             mouseCursorPosition: voidEvent.location,
             mouseButton: cgMouseButton
-        )?.tapPostEvent(proxy)
+        )?.post(tap: .cghidEventTap)
 
         usleep(Const.pauseInterval)
 
@@ -95,7 +95,7 @@ class Emitter: EmitterType {
             mouseType: upEventType,
             mouseCursorPosition: voidEvent.location,
             mouseButton: cgMouseButton
-        )?.tapPostEvent(proxy)
+        )?.post(tap: .cghidEventTap)
     }
 }
 
