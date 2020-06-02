@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		31C7CD28248546F000A97A11 /* WordMotionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C7CD27248546F000A97A11 /* WordMotionHandler.swift */; };
 		31C7CD2A24854BB700A97A11 /* CursorKeyHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C7CD2924854BB700A97A11 /* CursorKeyHandler.swift */; };
+		31C7CD2C2485DBFB00A97A11 /* NSScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C7CD2B2485DBFB00A97A11 /* NSScreen.swift */; };
 		AE38940621D8CB8C0097BE73 /* AXAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE38940521D8CB8C0097BE73 /* AXAttribute.swift */; };
 		AE38940821D8DF3A0097BE73 /* AXUIElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE38940721D8DF3A0097BE73 /* AXUIElement.swift */; };
 		AE38940A21D8DF9F0097BE73 /* AXError.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE38940921D8DF9F0097BE73 /* AXError.swift */; };
@@ -36,6 +37,7 @@
 /* Begin PBXFileReference section */
 		31C7CD27248546F000A97A11 /* WordMotionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordMotionHandler.swift; sourceTree = "<group>"; };
 		31C7CD2924854BB700A97A11 /* CursorKeyHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CursorKeyHandler.swift; sourceTree = "<group>"; };
+		31C7CD2B2485DBFB00A97A11 /* NSScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSScreen.swift; sourceTree = "<group>"; };
 		AE38940521D8CB8C0097BE73 /* AXAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AXAttribute.swift; sourceTree = "<group>"; };
 		AE38940721D8DF3A0097BE73 /* AXUIElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AXUIElement.swift; sourceTree = "<group>"; };
 		AE38940921D8DF9F0097BE73 /* AXError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AXError.swift; sourceTree = "<group>"; };
@@ -80,6 +82,7 @@
 				AE38940921D8DF9F0097BE73 /* AXError.swift */,
 				AE38940721D8DF3A0097BE73 /* AXUIElement.swift */,
 				AE38940D21D8E0940097BE73 /* DispatchTime.swift */,
+				31C7CD2B2485DBFB00A97A11 /* NSScreen.swift */,
 				AEC1049121FC7D5000B58342 /* TISInputSource.swift */,
 			);
 			path = Extensions;
@@ -134,13 +137,13 @@
 			children = (
 				AE5E8CCF2234D86D00A9BC49 /* AppQuitHandler.swift */,
 				AECCF7DC21D90B5B00B21C0A /* AppSwitchHandler.swift */,
+				31C7CD2924854BB700A97A11 /* CursorKeyHandler.swift */,
 				AECCF7D221D8FF2800B21C0A /* EmacsHandler.swift */,
 				AECCF7D421D8FFE400B21C0A /* EscapeHandler.swift */,
 				AEC1048F21FC733400B58342 /* InputSourceHandler.swift */,
 				AECCF7D021D8FCE800B21C0A /* NavigationHandler.swift */,
 				AECCF7D621D9004E00B21C0A /* WindowResizeHandler.swift */,
 				31C7CD27248546F000A97A11 /* WordMotionHandler.swift */,
-				31C7CD2924854BB700A97A11 /* CursorKeyHandler.swift */,
 			);
 			path = Handlers;
 			sourceTree = "<group>";
@@ -218,6 +221,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AEC1049021FC733400B58342 /* InputSourceHandler.swift in Sources */,
+				31C7CD2C2485DBFB00A97A11 /* NSScreen.swift in Sources */,
 				AE5E8CD02234D86D00A9BC49 /* AppQuitHandler.swift in Sources */,
 				AECCF7D121D8FCE800B21C0A /* NavigationHandler.swift in Sources */,
 				AECCF7D321D8FF2800B21C0A /* EmacsHandler.swift in Sources */,

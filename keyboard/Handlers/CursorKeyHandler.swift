@@ -108,18 +108,10 @@ final class CursorKeyHandler: Handler {
     }
 
     func moveCursor(_ movement: Movement) {
-        let mouseLocation = NSEvent.mouseLocation
-
-        guard let mainScreen = NSScreen.main else { return }
-        guard let currentScreen = NSScreen.screens.first(where: { NSMouseInRect(mouseLocation, $0.frame, false) }) else { return }
-
-        var screenRect = currentScreen.frame
-        screenRect.origin.y = (mainScreen.frame.origin.y + mainScreen.frame.size.height) - (currentScreen.frame.origin.y + currentScreen.frame.size.height)
-
+        guard let screenRect = NSScreen.currentScreenRect else { return }
         guard let voidEvent = CGEvent(source: nil) else { return }
+
         var location = voidEvent.location
-//        print("CGEvent#location =", location)
-//        print("screenRect =", screenRect)
 
         switch movement {
         case let .translate(x, y):
@@ -136,7 +128,7 @@ final class CursorKeyHandler: Handler {
             location.y = screenRect.minY + screenRect.height * ry
         }
 
-        // -1 to workaround for currentScreen being lost
+        // NOTE: -1 to workaround a problem of losing NSScreen.currentScreen.
         location.x = max(screenRect.minX, min(location.x, screenRect.maxX - 1))
         location.y = max(screenRect.minY, min(location.y, screenRect.maxY - 1))
 
