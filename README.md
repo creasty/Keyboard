@@ -110,7 +110,7 @@ Open "System Preferences" and set the following shortcuts.
 | <kbd>C+U</kbd> | Bottom-left corner |
 | <kbd>C+I</kbd> | Top-right corner |
 | <kbd>C+O</kbd> | Bottom-right corner |
-| <kbd>C+I+O</kbd> | Center of screen |
+| <kbd>C+U+I</kbd> | Center of screen |
 | | **Button actions** |
 | <kbd>C+M</kbd> | Left click |
 | <kbd>C+,</kbd> | Right click |
