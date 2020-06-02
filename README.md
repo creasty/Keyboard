@@ -19,7 +19,7 @@ $ brew cask install creasty/tools/keyboard
 List of actions
 ---------------
 
-`+` denotes a key sequence of the 'super key' mode which is activated by the first letter with no modifier keys pressed.
+`+` denotes a key sequence in the 'super key' mode which is activated by pressing and holding the first letter with no modifier keys.
 
 ### Window/space navigation
 
@@ -65,10 +65,10 @@ Open "System Preferences" and set the following shortcuts.
 | <kbd>Ctrl-D</kbd> | Forward delete | NO |
 | <kbd>Ctrl-H</kbd> | Backspace | NO |
 | <kbd>Ctrl-J</kbd> | Enter | NO |
-| <kbd>Ctrl-P</kbd> | ↑ | YES |
-| <kbd>Ctrl-N</kbd> | ↓ | YES |
-| <kbd>Ctrl-B</kbd> | ← | YES |
-| <kbd>Ctrl-F</kbd> | → | YES |
+| <kbd>Ctrl-P</kbd> | :arrow_up: | YES |
+| <kbd>Ctrl-N</kbd> | :arrow_down: | YES |
+| <kbd>Ctrl-B</kbd> | :arrow_left: | YES |
+| <kbd>Ctrl-F</kbd> | :arrow_right: | YES |
 | <kbd>Ctrl-A</kbd> | Beginning of line | YES |
 | <kbd>Ctrl-E</kbd> | End of line | YES |
 
@@ -80,6 +80,40 @@ Open "System Preferences" and set the following shortcuts.
 | <kbd>A+H</kbd> | Delete word before cursor |
 | <kbd>A+B</kbd> | Move cursor backward by word |
 | <kbd>A+F</kbd> | Move cursor forward by word |
+
+### Mouse keys
+
+| Key | Description |
+|:---|:---|
+| | **Parallel movements (10px)** |
+| <kbd>C+H</kbd> | :arrow_left: |
+| <kbd>C+J</kbd> | :arrow_down: |
+| <kbd>C+K</kbd> | :arrow_up: |
+| <kbd>C+L</kbd> | :arrow_right: |
+| | **Parallel movements (10%)** |
+| <kbd>C+S+H</kbd> | :arrow_left: |
+| <kbd>C+S+J</kbd> | :arrow_down: |
+| <kbd>C+S+K</kbd> | :arrow_up: |
+| <kbd>C+S+L</kbd> | :arrow_right: |
+| | **Diagonal movements (10px)** |
+| <kbd>C+H+J</kbd> | ↙ |
+| <kbd>C+J+L</kbd> | ↘ |
+| <kbd>C+K+L</kbd> | ↗ |
+| <kbd>C+H+K</kbd> | ↖️ |
+| | **Diagonal movements (10%)** |
+| <kbd>C+S+H+J</kbd> | ↙ |
+| <kbd>C+S+J+L</kbd> | ↘ |
+| <kbd>C+S+K+L</kbd> | ↗ |
+| <kbd>C+S+H+K</kbd> | ↖️ |
+| | **Quick jump actions** |
+| <kbd>C+Y</kbd> | Top-left corner |
+| <kbd>C+U</kbd> | Bottom-left corner |
+| <kbd>C+I</kbd> | Top-right corner |
+| <kbd>C+O</kbd> | Bottom-right corner |
+| <kbd>C+I+O</kbd> | Center of screen |
+| | **Button actions** |
+| <kbd>C+M</kbd> | Left click |
+| <kbd>C+,</kbd> | Right click |
 
 ### Switch input source
 

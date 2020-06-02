@@ -1,6 +1,6 @@
 import Cocoa
 
-final class CursorKeyHandler: Handler {
+final class MouseHandler: Handler {
     struct Const {
         static let superKey: KeyCode = .c
         static let speedKey: KeyCode = .s

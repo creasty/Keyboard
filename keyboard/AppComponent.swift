@@ -50,8 +50,8 @@ final class AppComponent {
         return WindowResizeHandler(workspace: nsWorkspace)
     }
     
-    func cursorKeyHandler() -> Handler {
-        return CursorKeyHandler(emitter: emitter)
+    func mouseHandler() -> Handler {
+        return MouseHandler(emitter: emitter)
     }
 
     func appSwitchHandler() -> Handler {
@@ -73,7 +73,7 @@ final class AppComponent {
         eventManager.register(handler: wordMotionHandler())
         eventManager.register(handler: escapeHandler())
         eventManager.register(handler: windowResizeHandler())
-        eventManager.register(handler: cursorKeyHandler())
+        eventManager.register(handler: mouseHandler())
         eventManager.register(handler: appSwitchHandler())
         eventManager.register(handler: inputMethodHandler())
         eventManager.register(handler: appQuithHandler())
