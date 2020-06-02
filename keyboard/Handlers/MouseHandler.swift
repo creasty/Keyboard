@@ -4,6 +4,7 @@ final class MouseHandler: Handler {
     struct Const {
         static let superKey: KeyCode = .c
         static let speedKey: KeyCode = .s
+        static let scrollKey: KeyCode = .x
         static let pauseInterval: UInt32 = 1000
     }
 
@@ -98,6 +99,19 @@ final class MouseHandler: Handler {
             return true
         case [.u, .i]:
             moveCursor(.movePropotionallyTo(rx: 0.5, ry: 0.5))
+            return true
+
+        case [Const.scrollKey, .h]:
+            emitter.emit(mouseScroll: .init(x: 50, y: 0))
+            return true
+        case [Const.scrollKey, .j]:
+            emitter.emit(mouseScroll: .init(x: 0, y: -50))
+            return true
+        case [Const.scrollKey, .k]:
+            emitter.emit(mouseScroll: .init(x: 0, y: 50))
+            return true
+        case [Const.scrollKey, .l]:
+            emitter.emit(mouseScroll: .init(x: -50, y: 0))
             return true
 
         case [.m]:

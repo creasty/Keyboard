@@ -10,6 +10,7 @@
 		31C7CD28248546F000A97A11 /* WordMotionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C7CD27248546F000A97A11 /* WordMotionHandler.swift */; };
 		31C7CD2A24854BB700A97A11 /* MouseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C7CD2924854BB700A97A11 /* MouseHandler.swift */; };
 		31C7CD2C2485DBFB00A97A11 /* NSScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C7CD2B2485DBFB00A97A11 /* NSScreen.swift */; };
+		31C7CD2E2485F7CE00A97A11 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 31C7CD2D2485F7CE00A97A11 /* MainMenu.xib */; };
 		AE38940621D8CB8C0097BE73 /* AXAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE38940521D8CB8C0097BE73 /* AXAttribute.swift */; };
 		AE38940821D8DF3A0097BE73 /* AXUIElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE38940721D8DF3A0097BE73 /* AXUIElement.swift */; };
 		AE38940A21D8DF9F0097BE73 /* AXError.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE38940921D8DF9F0097BE73 /* AXError.swift */; };
@@ -38,6 +39,7 @@
 		31C7CD27248546F000A97A11 /* WordMotionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordMotionHandler.swift; sourceTree = "<group>"; };
 		31C7CD2924854BB700A97A11 /* MouseHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MouseHandler.swift; sourceTree = "<group>"; };
 		31C7CD2B2485DBFB00A97A11 /* NSScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSScreen.swift; sourceTree = "<group>"; };
+		31C7CD2D2485F7CE00A97A11 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		AE38940521D8CB8C0097BE73 /* AXAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AXAttribute.swift; sourceTree = "<group>"; };
 		AE38940721D8DF3A0097BE73 /* AXUIElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AXUIElement.swift; sourceTree = "<group>"; };
 		AE38940921D8DF9F0097BE73 /* AXError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AXError.swift; sourceTree = "<group>"; };
@@ -309,7 +311,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -360,7 +362,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";

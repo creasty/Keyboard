@@ -37,6 +37,7 @@ protocol EmitterType {
     func emit(keyCode: KeyCode, flags: CGEventFlags, action: EmitterKeyAction)
     func emit(mouseMoveTo location: CGPoint)
     func emit(mouseClick button: EmitterMouseButton)
+    func emit(mouseScroll point: CGPoint)
 }
 
 class Emitter: EmitterType {
@@ -97,5 +98,15 @@ class Emitter: EmitterType {
             mouseButton: cgMouseButton
         )?.post(tap: .cghidEventTap)
     }
-}
 
+    func emit(mouseScroll point: CGPoint) {
+        CGEvent(
+            scrollWheelEvent2Source: nil,
+            units: .pixel,
+            wheelCount: 2,
+            wheel1: Int32(point.y),
+            wheel2: Int32(point.x),
+            wheel3: 0
+        )?.post(tap: .cghidEventTap)
+    }
+}
