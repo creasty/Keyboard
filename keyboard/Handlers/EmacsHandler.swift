@@ -7,6 +7,7 @@ private let escapeKeyDisabledApps: Set<String> = [
     "co.zeit.hyperterm",
     "co.zeit.hyper",
     "io.alacritty",
+    "net.kovidgoyal.kitty",
 ]
 
 private let advancedCursorKeysDisabledApps: Set<String> = [
@@ -50,6 +51,7 @@ private let allCursorKeysDisabledApps: Set<String> = [
     "co.zeit.hyperterm",
     "co.zeit.hyper",
     "io.alacritty",
+    "net.kovidgoyal.kitty",
 
     // vi
     "org.vim.MacVim",
