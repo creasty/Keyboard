@@ -148,7 +148,7 @@ Change the input source to English as you leave 'insert mode' in Vim with <kbd>E
 
 | Key | Description |
 |:---|:---|
-| <kbd>Ctrl-C</kbd> | Invokes <kbd>EISUU, Escape</kbd> |
+| <kbd>Ctrl-C</kbd> | Invokes <kbd>EISUU, Ctrl-C</kbd> |
 | <kbd>Escape</kbd> | Invokes <kbd>EISUU, Escape</kbd> |
 
 ### Switch between apps
@@ -167,5 +167,5 @@ Prevents <kbd>Cmd-Q</kbd> from quiting applications.
 
 | Key | Description |
 |:---|:---|
-| <kbd>Cmd-Q</kbd> | Noop |
+| <kbd>Cmd-Q</kbd> | No-op |
 | <kbd>Cmd-Q, Cmd-Q</kbd> | Invokes </kbd>Cmd-Q</kbd>. Quits application |

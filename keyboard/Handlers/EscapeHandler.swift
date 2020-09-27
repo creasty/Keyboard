@@ -12,7 +12,7 @@ final class EscapeHandler: Handler {
         guard keyEvent.isDown else {
             return nil
         }
-        guard keyEvent.match(code: .escape) else {
+        guard isEscapeKey(keyEvent: keyEvent) else {
             return nil
         }
 
@@ -22,6 +22,16 @@ final class EscapeHandler: Handler {
     }
 
     func handleSuperKey(prefix: KeyCode, keys: Set<KeyCode>) -> Bool {
+        return false
+    }
+
+    private func isEscapeKey(keyEvent: KeyEvent) -> Bool {
+        if keyEvent.match(code: .escape) {
+            return true
+        }
+        if keyEvent.match(code: .c, shift: false, control: true, option: false, command: false) {
+            return true
+        }
         return false
     }
 }
