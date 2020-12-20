@@ -8,6 +8,8 @@ private let escapeKeyDisabledApps: Set<String> = [
     "co.zeit.hyper",
     "io.alacritty",
     "net.kovidgoyal.kitty",
+    "com.ident.goneovim",
+    "com.qvacua.VimR",
 ]
 
 private let advancedCursorKeysDisabledApps: Set<String> = [
@@ -55,6 +57,8 @@ private let allCursorKeysDisabledApps: Set<String> = [
 
     // vi
     "org.vim.MacVim",
+    "com.ident.goneovim",
+    "com.qvacua.VimR",
 
     // virtualmachine
     "com.vmware.fusion",
