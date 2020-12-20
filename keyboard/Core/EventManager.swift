@@ -28,10 +28,10 @@ final class EventManager: EventManagerType {
         emitter.setProxy(proxy)
 
         guard let event = NSEvent(cgEvent: cgEvent) else {
-            return Unmanaged.passRetained(cgEvent)
+            return Unmanaged.passUnretained(cgEvent)
         }
         guard let keyEvent = KeyEvent(nsEvent: event) else {
-            return Unmanaged.passRetained(cgEvent)
+            return Unmanaged.passUnretained(cgEvent)
         }
 
         let action = updateSuperKey(keyEvent: keyEvent)
@@ -43,7 +43,7 @@ final class EventManager: EventManagerType {
         case .prevent:
             return nil
         case .passThrough:
-            return Unmanaged.passRetained(cgEvent)
+            return Unmanaged.passUnretained(cgEvent)
         }
     }
 }
