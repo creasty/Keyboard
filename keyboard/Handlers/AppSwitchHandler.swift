@@ -66,11 +66,8 @@ final class AppSwitchHandler: Handler, ApplicationLaunchable {
         case [.t]:
             showOrHideApplication("com.culturedcode.ThingsMac")
             return true
-        case [.b]:
-            showOrHideApplication("net.shinyfrog.bear")
-            return true
         case [.n]:
-            showOrHideApplication("notion.id")
+            showOrHideApplication("net.shinyfrog.bear")
             return true
         default:
             return false
