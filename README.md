@@ -1,7 +1,7 @@
 Keyboard
 ========
 
-[![Build Status](https://github.com/creasty/Keyboard/actions/workflows/build/badge.svg)](https://github.com/creasty/Keyboard/actions/workflows/build.yml)
+[![Build Status](https://github.com/creasty/Keyboard/actions/workflows/build.yml/badge.svg)](https://github.com/creasty/Keyboard/actions/workflows/build.yml)
 [![GitHub release](https://img.shields.io/github/release/creasty/Keyboard.svg)](https://github.com/creasty/Keyboard/releases)
 [![License](https://img.shields.io/github/license/creasty/Keyboard.svg)](./LICENSE)
 
