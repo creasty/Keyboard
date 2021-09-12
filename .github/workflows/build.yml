@@ -1,0 +1,21 @@
+name: build-and-publish
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Show Xcode version
+        run: xcodebuild -version
+      - name: Build
+        run: make build
+      - name: Create distribution file
+        run: make dist
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/v')
+        with:
+          prerelease: ${{ endsWith(github.ref, '-pre') }}
+          files: build/*.zip
