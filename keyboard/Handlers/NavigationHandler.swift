@@ -83,14 +83,14 @@ final class NavigationHandler: Handler, ApplicationLaunchable {
             if hasWitch {
                 emitter.emit(keyCode: .tab, flags: [.maskControl, .maskAlternate], action: .both)
             } else {
-                emitter.emit(keyCode: .f1, flags: [.maskCommand], action: .both)
+                emitter.emit(keyCode: .f1, flags: [.maskCommand, .maskSecondaryFn], action: .both)
             }
             return true
-        case [.b], [.p]:
+        case [.b]:
             if hasWitch {
                 emitter.emit(keyCode: .tab, flags: [.maskControl, .maskAlternate, .maskShift], action: .both)
             } else {
-                emitter.emit(keyCode: .f1, flags: [.maskCommand, .maskShift], action: .both)
+                emitter.emit(keyCode: .f1, flags: [.maskCommand, .maskShift, .maskSecondaryFn], action: .both)
             }
             return true
         case [.m]:
