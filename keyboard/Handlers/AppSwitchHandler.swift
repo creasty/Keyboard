@@ -61,7 +61,7 @@ final class AppSwitchHandler: Handler, ApplicationLaunchable {
             showOrHideApplication("com.apple.finder")
             return true
         case [.m]:
-            showOrHideApplication("io.alacritty")
+            showOrHideApplication("org.alacritty")
             return true
         case [.t]:
             showOrHideApplication("com.culturedcode.ThingsMac")
