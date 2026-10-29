@@ -5,6 +5,9 @@ Keyboard
 [![GitHub release](https://img.shields.io/github/release/creasty/Keyboard.svg)](https://github.com/creasty/Keyboard/releases)
 [![License](https://img.shields.io/github/license/creasty/Keyboard.svg)](./LICENSE)
 
+> [!NOTE]
+> As of October 2026, this app still works, having somehow survived years of macOS upgrades. I no longer maintain this repository; it remains as a minimal, pure Swift implementation. Its features, the super key above all, have moved to my [Hammerspoon config](https://github.com/creasty/dotfiles/tree/master/hammerspoon), which adds tests and a few minor bug fixes.
+
 Master of keyboard is master of automation.
 
 
@@ -160,11 +163,11 @@ Change the input source to English as you leave 'insert mode' in Vim with <kbd>E
 | <kbd>;+T</kbd> | Things | `com.culturedcode.ThingsMac` | https://culturedcode.com/things |
 | <kbd>;+N</kbd> | Bear | `net.shinyfrog.bear` | https://bear.app |
 
-### Fool-safe "Quit Application"
+### Fool-proof "Quit Application"
 
-Prevents <kbd>Cmd-Q</kbd> from quiting applications.
+Prevents <kbd>Cmd-Q</kbd> from quitting applications.
 
 | Key | Description |
 |:---|:---|
 | <kbd>Cmd-Q</kbd> | No-op |
-| <kbd>Cmd-Q, Cmd-Q</kbd> | Invokes </kbd>Cmd-Q</kbd>. Quits application |
+| <kbd>Cmd-Q, Cmd-Q</kbd> | Invokes <kbd>Cmd-Q</kbd>. Quits application |
